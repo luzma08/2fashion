@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles</title>
+    <link rel="stylesheet" href="../css/detalles.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos para el efecto zoom */
+        .imagen-zoom-container {
+            position: relative;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+        
+        .imagen-detalles {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        /* Modal para imagen ampliada */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            overflow: auto;
+            cursor: zoom-out;
+        }
+        
+        /* Contenido del modal */
+        .zoom-contenido {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .imagen-ampliada {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.imagen-ampliada.zoom {
+    transform: scale(2); /* o más si quieres */
+    cursor: zoom-out;
+}
+
+        
+        /* Botón para cerrar */
+        .zoom-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Efecto de hover para el botón cerrar */
+        .zoom-cerrar:hover {
+            color: #bbb;
+        }
+        
+        /* Aseguramos que el contenedor de acciones esté correctamente posicionado */
+        .accion-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .boton-carrito {
+            padding: 10px 15px;
+            background-color: #65558f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .icono-fav-agregar {
+            margin-left: 15px;
+        }
+        
+        .icono-fav-agregar i {
+            font-size: 25px;
+            color: #65558f;
+            transition: color 0.3s, transform 0.2s ease;
+        }
+        
+        .icono-fav-agregar i:hover {
+            color: #4F1D3F;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre nosotras</a></li>
+                <li>
+                    <a href="./categorias.html">Categorías</a>
+                    <ul>
+                        <li><a href="./categorias.html">Mujeres</a></li> <!--Categoria mujer-->
+                        <li><a href="./categoria-hombre.html">Hombres</a></li>
+                        <li><a href="./categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./categorias.html">Mujeres</a></li>
+          <li> <a href="./vestido.tirantes.home.html">Vestido de tirantes</a></li>
+        </ol>
+    </nav>
+
+    <div class="Caja-detalles">
+        <!-- Aquí envolvemos la imagen en el contenedor de zoom -->
+        <div class="imagen-zoom-container">
+            <img class="imagen-detalles" src="../img/vestido.tirante.floral.jpg" alt="Vestido de tirantes" id="imagen-detalles">
+        </div>
+        
+        <div class="caja-texto">
+            <h1 class="titulo-prenda">Vestido de tirantes </h1>
+            <h3 class="precio">$23.000</h3>
+            <p class="texto"> <b>Descripción:</b>  Vestido corto de tirantes con estampado floral, ideal para días soleados o salidas casuales.
+               <br>
+                <b>Material: </b>  Rayón
+                <br>
+                <b>Talla:</b>  S.
+                <br>
+                <b>Estado:</b>   Usado en buen estado, sin manchas ni daños visibles.
+                <br>
+                <b>Instrucciones de cuidado:</b> Lavar con agua fría, secar al aire, no usar secadora.</p>
+                <div class="accion-container">
+                    <button class="boton-carrito">
+                        <h3 class="texto-carro">Añadir al carrito</h3>
+                    </button>
+                    <div class="icono-fav-agregar">
+                        <a href=""><i class="fa-solid fa-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+    <!-- Modal para mostrar la imagen ampliada -->
+    <div id="zoom-modal" class="zoom-modal">
+        <span class="zoom-cerrar">&times;</span>
+        <div class="zoom-contenido">
+            <img id="imagen-ampliada" class="imagen-ampliada">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imagenDetalles = document.getElementById('imagen-detalles');
+            const modal = document.getElementById('zoom-modal');
+            const imagenAmpliada = document.getElementById('imagen-ampliada');
+            const cerrarModal = document.querySelector('.zoom-cerrar');
+        
+            // Abrir modal con imagen
+            imagenDetalles.addEventListener('click', function () {
+                imagenAmpliada.src = this.src;
+                imagenAmpliada.classList.remove('zoom'); // Asegura que el zoom no esté activado
+                modal.style.display = 'flex';
+            });
+        
+            // Cerrar modal al hacer clic en el botón de cerrar
+            cerrarModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+                imagenAmpliada.classList.remove('zoom');
+            });
+        
+            // Alternar zoom al hacer clic en la imagen dentro del modal
+            imagenAmpliada.addEventListener('click', function () {
+                this.classList.toggle('zoom');
+            });
+        
+            // Cerrar modal al hacer clic fuera de la imagen
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    imagenAmpliada.classList.remove('zoom');
+                }
+            });
+        });
+        </script>
+        
+    
+</body>
+</html>

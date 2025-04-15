@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+   gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+padding: 30px;
+   
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px; 
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px; 
+    color: #ffffff; 
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2; 
+    transform: scale(1.2); 
+}
+
+
+#inicio .contenedor-fondo{
+    background: url("../img/fondo-inicio.svg");
+    background-size: cover;
+    background-position: center center;
+    height: 99vh;
+    }
+
+#inicio .presentacion{
+  text-align: left;
+  font-size: 100%;
+  position: absolute;
+  height: 315px;
+  margin-left: 40px;
+  top: 120px;
+  align-items: center;
+  color: #4f1d3f;
+  font-family: "Poppins-SemiBold", sans-serif;
+  padding-left: 100px;
+}
+
+h2{
+    margin-top: 0;
+
+  
+}
+h1{
+    margin-top: 0;
+}
+
+
+#inicio .presentacion a{
+    margin-left: 87px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 11px 14px;
+  border: 1px solid#4f1d3f;
+  align-items: center;
+  border-radius: 20px;
+  color: #4f1d3f;
+  font-weight: bold;
+  transition: 0.5s;
+}
+
+#inicio .presentacion a:hover{
+    background-color: #fcdef3;
+    color: #4f1d3f;
+   
+}
+
+.imagen-presentacion {
+    flex: 1;
+    display: flex;
+    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+    padding-inline-start: 30%;
+
+}
+
+.imagen-presentacion img {
+    height: 80%;
+    width: auto;
+    position: absolute;
+    margin-left: 65px;
+    top: 90px;
+    margin-top: 0;
+    object-fit: cover;
+}
+
+#promociones{
+    margin-bottom: 29px;
+    background-color: #e8b7cf91;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1px;
+}
+
+
+    .columna {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+  }
+  
+  .columna img {
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 20px;
+    border-color: #4F1D3F;
+    transition: .5s;
+
+  }
+
+  #promociones .columna :hover{
+    box-shadow: 5px 5px 10px rgba(80, 37, 90, 0.95), -5px -5px 10px rgb(138, 56, 101);
+
+}
+
+.footer{
+    background-color:#4F1D3F ;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px  0;
+    color: #EEDAF2;
+
+}
+
+.footer-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 90px;
+    
+}
+
+.lista{
+    list-style: none;
+
+}
+
+.elem{
+    padding: initial;
+    
+}
+
+.elem:hover{
+    color: #da9dd3;
+    cursor: pointer;
+    transition: color .03s ease;
+}
+
+.title{
+    color: #cfb6dd;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+
+
+.social-content{
+    padding-top: 20px;
+    font-size: 23px;
+    margin: 12px;
+}
+
+@media(max-width:700px){
+    .footer{
+        display: flex;
+        justify-content: center;
+    }
+    .footer-content{
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+/* Contenedor principal */
+#Mostradores {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Filas de productos - forzar disposición horizontal */
+#Mostradores .fila {
+    display: flex;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
+    justify-content: space-between; /* Distribuye los elementos uniformemente */
+    gap: 15px;
+    margin: 30px auto;
+    overflow-x: auto; /* Permite desplazamiento horizontal si no caben */
+    padding-bottom: 10px; /* Espacio para la barra de desplazamiento */
+}
+
+/* Tarjetas de productos - ancho fijo para mantener consistencia */
+#Mostradores .fila .recuadro-ropa {
+    min-width: 220px; /* Ancho mínimo fijo */
+    max-width: 250px; /* Ancho máximo fijo */
+    flex: 0 0 auto; /* No crecer, no encoger, tamaño basado en el contenido */
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Resto del CSS como antes */
+#Mostradores .fila .recuadro-ropa:hover {
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de la imagen */
+.cuadroderopa {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Ajuste de la imagen */
+.img-categorias {
+    width: 100%;
+    height: 100%;
+}
+
+.img-categorias img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para llenar el espacio disponible */
+    transition: transform 0.5s ease;
+}
+
+.cuadroderopa:hover .img-categorias img {
+    transform: scale(1.1); /* Efecto zoom al pasar el cursor */
+}
+
+/* Textos e información */
+.texto-info {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.texto-info h4 {
+    font-family: "Poppins", serif;
+    font-size: 15px;
+    margin: 0;
+}
+
+/* Precio */
+.texto-precio {
+    width: 100%;
+    margin-top: auto; /* Empuja el precio hacia abajo */
+}
+
+.texto-precio h3 {
+    font-family: "Poppins", serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Iconos */
+#Mostradores .fila .recuadro-ropa a {
+    text-decoration: none;
+}
+
+#icono-compra, #icono-corazon {
+    position: absolute;
+    top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#icono-compra {
+    right: 60px;
+}
+
+#icono-corazon {
+    right: 20px;
+}
+
+#icono-compra:hover, #icono-corazon:hover {
+    color: #a15a8b;
+    transform: scale(1.1);
+}
+   #mostrar-mas {
+    text-align: center;
+  text-decoration: none;
+  margin-left: 66px;
+  display: inline-block;
+  padding: 11px 14px;
+  border: 1px solid#4f1d3f;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  border-radius: 20px;
+  color: #4f1d3f;
+  font-weight: bold;
+  left: 49px;
+  transition: 0.5s;
+  margin-bottom: 20px;
+  transform: translate(630px)
+}
+
+#mostrar-mas:hover{
+    background-color: #fcdef3;
+    color: #4f1d3f;
+   
+}
+
+.talla-compra{
+
+    font-family: "Poppins", serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #12000c;
+    
+}

@@ -1,0 +1,549 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+    overflow-x: hidden;
+    
+}
+
+
+/* La parte superior donde se escoge que quieres ver*/
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    font-family: "Poppins", serif;
+    box-sizing: border-box;
+    height: 70px;
+    margin: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+    padding: 30px;
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px;
+    color: #ffffff;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2;
+    transform: scale(1.2);
+}
+/* el lugar donde deciden donde ir categorias>mujer>sueter   */
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    top: 40px;
+    left: 60px;
+}
+  
+.breadcrumb a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.breadcrumb li {
+    margin-right: 5px;
+}
+  
+/* Añade el separador ">" entre elementos */
+.breadcrumb li + li::before {
+    content: ">";
+    margin-right: 5px;
+}
+
+/* Ajuste del contenedor principal */
+.Caja-detalles {
+    display: flex;
+    flex-direction: row; /* Asegura que los elementos estén en línea horizontal */
+    justify-content: flex-start; /* Alinea los elementos desde la izquierda */
+    align-items: flex-start;
+    gap: 180px; /* Separación entre imagen y detalles */
+    margin-top: 60px;
+    padding: 0 30px; /* Padding general */
+    max-width: 1200px;
+    
+    margin-left: none;
+    margin-right: none;
+}
+
+/* Ajuste de la imagen */
+.imagen-detalles {
+    width: 350px;
+    height: 500px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-left: 0; /* Sin margen adicional a la izquierda */
+    flex-shrink: 0;
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+/* Ajuste para la caja de texto */
+.caja-texto {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    min-height: 480px;
+    font-family: "Poppins", serif;
+    background: rgba(212, 184, 206, 0.945);
+    border-radius: 29px;
+    padding: 20px;
+    position: relative;
+    margin-top: 0; /* Elimina cualquier margen superior */
+    margin-left: 0; /* Elimina posicionamiento anterior */
+    top: 0; /* Elimina posicionamiento anterior */
+    left: 0; /* Elimina posicionamiento anterior */
+    
+}
+
+
+.imagen-detalles img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+
+
+.precio {
+    color: #661e42;
+    text-align: left;
+    font-family: "Nokora-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 20px 40px;
+}
+
+.texto {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+
+
+.titulo-prenda {
+    margin: 12px 40px 0;
+}
+   
+.boton-carrito {
+    background: #65558f;
+    border-radius: 34px;
+    width: 160px;
+    height: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    transition: 0.3s ease, transform 0.2s ease;
+    list-style: none;
+    border: none;
+    cursor: pointer;
+}
+
+.boton-carrito:hover {
+    background-color: #4F1D3F;
+}
+
+.texto-carro {
+    color: #FFFFFF;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    margin: 0;
+}
+.accion-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Para referencia de posicionamiento absoluto */
+    width: 100%;
+    margin: 20px auto;
+}
+.icono-fav-agregar {
+    position: absolute;
+    right: 90px; /* Posición fija desde el borde derecho */
+    transform: none; /* Eliminar transformación relativa */
+
+}
+
+.icono-fav-agregar i {
+    font-size: 25px;
+    color: #65558f;
+    transition: color 0.3s, transform 0.2s ease;
+}
+
+.icono-fav-agregar i:hover {
+    color: #4F1D3F;
+    transform: scale(1.2);
+}
+
+/* Media queries para responsividad */
+@media screen and (max-width: 992px) {
+    .Caja-detalles {
+        padding: 0 20px;
+        gap: 20px;
+    }
+    
+    .imagen-detalles {
+        width: 350px;
+        height: 450px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .Caja-detalles {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .imagen-detalles {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        aspect-ratio: 4/5;
+    }
+    
+    .caja-texto {
+        width: 100%;
+        max-width: 500px;
+        margin-top: 20px;
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    .additional-logos {
+        padding-left: 20px;
+    }
+    
+    .navegacion ul li {
+        margin: 0 15px;
+    }
+    
+    .iconos {
+        gap: 20px;
+        padding: 15px;
+    }
+    
+    .breadcrumb {
+        left: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .logo img {
+        height: 50px;
+    }
+    
+    #toggle {
+        display: none;
+    }
+    
+    .header label {
+        display: block;
+        font-size: 24px;
+        color: white;
+        order: 1;
+    }
+    
+    .header label:after {
+        content: "\f0c9";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+    
+    .navegacion {
+        width: 100%;
+        order: 3;
+        display: none;
+    }
+    
+    #toggle:checked ~ .navegacion {
+        display: block;
+    }
+    
+    .navegacion ul {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .navegacion ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .navegacion ul li ul {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+    
+    .iconos {
+        order: 2;
+    }
+    
+    .additional-logos {
+        order: 0;
+        padding-left: 0;
+    }
+    
+    .breadcrumb {
+        top: 20px;
+        left: 20px;
+    }
+    
+    .Caja-detalles {
+        margin-top: 60px;
+    }
+    
+    .imagen-detalles {
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+    }
+    
+    .caja-texto {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .header {
+        padding: 10px;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+    
+    .iconos {
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .iconos a,
+    .additional-logos i {
+        font-size: 14px;
+    }
+    
+    .breadcrumb {
+        top: 15px;
+        left: 15px;
+        font-size: 12px;
+    }
+    
+    .Caja-detalles {
+        margin-top: 50px;
+    }
+    
+    .imagen-detalles {
+        height: 350px;
+    }
+    
+    .caja-texto {
+        padding: 15px 0;
+    }
+    
+    .titulo-prenda {
+        margin: 10px 20px 0;
+        font-size: 24px;
+    }
+    
+    .precio {
+        margin: 15px 20px;
+        font-size: 18px;
+    }
+    
+    .texto {
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 14px;
+    }
+    
+    .boton-carrito {
+        width: 140px;
+        height: 35px;
+    }
+    
+    .texto-carro {
+        font-size: 14px;
+    }
+    
+    .icono-fav-agregar i {
+        font-size: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+
+/* Estilos del contenedor de zoom */
+.imagen-zoom-container {
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+
+
+/* Modal para imagen ampliada */
+.zoom-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow: auto;
+    cursor: zoom-out;
+}
+
+.zoom-contenido {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-ampliada {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.imagen-ampliada.zoom {
+    transform: scale(2);
+    cursor: zoom-out;
+}
+
+/* Botón cerrar del modal */
+.zoom-cerrar {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.zoom-cerrar:hover {
+    color: rgb(40, 31, 31);
+}

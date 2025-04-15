@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/carrito.css">
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Carro de compras</title>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="../img/logo.svg" alt="Logo">
+    </div>
+
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../html/index.html">Inicio</a></li>
+        <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+            <li><a href="../html/categorias.html">Mujeres</a></li>
+            <li><a href="../html/categoria-hombre.html">Hombres</a></li>
+            <li><a href="../html/categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="iconos">
+      <a href="#"><i class="fa-solid fa-heart"></i></a>
+      <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="#"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <h1 class="titulo-carro">CARRO DE COMPRAS</h1>
+
+  <div class="Seleccionar">
+    <h3>
+      <label>
+        <input type="checkbox" id="seleccionarTodo">
+        Seleccionar todo (<span id="contadorSeleccionados">0</span>)
+      </label>
+    </h3>
+  </div>
+
+  <div id="contenedor-carrito" class="contenedor-carrito"></div>
+
+  <div class="casilla-pago" id="total-container" style="display: none;">
+    <p>TOTAL:</p>
+    <p id="total-precio"></p>
+  </div>
+
+  <!-- Botón eliminar todos -->
+  <div id="eliminar-todos-container" style="display: none; text-align: center; margin-top: 20px;">
+    <button id="eliminar-todos" style=" font-family: Poppins, serif; font-weight: 600; border-radius: 73px;  padding: 10px 20px; background-color: #4b0f09; color: white; border: none;  cursor: pointer; font-size: 15px;">
+      Eliminar todos
+    </button>
+  </div>
+
+  <div class="boton">
+    <a href="">Ir a pagar</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const contenedor = document.getElementById('contenedor-carrito');
+      const productos = JSON.parse(localStorage.getItem('carrito')) || [];
+      const seleccionarTodo = document.getElementById('seleccionarTodo');
+      const contadorSeleccionados = document.getElementById('contadorSeleccionados');
+      const totalContainer = document.getElementById('total-container');
+      const totalPrecio = document.getElementById('total-precio');
+      const eliminarTodosContainer = document.getElementById('eliminar-todos-container');
+      const eliminarTodosBtn = document.getElementById('eliminar-todos');
+
+      let checkboxes = [];
+
+      if (productos.length === 0) {
+        contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+      } else {
+        productos.forEach((producto, index) => {
+          const div = document.createElement('div');
+          div.classList.add('producto');
+          div.innerHTML = `
+            <input type="checkbox" class="checkbox-producto" data-precio="${producto.precio.replace(/\D/g, '')}" data-index="${index}">
+            <div class="imagen-contenedor">
+              <img src="${producto.img}" alt="" class="imagen-producto-carrito">
+            </div>
+            <div id="textos-favoritos">
+              <h3 id="titulo-compra-descripcion">${producto.nombre}</h3>
+              <h3 id="talla-compra">${producto.talla || '-'}</h3>
+              <h3 id="precio-compra">${producto.precio}</h3>
+            </div>
+            <a href="#" onclick="eliminarProducto(${index})"><i id="papelera-carro" class="fa-solid fa-trash"></i></a>
+          `;
+          contenedor.appendChild(div);
+        });
+
+        checkboxes = document.querySelectorAll('.checkbox-producto');
+
+        checkboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', actualizarSeleccion);
+        });
+
+        seleccionarTodo.addEventListener('change', function () {
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = seleccionarTodo.checked;
+          });
+          actualizarSeleccion();
+        });
+
+        eliminarTodosBtn.addEventListener('click', function () {
+          let productos = JSON.parse(localStorage.getItem('carrito')) || [];
+          const nuevosProductos = productos.filter((_, index) => {
+            const checkbox = document.querySelector(`.checkbox-producto[data-index="${index}"]`);
+            return !checkbox.checked;
+          });
+          localStorage.setItem('carrito', JSON.stringify(nuevosProductos));
+          location.reload();
+        });
+
+        function actualizarSeleccion() {
+          let total = 0;
+          let seleccionados = 0;
+
+          checkboxes.forEach(checkbox => {
+            const producto = checkbox.closest('.producto');
+            if (checkbox.checked) {
+              producto.classList.add('producto-seleccionado');
+              seleccionados++;
+              total += parseInt(checkbox.dataset.precio);
+            } else {
+              producto.classList.remove('producto-seleccionado');
+            }
+          });
+
+          contadorSeleccionados.textContent = seleccionados;
+
+          totalContainer.style.display = seleccionados > 0 ? 'flex' : 'none';
+          eliminarTodosContainer.style.display = seleccionados > 0 ? 'block' : 'none';
+          totalPrecio.textContent = `$${total.toLocaleString('es-CO')}`;
+          seleccionarTodo.checked = seleccionados === checkboxes.length;
+        }
+      }
+    });
+
+    function eliminarProducto(index) {
+      let productos = JSON.parse(localStorage.getItem('carrito')) || [];
+      productos.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(productos));
+      location.reload();
+    }
+  </script>
+</body>
+</html>

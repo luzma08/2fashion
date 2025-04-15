@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles</title>
+    <link rel="stylesheet" href="../css/detalles.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>    
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre nosotras</a></li>
+                <li>
+                    <a href="./categorias.html">Categorías</a>
+                    <ul>
+                        <li><a href="./categorias.html">Mujeres</a></li> <!--Categoria mujer-->
+                        <li><a href="./categoria-hombre.html">Hombres</a></li>
+                        <li><a href="./categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
+            <a href="../html/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./categorias.html">Mujeres</a></li>
+          <li> <a href="./bleazer.home.html">Blazer azul</a></li>
+        </ol>
+      </nav>
+    
+      <div class="Caja-detalles">
+        <div class="imagen-zoom-container">
+            <img class="imagen-detalles" src="../img/bleazer.home.jpg" alt="Blazer azul" id="imagen-detalles">
+        </div>
+
+        
+            <div class="caja-texto">
+            <h1 class="titulo-prenda">Blazer azul</h1>
+            <h3 class="precio">$20.000</h3>
+            <p class="texto"> <b>Descripción:</b> Falda de mezclilla para niñas con botones decorativos en el lateral y corte asimétrico. Perfecta para combinar con blusas y camisetas.
+               <br>
+                <b>Material: </b>   Denim (mezclilla)
+                <br>
+                <b>Talla:</b>  6.
+                <br>
+                <b>Estado:</b>   Usado en buen estado, sin manchas ni daños visibles.
+                <br>
+                <b>Instrucciones de cuidado:</b>  Lavar con agua fría, no usar secadora, planchar a baja temperatura.</p>
+                <div class="accion-container">
+                    <button class="boton-carrito">
+                        <h3 class="texto-carro">Añadir al carrito</h3>
+                    </button>
+                    <div class="icono-fav-agregar">
+                        <a href=""><i class="fa-solid fa-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div id="zoom-modal" class="zoom-modal">
+        <span class="zoom-cerrar">&times;</span>
+        <div class="zoom-contenido">
+            <img id="imagen-ampliada" class="imagen-ampliada">
+        </div>
+    </div>
+
+    <script src="../js/detalles.js"></script>
+</body>

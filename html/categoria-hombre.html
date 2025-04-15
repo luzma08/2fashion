@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria hombre</title>
+    <link rel="stylesheet" href="../css/categorias.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="../html/index.html">Inicio</a></li>
+                <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="./categorias.html">Categorías</a>
+                    <ul>
+                        <li><a href="./categorias.html">Mujeres</a></li> <!--Categoria mujer-->
+                        <li><a href="./categoria-hombre.html">Hombres</a></li>
+                        <li><a href="./categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
+            <a href="../html/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    
+
+    <div class="ropa">
+        <a href="javascript:void(0);" style="color: purple;" class="filtros" onclick="eliminarChulito()">Eliminar filtros</a>
+
+   
+        <h3 class="titulo-ropa">Palabras clave</h3>
+        <button class="primavera">Elegante</button>     <button class="moderno">Moderno</button>   <button class="moderno">Retro</button>
+        <form id="lista-ropa">
+            <label  id="escoger-ropa"> <input  type="checkbox"  class="miCheckbox"name="ropa" id="ropa1">Bermudas</label>
+            <br>
+            <label id="escoger-ropa"> <input type="checkbox" class="miCheckbox" name="ropa" id="ropa2">Camisas</label>
+            <br>
+            <label id="escoger-ropa"> <input type="checkbox" class="miCheckbox" name="ropa" id="ropa3">Bleazer</label>
+            <br>
+            <label id="escoger-ropa"> <input type="checkbox" class="miCheckbox" name="ropa" id="ropa4">Trajes</label>
+            <br>
+            <label id="escoger-ropa"> <input type="checkbox" class="miCheckbox" name="ropa" id="ropa5">Shorts</label>
+
+        </form>
+        <h4 class="titulo-ropa">Color</h4>
+        <form id="colores">
+            <label id="escoger-color"> <input type="checkbox" class="miCheckbox" name="color" id="color1">Negro</label>
+            <br>
+            <label id="escoger-color"> <input type="checkbox"  class="miCheckbox"name="color" id="color2">Gris</label>
+            <br>
+            <label id="escoger-color"> <input type="checkbox"  class="miCheckbox"name="color" id="color3">Blanco</label>
+            <br>
+            <label id="escoger-color"> <input type="checkbox" class="miCheckbox" name="color" id="color4">Azul</label>
+
+        </form>
+    </form>
+    <h4 class="titulo-ropa">Tallas</h4>
+    <form id="colores">
+        <label id="escoger-tallas"> <input type="radio" class="miCheckbox" name="talla" id="talla1">S</label>
+        <br>
+        <label id="escoger-tallas"> <input type="radio" class="miCheckbox" name="talla" id="talla2">M</label>
+        <br>
+        <label id="escoger-tallas"> <input type="radio" class="miCheckbox" name="talla" id="talla3">L</label>
+        <br>
+        <label id="escoger-tallas"> <input type="radio"  class="miCheckbox"name="talla" id="talla4">XL</label>
+
+    </form>
+    <div class="rango-precios">
+        <!-- Barra de rango de precios -->
+        <label for="precio">Rango de precios:</label><br>
+        <input type="range" id="precio" name="precio" min="13000" max="31000" step="100" value="13000" oninput="actualizarValor()">
+        
+        <!-- Mostrar valores del rango -->
+        <div class="valores-rango">
+       
+            <span id="valorActual">13.000</span>
+        </div>
+    </div>
+    <button id="aplicar-filtros">Aplicar filtros</button>
+    </div>
+</div>
+
+<!--Cuadros para poner las prendas de ropa -->
+<section id="Mostradores">
+     
+    <div class="fila">
+        <div class="recuadro-ropa">
+            <div class="cuadroderopa"> 
+                <a href="./detalles-camisa-formal.html" target="_blank"> 
+                    <div class="img-categorias"> <img src="../img/camisa_formal_men.jpg" alt=""></div>
+            </div>
+            <div class="texto-info"><h4>Camiseta formal</h4>
+                <p class="talla-compra">Talla: M</p> <!-- Esta es la nueva línea -->
+            </div>
+            <a href="#"><i id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+            <div class="texto-precio"><h3>$25.000</h3></div>
+        </div>
+        <div class="recuadro-ropa">
+            <div class="cuadroderopa"> 
+                <a href="./chaqueta-en-cuero.html" target="_blank"> 
+                    <div class="img-categorias"> <img src="../img/chaleco-man.png" alt=""></div>
+            </div>
+            <div class="texto-info"><h4>Chaqueta en cuero</h4>
+                <p class="talla-compra">Talla: L</p> <!-- Esta es la nueva línea -->
+            </div>
+            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+            <div class="texto-precio"><h3>$31.000</h3></div>
+        </div>
+        <div class="recuadro-ropa">
+            <div class="cuadroderopa"> 
+                <a href="/html/detalles_dril.html" target="_blank"> 
+                    <div class="img-categorias"> <img src="../img/drill_hombre.png" alt=""></div>
+            </div>
+            <div class="texto-info"><h4>Pantalon en drill</h4>
+                <p class="talla-compra">Talla: 32</p> <!-- Esta es la nueva línea -->
+            </div>
+            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+            <div class="texto-precio"><h3>$20.000</h3></div>
+        </div>
+        <div class="recuadro-ropa">
+            <div class="cuadroderopa"> 
+                <a href="/html/detalles_traje.html" target="_blank"> <div class="img-categorias"> <img src="../img/trajehombre.jpg" alt=""></div>
+            </div>
+            <div class="texto-info"><h4>Traje</h4>
+                <p class="talla-compra">Talla: 42</p> <!-- Esta es la nueva línea -->
+            </div>
+            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+            <div class="texto-precio"><h3>$30.000</h3></div>
+        </div>
+    </div>
+    <div class="fila">
+        <div class="recuadro-ropa">
+            <div class="cuadroderopa"> 
+                <a href="/html/detalles_bermudas_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/bermudashombre.jpg" alt=""></div>
+            </div>
+        <div class="texto-info"><h4>Bermuda</h4>
+            <p class="talla-compra">Talla: 34</p> <!-- Esta es la nueva línea -->
+        </div>
+        <a href="#"><i id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+        <div class="texto-precio"><h3>$20.000</h3></div>
+    </div>
+    <div class="recuadro-ropa">
+        <div class="cuadroderopa"> 
+            <a href="/html/detalles_bleazer_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/blazerhombre.jpg" alt=""></div>
+        </div>
+        <div class="texto-info"><h4> Blazer</h4>
+            <p class="talla-compra">Talla: M</p> <!-- Esta es la nueva línea -->
+        </div>
+        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+        <div class="texto-precio"><h3>$30.000</h3></div>
+    </div>
+    <div class="recuadro-ropa">
+        <div class="cuadroderopa"> 
+            <a href="/html/camisa.polo.html" target="_blank"> <div class="img-categorias"> <img src="../img/polocamisa.webp" alt=""></div>
+        </div>
+        <div class="texto-info"><h4>Camisa tipo polo</h4>
+            <p class="talla-compra">Talla: L</p> <!-- Esta es la nueva línea -->
+        </div>
+        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+        <div class="texto-precio"><h3>$28.000</h3></div>
+    </div>
+    <div class="recuadro-ropa">
+        <div class="cuadroderopa"> 
+            <a href="/html/jean_skkiny_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/jean-skinny.jpg" alt=""></div>
+        </div>
+        <div class="texto-info"><h4>Jean skinny</h4>
+            <p class="talla-compra">Talla: 28</p> <!-- Esta es la nueva línea -->
+        </div>
+        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
+        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
+        <div class="texto-precio"><h3>$30.000</h3></div>
+    </div>
+    </div>
+</section>
+<div id="mensaje-carrito" style="font-family: Poppins, serif;  position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999;"></div>
+
+<script src="./js/categorias.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const iconosCompra = document.querySelectorAll('.fa-cart-shopping');
+      const mensajeCarrito = document.getElementById('mensaje-carrito');
+    
+      iconosCompra.forEach(icono => {
+        icono.addEventListener('click', function (e) {
+          e.preventDefault();
+    
+          const recuadro = this.closest('.recuadro-ropa');
+          if (!recuadro) return;
+    
+          const img = recuadro.querySelector('img')?.src || '';
+          const nombre = recuadro.querySelector('.texto-info h4')?.textContent || 'Producto';
+          const precio = recuadro.querySelector('.texto-precio h3')?.textContent || '$0';
+          const talla = recuadro.querySelector('.talla-compra')?.textContent || 'Talla: -';
+
+         
+
+    
+          const nuevoProducto = {
+  img: img,
+  nombre: nombre,
+  precio: precio,
+  talla: talla
+};
+
+          let productos = JSON.parse(localStorage.getItem('carrito')) || [];
+          productos.push(nuevoProducto);
+          localStorage.setItem('carrito', JSON.stringify(productos));
+    
+          // Mostrar mensaje con estilo
+          mensajeCarrito.textContent = `${nombre} se añadió al carrito`;
+          mensajeCarrito.style.display = 'block';
+    
+          setTimeout(() => {
+            mensajeCarrito.style.display = 'none';
+          }, 2000);
+        });
+      });
+    });
+    </script>
+    
+  
+
+
+</body>
+</html>
