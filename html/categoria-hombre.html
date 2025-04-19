@@ -13,7 +13,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>
+            <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
         </div>
 
         <div class="additional-logos">
@@ -41,7 +41,7 @@
 
         <div class="iconos">
             <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
-            <a href="../html/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a onclick="llevaracarrito()"><i class="fa-solid fa-cart-shopping"></i></a>
             <a href="#"><i class="fa-solid fa-user"></i></a>
         </div>
     </header>
@@ -206,6 +206,13 @@
 
 <script src="./js/categorias.js"></script>
 <script>
+function llevaracarrito(){
+    window.location.href = "../html/carrito.html"
+}
+
+
+
+
     document.addEventListener('DOMContentLoaded', function () {
       const iconosCompra = document.querySelectorAll('.fa-cart-shopping');
       const mensajeCarrito = document.getElementById('mensaje-carrito');

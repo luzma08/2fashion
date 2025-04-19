@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>
+            <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
         </div>
 
         <div class="additional-logos">
@@ -24,8 +24,8 @@
         
         <nav class="navegacion">
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Sobre nosotras</a></li>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="sobrenostros.html">Sobre nosotras</a></li>
                 <li>
                     <a href="./categorias.html">Categorías</a>
                     <ul>
@@ -89,6 +89,46 @@
             <img id="imagen-ampliada" class="imagen-ampliada">
         </div>
     </div>
+
+
+    <div id="mensaje-carrito" style="font-family: Poppins, serif;  position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999;"></div>
+    <script src="../js/detalles.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const botonCarrito = document.querySelector('.boton-carrito');
+            const mensajeCarrito = document.getElementById('mensaje-carrito');
+        
+            botonCarrito.addEventListener('click', function (e) {
+                e.preventDefault();
+        
+                const img = document.getElementById('imagen-detalles')?.src || '';
+                const nombre = document.querySelector('.titulo-prenda')?.textContent || 'Producto';
+                const precio = document.querySelector('.precio')?.textContent || '$0';
+        
+                const nuevoProducto = {
+                    img: img,
+                    nombre: nombre,
+                    precio: precio,
+                    talla: 'Talla: 32'
+                };
+        
+                let productos = JSON.parse(localStorage.getItem('carrito')) || [];
+                productos.push(nuevoProducto);
+                localStorage.setItem('carrito', JSON.stringify(productos));
+        
+                // Mostrar mensaje con estilo
+                mensajeCarrito.textContent = `${nombre} se añadió al carrito`;
+                mensajeCarrito.style.display = 'block';
+        
+                setTimeout(() => {
+                    mensajeCarrito.style.display = 'none';
+                }, 2000);
+            });
+        });
+        </script>
+        
+      
 
     <script src="../js/detalles.js"></script>
 </body>

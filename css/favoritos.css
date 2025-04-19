@@ -131,7 +131,7 @@ padding: 30px;
     text-align: center;
 }
 #articulos-favorito-caja{
-    background-color: #f2cee0bb;
+    background-color: #ecc8e0c4;
   padding: 0.5px;
 
 }
@@ -187,102 +187,57 @@ padding: 30px;
     font-family: "Poppins", serif;;
 }
 
-#favoritos-ropa{
-    margin-top: -7px;
-}
 
 
+.producto-lista {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    gap: 20px;
+  }
 
-
-img{
-   
-    width: 260px;
-    height: 299px;
-   margin: 10px;
+  .producto-lista img {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    position: relative;
-    left: 60px;
-}
-#favoritos-ropa .fila{
-    background-color: #f8f4f4d0;
-    
-    
-   border-bottom: 2px solid rgb(139, 138, 138);
-    height: 320px;
-    padding: 0.5px;
-    margin: 30px auto;
-    position: relative;
-    
-    gap: 10px;
-    
-}
+    border-radius: 10px;
+  }
 
-#favortitos-ropa .fila .recuadro-ropa-favorito{
-    max-width: 300px;
-    padding: 30px;
-    margin: 0.5px;
-    border: 2px solid rgba(0, 0, 0, 0.288);
-    border-radius: 15px;
-    width: 300px;
-   margin-top: 10px;
-   height: 300px;
-   border-width: 1px;
- 
-   display: flex;
-   
-   flex: 1;
-   padding: 30px;
-}
-#textos-titulo-favoritos{
-    padding: 30px;
-    position: relative;
-    top: -300px;
-    left: 290px;
-    width: 290px;
-    font-family: "Poppins", serif;;
-    font-size: 30px;
-    margin-left: 80px;
-}
-#titulo-favorito-descripcion{
-    color: #4f1d3f;
+  .producto-info {
+    flex: 1;
+    font-family:  "Poppins", serif;
+  }
 
-  font-family: "Poppins-Bold", sans-serif;
-  font-size: 24px;
-  line-height: 100%;
-  font-weight: 700;
-  position: relative; 
-  font-size: 24px;
-    
+  .producto-info h4 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #4B2165;
+  }
+
+  .producto-info .precio {
+    color: rgb(13, 87, 66);
+    font-weight: bold;
+  }
+
+  .producto-botones {
+    display: flex;
+    flex-direction: row; /* ✅ Esto los pone uno al lado del otro */
+    align-items: center;
+    gap: 15px; /* Espacio entre los íconos */
+    margin-left: 10px;
+  }
   
-}
-#textos-titulo-favoritos p{
-    font-size: 16px;
-    
-}
-#talla-favorito{
-    
-    color: #4F1D3F;
-    
-    width: 290px;
-    font-family: "Poppins", serif;;
+
+  .producto-botones a i {
     font-size: 20px;
-    margin-left: 370px;
-    margin-top: -100px;
-}
-/*iconos*/
-#carro-favorito{
-   position: relative;
-   top: -370px;
-   left: 1000px;
-}
-#papelera-favorito{
-    position: relative;
-    top: -370px;
-    left: 1100px;
-}
+    color: #4B2165;
+    cursor: pointer;
+  }
 
-
-
-
-
-
+  .producto-botones a i:hover {
+    color: #34164a;
+  }

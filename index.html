@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>
+            <a href="index.html"><img src="img/logo.svg" alt="Logo"></a>
         </div>
 
         <div class="additional-logos">
@@ -24,25 +24,31 @@
         
         <nav class="navegacion">
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="html/sobrenostros.html">Sobre nosotras</a></li>
                 <li>
                     <a href="#">Categorías</a>
                     <ul>
-                        <li><a href="../html/categorias.html">Mujeres</a></li>
-                        <li><a href="categoria-hombre.html">Hombres</a></li>
-                        <li><a href="categoria-niños.html">Niños</a></li>
+                        <li><a href="html/categorias.html">Mujeres</a></li>
+                        <li><a href="html/categoria-hombre.html">Hombres</a></li>
+                        <li><a href="html/categoria-niños.html">Niños</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
 
         <div class="iconos">
-            <a href="../html/listadesos.html"><i class="fa-solid fa-heart"></i></a> 
-            <a onclick="llevaracarrito()"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="html/favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
             <a href="#"><i class="fa-solid fa-user"></i></a>
-            
-        </div>
+          </div>
+          
     </header>
 
 
@@ -57,22 +63,22 @@
                 tu closet en nuestra tienda. </p> <br>
      
             <h1>¡Haz la diferencia y luce increíble!</h1>
-            <a href="donarropa.html">Mas informacion...</a>
+            <a href="html/donarropa.html">Mas informacion...</a>
             </div>
             <div class="imagen-presentacion">
-                <img src="../img/mujer-incio.svg" alt="">
+                <img src="img/mujer-incio.svg" alt="">
             </div>
         </div>
         </section>
      <section id="promociones">
 <div class="columna">
-    <img src="../img/descuento1.svg" alt="">
+    <img src="img/descuento1.svg" alt="">
 </div>
 <div class="columna">
-    <img src="../img/descuento2.svg" alt="">
+    <img src="img/descuento2.svg" alt="">
 </div>
 <div class="columna">
-    <img src="../img/personalizar.ropa.png" alt="">
+    <img src="img/personalizar.ropa.png" alt="">
 </div>
      </section>
 
@@ -80,7 +86,7 @@
         <div class="fila">
             <div class="recuadro-ropa">
                 <div class="cuadroderopa">
-                    <a href="/html/pantalon.cargo.home.html" target="_blank"><div class="img-categorias"> <img src="../img/pantaloncargo.hombre.jpg" alt=""></div> </a>
+                    <a href="html/pantalon.cargo.home.html" target="_blank"><div class="img-categorias"> <img src="img/pantaloncargo.hombre.jpg" alt=""></div> </a>
                 </div>
                 <div class="texto-info"><h4>Pantalon cargo</h4>
                     <p class="talla-compra">Talla: 34</p>
@@ -91,7 +97,7 @@
             </div>
             <div class="recuadro-ropa">
                 <div class="cuadroderopa"> 
-                    <a href="/html/crop.top.home.html" target="_blank"><div class="img-categorias"> <img src="../img/croptop-estampado.jpg" alt=""></div> </a>
+                    <a href="html/crop.top.home.html" target="_blank"><div class="img-categorias"> <img src="img/croptop-estampado.jpg" alt=""></div> </a>
                 </div>
                 <div class="texto-info"><h4>Crop top estampado</h4>
                     <p class="talla-compra">Talla: S</p>
@@ -102,7 +108,7 @@
             </div>
             <div class="recuadro-ropa">
                 <div class="cuadroderopa"> 
-                    <a href="/html/bleazer.home.html" target="_blank"><div class="img-categorias"> <img src="../img/bleazer.home.jpg" alt=""></div></a>
+                    <a href="html/bleazer.home.html" target="_blank"><div class="img-categorias"> <img src="img/bleazer.home.jpg" alt=""></div></a>
                 </div>
                 <div class="texto-info"><h4>Blazer azul</h4>
                     <p class="talla-compra">Talla: 6</p>
@@ -113,7 +119,7 @@
             </div>
             <div class="recuadro-ropa">
                 <div class="cuadroderopa"> 
-                    <a href="/html/bermudas.home.html" target="_blank"><div class="img-categorias"> <img src="../img/bermudas.home.jpg" alt=""></div></a>
+                    <a href="html/bermudas.home.html" target="_blank"><div class="img-categorias"> <img src="img/bermudas.home.jpg" alt=""></div></a>
                 </div>
                 <div class="texto-info"><h4>Bermudas</h4>
                     <p class="talla-compra">Talla: 32</p>
@@ -126,7 +132,7 @@
         <div class="fila">
             <div class="recuadro-ropa">
             <div class="cuadroderopa">
-                <a href="/html/camisa.blanca.men.home.html" target="_blank"><div class="img-categorias"> <img src="../img/camisa.basica.blanca.jpg" alt=""></div></a>
+                <a href="html/camisa.blanca.men.home.html" target="_blank"><div class="img-categorias"> <img src="img/camisa.basica.blanca.jpg" alt=""></div></a>
             </div>
             <div class="texto-info"><h4>Camisa basica blanca</h4>
                 <p class="talla-compra">Talla: M</p></div>
@@ -136,7 +142,7 @@
         </div>
         <div class="recuadro-ropa">
             <div class="cuadroderopa"> 
-                <a href="/html/vestido.tirantes.home.html" target="_blank"> <div class="img-categorias"> <img src="../img/vestido.tirante.floral.jpg" alt=""></div></a>
+                <a href="html/vestido.tirantes.home.html" target="_blank"> <div class="img-categorias"> <img src="../img/vestido.tirante.floral.jpg" alt=""></div></a>
             </div>
             <div class="texto-info"><h4>Vestido de tirantes </h4>
                 <p class="talla-compra">Talla: S</p>
@@ -196,17 +202,11 @@
         <div class="title">Legal</div>
         <li class="lista">
             <ul class="elem">
-                Terminos y condiciones
+              <a href="html/terminosycondiciones.html">Terminos y condiciones </a>  
 
             </ul>
-            <ul class="elem">
-                Aviso de privacidad
-            </ul>
-            <ul class="elem">
-                Uso de cookies
-            </ul>
-            <ul class="elem">
-                Política de datos personales 
+                <ul class="elem">
+                <a href="html/poliricadeprivacidad.html">Política de pricivacidad y cookies</a> 
             </ul>
         </li>
     </div>
@@ -228,6 +228,9 @@
             <ul class="elem">
                 Categoría niños
             </ul>
+            <ul class="elem">
+              Personalizar ropa
+            </ul>
         </li>
     </div>
     <div class="social">
@@ -248,6 +251,63 @@
  </footer>
 
  <script>
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+    document.getElementById('contador-carrito').textContent = carrito.length;
+    document.getElementById('contador-fav').textContent = favoritos.length;
+  });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const iconosFavorito = document.querySelectorAll('.fa-heart');
+  const mensajeCarrito = document.getElementById('mensaje-carrito'); // Usamos el mismo mensaje
+
+  iconosFavorito.forEach(icono => {
+    icono.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const recuadro = this.closest('.recuadro-ropa');
+      if (!recuadro) return;
+
+      const img = recuadro.querySelector('img')?.src || '';
+      const nombre = recuadro.querySelector('.texto-info h4')?.textContent || 'Producto';
+      const precio = recuadro.querySelector('.texto-precio h3')?.textContent || '$0';
+      const talla = recuadro.querySelector('.talla-compra')?.textContent || 'Talla: -';
+
+      const nuevoFavorito = {
+        img: img,
+        nombre: nombre,
+        precio: precio,
+        talla: talla
+      };
+
+      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+      favoritos.push(nuevoFavorito);
+      localStorage.setItem('favoritos', JSON.stringify(favoritos));
+
+      // Mostrar el mensaje como el carrito
+      mensajeCarrito.textContent = `${nombre} se añadió a tus favoritos`;
+      mensajeCarrito.style.display = 'block';
+
+      setTimeout(() => {
+        mensajeCarrito.style.display = 'none';
+      }, 2000);
+    });
+  });
+});
+
+
+
+
+
+
+
 function llevaracarrito(){
     window.location.href = "../html/carrito.html"
 }

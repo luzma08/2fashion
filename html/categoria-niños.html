@@ -13,7 +13,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="index.html"><img src="../img/logo.svg" alt="Logo"></a>
+            <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
         </div>
 
         <div class="additional-logos">
@@ -26,10 +26,10 @@
         
         <nav class="navegacion">
             <ul>
-                <li><a href="../html/index.html">Inicio</a></li>
+                <li><a href="../index.html">Inicio</a></li>
                 <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
                 <li>
-                    <a href="../categorias.html">Categorías</a>
+                    <a href="../html/categorias.html">Categorías</a>
                     <ul>
                         <li><a href="./categorias.html">Mujeres</a></li> <!--Categoria mujer-->
                         <li><a href="./categoria-hombre.html">Hombres</a></li>
@@ -41,7 +41,7 @@
 
         <div class="iconos">
             <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
-            <a href="../html/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a onclick="llevaracarrito()"><i class="fa-solid fa-cart-shopping"></i></a>
             <a href="#"><i class="fa-solid fa-user"></i></a>
         </div>
     </header>
@@ -187,6 +187,13 @@
 
 <script src="../js/categorias.js"></script>
 <script>
+function llevaracarrito(){
+    window.location.href = "../html/carrito.html"
+}
+
+
+
+
     document.addEventListener('DOMContentLoaded', function () {
       const iconosCompra = document.querySelectorAll('.fa-cart-shopping');
       const mensajeCarrito = document.getElementById('mensaje-carrito');

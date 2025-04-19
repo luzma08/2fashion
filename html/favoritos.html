@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoritos</title>
+    <link rel="stylesheet" href="../css/favoritos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+</head>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
+    </div>
+
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+    
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="./categorias.html">Categorías</a>
+          <ul>
+            <li><a href="./categorias.html">Mujeres</a></li>
+            <li><a href="./categoria-hombre.html">Hombres</a></li>
+            <li><a href="./categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="iconos">
+      <a href="./favoritos.html"><i class="fa-solid fa-heart"></i></a> 
+      <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="#"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <h1 id="texto-lista-de-deseos">Favoritos</h1>
+  
+  <div id="articulos-favorito-caja">
+    <h2 id="Articulos-favoritos">Artículos (<span id="contador-favoritos">0</span>)</h2>
+  </div>
+
+  <div id="Opciones-favoritos">
+    <button id="Todos-favoritos">Todos</button>    
+    <button id="hombres-favoritos">Hombres</button>    
+    <button id="mujeres-favoritos">Mujeres</button> 
+    <button id="Niños-favoritos">Niños</button>
+  </div>
+
+  <section id="favoritos-ropa">
+    <div id="lista-favoritos" class="p-4 max-w-3xl mx-auto"></div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const contenedor = document.getElementById('lista-favoritos');
+      const contador = document.getElementById('contador-favoritos');
+      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+      contador.textContent = favoritos.length;
+
+      if (favoritos.length === 0) {
+        contenedor.innerHTML = '<p class="text-center text-zinc-600">No hay productos en tus favoritos.</p>';
+      } else {
+        favoritos.forEach((producto, index) => {
+          const div = document.createElement('div');
+          div.className = "producto-lista";
+
+          div.innerHTML = `
+            <img src="${producto.img}" alt="${producto.nombre}">
+            <div class="producto-info">
+              <h4>${producto.nombre}</h4>
+              <p class="precio">${producto.precio}</p>
+              <p class="talla"> ${producto.talla}</p>
+            </div>
+            <div class="producto-botones">
+              <a href="#"><i id="icono-compra" class="fa-solid fa-cart-shopping" title="Comprar"></i></a>
+              <a href="#" onclick="eliminarFavorito(${index})"><i id="papelera-carro" class="fa-solid fa-trash" title="Eliminar"></i></a>
+            </div>
+          `;
+
+          contenedor.appendChild(div);
+        });
+      }
+    });
+
+    function eliminarFavorito(index) {
+      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+      favoritos.splice(index, 1);
+      localStorage.setItem('favoritos', JSON.stringify(favoritos));
+      location.reload(); // recarga para actualizar
+    }
+  </script>
+</body>
+</html>
