@@ -164,7 +164,8 @@ padding: 30px;
     border-width: 1px;
     width: 100px;
     height: 30px;
-    font-family: "Poppins", serif;;
+    font-family: "Poppins", serif;
+    cursor: pointer;
 }
 
 #mujeres-favoritos{
@@ -174,7 +175,8 @@ padding: 30px;
     border-width: 1px;
     width: 100px;
     height: 30px;
-    font-family: "Poppins", serif;;
+    font-family: "Poppins", serif;
+    cursor: pointer;
 
 }
 #Niños-favoritos{
@@ -184,7 +186,8 @@ padding: 30px;
     border-width: 1px;
     width: 100px;
     height: 30px;
-    font-family: "Poppins", serif;;
+    font-family: "Poppins", serif;
+    cursor: pointer;
 }
 
 
@@ -240,4 +243,30 @@ padding: 30px;
 
   .producto-botones a i:hover {
     color: #34164a;
+  }
+
+  
+.icono-con-contador {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .contador {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: rgb(138, 56, 101);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 70%;
+    z-index: 10;
+  }
+
+  .text-fav{
+    font-family:  "Poppins", serif;
+    text-align: center;
+    color: hsl(320, 49%, 21%);
+    cursor: pointer;
   }

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../css/infousuario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <title>Información de usuario</title>
+</head>
+<body style="background-image: url('./imagenes/fondo.png'); background-size: cover; background-position: center;">
+    
+
+ <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="/index.html">Inicio</a></li>
+                <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="">Categorías</a>
+                    <ul>
+                        <li><a href="../html/categorias.html">Mujeres</a></li>
+                        <li><a href="../html/categoria-hombre.html">Hombres</a></li>
+                        <li><a href="../html/categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+          </div>
+    </header>
+  
+    <div class="profile-container">
+        <h1>Información usuario</h1>
+        
+        <div class="user-info">
+            <div class="profile-image-container">
+                <div class="profile-image" id="profileImage">
+                    <div class="profile-image-placeholder"></div>
+                </div>
+                <div class="add-photo-text" id="addPhotoText">Agregar foto de perfil</div>
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+            </div>
+            
+            <div class="user-details">
+                <p>Usuario: user1234566</p>
+                <p>Nombre completo: Tatiana gonzales</p>
+                <p>Correo electronico: tatigo@gmail.com</p>
+                <p>Contraseña: ***********</p>
+                <p>Direccion residencia: Cra23#45-65</p>
+                <div class="pink-circle"></div>
+            </div>
+        </div>
+    </div>
+    
+
+<footer class="footer">
+
+<div class="footer-content">
+
+    <h1>2fashion</h1>
+
+    <div class="conctact">
+
+        <div class="title">Conctacto</div>
+
+        <li class="lista">
+
+            <ul class="elem">
+
+                2fashion
+
+            </ul>
+
+            <ul class="elem">
+
+                3155131227
+
+            </ul>
+
+            <ul class="elem">
+
+                devprogramm4.@gmail.com
+
+            </ul>
+
+        </li>
+
+    </div>
+
+    <div class="direction">
+
+        <div class="title">Legal</div>
+
+        <li class="lista">
+
+            <ul class="elem">
+
+                Terminos y condiciones
+
+
+
+            </ul>
+
+            <ul class="elem">
+
+                Aviso de privacidad
+
+            </ul>
+
+            <ul class="elem">
+
+                Uso de cookies
+
+            </ul>
+
+            <ul class="elem">
+
+                Política de datos personales
+
+            </ul>
+
+        </li>
+
+    </div>
+
+    <div class="services">
+
+        <div class="title">Menu</div>
+
+        <li class="lista">
+
+            <ul class="elem">
+
+               Inicio
+
+            </ul>
+
+            <ul class="elem">
+
+                Sobre nosotros
+
+            </ul>
+
+            <ul class="elem">
+
+                Categoría mujer
+
+            </ul>
+
+            <ul class="elem">
+
+                Categoría hombres
+
+            </ul>
+
+            <ul class="elem">
+
+                Categoría niños
+
+            </ul>
+
+        </li>
+
+    </div>
+
+    <div class="social">
+
+        <div class="title">Conctacto</div>
+
+        <div class="social-content">
+
+            <a class="elem">
+
+                <i class="fa-brands fa-instagram"></i>
+
+            </a>
+
+            <a class="elem">
+
+                <i class="fa-brands fa-facebook"></i>
+
+            </a>
+
+            <a class="elem">
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+ </footer>
+ <script src="../js/infousuario.js"></script>
+ 
+
+
+ <script>
+  function llevaracarrito(){
+    window.location.href = "../html/carrito.html"
+}
+    document.addEventListener('DOMContentLoaded'), function () {
+      const contenedor = document.getElementById('lista-favoritos');
+      const contador = document.getElementById('contador-favoritos');
+      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    }
+
+        
+ </script>
+</body>
+
+</html>

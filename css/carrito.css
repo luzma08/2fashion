@@ -335,4 +335,25 @@ padding: 30px;
     width: 250px;
     text-align: center;
   }
+
+  
+.icono-con-contador {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.contador {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: rgb(138, 56, 101);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 70%;
+  z-index: 10;
+  cursor: pointer;
+}
   

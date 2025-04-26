@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,8 +39,14 @@
     </nav>
 
     <div class="iconos">
-      <a href="#"><i class="fa-solid fa-heart"></i></a>
-      <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a> 
+      <a onclick="llevaracarrito()" class="icono-con-contador">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
       <a href="#"><i class="fa-solid fa-user"></i></a>
     </div>
   </header>
