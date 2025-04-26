@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="../css/infousuario.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <title>Información de usuario</title>
 </head>
 <body style="background-image: url('./imagenes/fondo.png'); background-size: cover; background-position: center;">
@@ -27,14 +30,14 @@
         
         <nav class="navegacion">
             <ul>
-                <li><a href="/index.html">Inicio</a></li>
-                <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="sobrenostros.html">Sobre nosotras</a></li>
                 <li>
-                    <a href="">Categorías</a>
+                    <a href="./categorias.html">Categorías</a>
                     <ul>
-                        <li><a href="../html/categorias.html">Mujeres</a></li>
-                        <li><a href="../html/categoria-hombre.html">Hombres</a></li>
-                        <li><a href="../html/categoria-niños.html">Niños</a></li>
+                        <li><a href="./categorias.html">Mujeres</a></li> <!--Categoria mujer-->
+                        <li><a href="./categoria-hombre.html">Hombres</a></li>
+                        <li><a href="./categoria-niños.html">Niños</a></li>
                     </ul>
                 </li>
             </ul>
@@ -49,7 +52,7 @@
               <span class="contador" id="contador-carrito">0</span>
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
-            <a href="#"><i class="fa-solid fa-user"></i></a>
+            <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
           </div>
     </header>
   
@@ -66,14 +69,37 @@
             </div>
             
             <div class="user-details">
-                <p>Usuario: user1234566</p>
-                <p>Nombre completo: Tatiana gonzales</p>
-                <p>Correo electronico: tatigo@gmail.com</p>
-                <p>Contraseña: ***********</p>
-                <p>Direccion residencia: Cra23#45-65</p>
-                <div class="pink-circle"></div>
+            
+                    <div class="info-row">
+                        <span class="label">Usuario:</span>
+                        <span id="usuario">user1234566</span>
+                        <i class="fa-solid fa-pencil edit-icon" data-field="usuario"></i>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="label">Nombre completo:</span>
+                        <span id="nombre">Tatiana gonzales</span>
+                        <i class="fa-solid fa-pencil edit-icon" data-field="nombre"></i>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="label">Correo electronico:</span>
+                        <span id="correo">tatigo@gmail.com</span>
+                        <i class="fa-solid fa-pencil edit-icon" data-field="correo"></i>
+                    </div>
+    
+                    <p>Contraseña: ***********</p>
+                    <p>Direccion residencia: Cra23#45-65</p>
+                    <div class="pink-circle"></div>
+                </div>
             </div>
+         
+            
         </div>
+    </div>
+    <div class="reset-container" style="display: none; text-align: center; margin-top: 20px;">
+        <button id="guardarCambios">Guardar cambios</button>
+        <button id="restablecerCambios">Restablecer cambios</button>
     </div>
     
 
@@ -218,22 +244,12 @@
 </div>
 
  </footer>
- <script src="../js/infousuario.js"></script>
- 
+ <script src="../js/infousuario.js"></script> 
+ <script src="../js/detalles.js"></script> 
 
 
- <script>
-  function llevaracarrito(){
-    window.location.href = "../html/carrito.html"
-}
-    document.addEventListener('DOMContentLoaded'), function () {
-      const contenedor = document.getElementById('lista-favoritos');
-      const contador = document.getElementById('contador-favoritos');
-      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-    }
+ <div id="customAlert" class="custom-alert" style="display: none;"></div>
 
-        
- </script>
+
 </body>
-
 </html>

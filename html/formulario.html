@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donación de Prendas de Segunda Mano</title>
+  <link rel="stylesheet" href="../css/formulario.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="html/sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="#">Categorías</a>
+                    <ul>
+                        <li><a href="html/categorias.html">Mujeres</a></li>
+                        <li><a href="html/categoria-hombre.html">Hombres</a></li>
+                        <li><a href="html/categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="html/favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <a href="html/infousuario.html"><i class="fa-solid fa-user"></i></a>
+          </div>
+          
+    </header>
+
+  <div class="container">
+    <header>
+      <h1>Donación de Prendas</h1>
+      <p class="subtitle">Comparte tus prendas y dale una segunda oportunidad</p>
+    </header>
+    
+    <div class="donation-form">
+      <form id="prendaForm">
+        <div class="form-group">
+          <label for="nombrePrenda">Nombre de la prenda</label>
+          <input type="text" id="nombrePrenda" name="nombrePrenda" placeholder="Ej: Chaqueta de mezclilla" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="tipoPrenda">Tipo de prenda</label>
+          <select id="tipoPrenda" name="tipoPrenda" required>
+            <option value="">Selecciona una opción...</option>
+            <option value="Camiseta">Camiseta</option>
+            <option value="Pantalón">Pantalón</option>
+            <option value="Vestido">Vestido</option>
+            <option value="Chaqueta">Chaqueta</option>
+            <option value="Calzado">Calzado</option>
+            <option value="Accesorio">Accesorio</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="estadoPrenda">Estado de la prenda</label>
+          <div class="estado-options">
+            <label class="radio-label">
+              <input type="radio" name="estadoPrenda" value="Excelente" required>
+              <span class="radio-custom"></span>
+              <span>Excelente</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="estadoPrenda" value="Bueno">
+              <span class="radio-custom"></span>
+              <span>Bueno</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="estadoPrenda" value="Aceptable">
+              <span class="radio-custom"></span>
+              <span>Aceptable</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="talla">Talla</label>
+          <input type="text" id="talla" name="talla" placeholder="Ej: M, 38, XL" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" name="color" placeholder="Ej: Azul, Negro" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="genero">Género</label>
+            <select id="genero" name="genero" required>
+              <option value="">Selecciona una opción...</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Unisex">Unisex</option>
+              <option value="Niño">Niño</option>
+              <option value="Niña">Niña</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe la prenda, materiales, marca, etc."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Fotos de la prenda (2 imágenes)</label>
+          <div class="image-upload-container">
+            <div class="image-upload" id="upload1">
+              <div class="upload-icon">
+                <i class="icon-camera"></i>
+              </div>
+              <span class="upload-text">Imagen frontal</span>
+              <input type="file" id="imagen1" name="imagen1" accept="image/*" required>
+              <div class="preview" id="preview1"></div>
+            </div>
+            
+            <div class="image-upload" id="upload2">
+              <div class="upload-icon">
+                <i class="icon-camera"></i>
+              </div>
+              <span class="upload-text">Imagen detalle</span>
+              <input type="file" id="imagen2" name="imagen2" accept="image/*" required>
+              <div class="preview" id="preview2"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="contacto">Información de contacto</label>
+          <input type="email" id="contacto" name="contacto" placeholder="Tu correo electrónico" required>
+        </div>
+        
+        <div class="form-group terms">
+          <label class="checkbox-label">
+            <input type="checkbox" id="terminos" name="terminos" required>
+            <span class="checkbox-custom"></span>
+            <span>Acepto los términos y condiciones</span>
+          </label>
+        </div>
+        
+        <div class="form-buttons">
+          <button type="button" class="btn btn-secondary" id="resetBtn">Limpiar</button>
+          <button type="submit" class="btn btn-primary">Donar Prenda</button>
+        </div>
+      </form>
+    </div>
+    
+    <div id="confirmation" class="confirmation-message">
+      <div class="confirmation-content">
+        <h2>¡Gracias por tu donación!</h2>
+        <p>Hemos recibido los datos de tu prenda. Te contactaremos pronto.</p>
+        <button class="btn btn-primary" id="closeConfirmation">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../js/formulario.js"></script>
+  <script src="../js/categorias.js"></script>
+</body>
+</html>

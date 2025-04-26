@@ -17,7 +17,8 @@
         </div>
 
         <div class="additional-logos">
-            <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="buscador" placeholder="Buscar ropa...">
             <i class="fa-solid fa-circle-info"></i>
         </div>
         
@@ -48,7 +49,7 @@
               <span class="contador" id="contador-carrito">0</span>
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
-            <a href="#"><i class="fa-solid fa-user"></i></a>
+            <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
           </div>
     </header>
     
@@ -210,8 +211,28 @@
 </section>
 <div id="mensaje-carrito" style="font-family: Poppins, serif;  position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999;"></div>
 
-<script src="./js/categorias.js"></script>
+<script src="../js/categorias.js"></script>
 <script>
+// Esperar que todo cargue
+document.addEventListener('DOMContentLoaded', function () {
+    const buscador = document.getElementById('buscador');
+    const productos = document.querySelectorAll('.recuadro-ropa'); // todos los productos
+
+    buscador.addEventListener('input', function () {
+        const texto = buscador.value.toLowerCase(); // lo que escribe el usuario en minúscula
+
+        productos.forEach(producto => {
+            const nombre = producto.querySelector('.texto-info h4').textContent.toLowerCase();
+
+            if (nombre.includes(texto)) {
+                producto.style.display = 'block'; // mostrar si coincide
+            } else {
+                producto.style.display = 'none'; // ocultar si no coincide
+            }
+        });
+    });
+});
+
 function llevaracarrito(){
     window.location.href = "../html/carrito.html"
 }

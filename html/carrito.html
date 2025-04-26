@@ -47,7 +47,7 @@
         <span class="contador" id="contador-carrito">0</span>
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
-      <a href="#"><i class="fa-solid fa-user"></i></a>
+      <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
     </div>
   </header>
 
@@ -168,6 +168,27 @@
       localStorage.setItem('carrito', JSON.stringify(productos));
       location.reload();
     }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  
+    const contadorCarrito = document.getElementById('contador-carrito');
+    const contadorFav = document.getElementById('contador-fav');
+  
+    if (contadorCarrito) contadorCarrito.textContent = carrito.length;
+    if (contadorFav) contadorFav.textContent = favoritos.length;
+  });
+  
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  const contadorFav = document.getElementById('contador-fav');
+  if (contadorFav) contadorFav.textContent = favoritos.length;
+
+  localStorage.setItem('carrito', JSON.stringify(productos));
+const contadorCarrito = document.getElementById('contador-carrito');
+if (contadorCarrito) contadorCarrito.textContent = productos.length;
+
   </script>
 </body>
 </html>

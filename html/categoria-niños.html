@@ -17,7 +17,8 @@
         </div>
 
         <div class="additional-logos">
-            <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="buscador" placeholder="Buscar ropa...">
             <i class="fa-solid fa-circle-info"></i>
         </div>
         
@@ -48,7 +49,7 @@
               <span class="contador" id="contador-carrito">0</span>
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
-            <a href="#"><i class="fa-solid fa-user"></i></a>
+            <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
           </div>
     </header>
     
@@ -192,55 +193,7 @@
 <div id="mensaje-carrito" style="font-family: Poppins, serif;  position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999;"></div>
 
 <script src="../js/categorias.js"></script>
-<script>
-function llevaracarrito(){
-    window.location.href = "../html/carrito.html"
-}
 
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const iconosCompra = document.querySelectorAll('.fa-cart-shopping');
-      const mensajeCarrito = document.getElementById('mensaje-carrito');
-    
-      iconosCompra.forEach(icono => {
-        icono.addEventListener('click', function (e) {
-          e.preventDefault();
-    
-          const recuadro = this.closest('.recuadro-ropa');
-          if (!recuadro) return;
-    
-          const img = recuadro.querySelector('img')?.src || '';
-          const nombre = recuadro.querySelector('.texto-info h4')?.textContent || 'Producto';
-          const precio = recuadro.querySelector('.texto-precio h3')?.textContent || '$0';
-          const talla = recuadro.querySelector('.talla-compra')?.textContent || 'Talla: -';
-
-         
-
-    
-          const nuevoProducto = {
-  img: img,
-  nombre: nombre,
-  precio: precio,
-  talla: talla
-};
-
-          let productos = JSON.parse(localStorage.getItem('carrito')) || [];
-          productos.push(nuevoProducto);
-          localStorage.setItem('carrito', JSON.stringify(productos));
-    
-          // Mostrar mensaje con estilo
-          mensajeCarrito.textContent = `${nombre} se añadió al carrito`;
-          mensajeCarrito.style.display = 'block';
-    
-          setTimeout(() => {
-            mensajeCarrito.style.display = 'none';
-          }, 2000);
-        });
-      });
-    });
-    </script>
     
   
 

@@ -16,23 +16,23 @@
     </div>
 
     <div class="additional-logos">
-      <i class="fa-solid fa-magnifying-glass"><input type="search"></i>
+      <i class="fa-solid fa-magnifying-glass"></i>
       <i class="fa-solid fa-circle-info"></i>
     </div>
-    
+
     <input type="checkbox" id="toggle">
     <label for="toggle"></label>
-    
+
     <nav class="navegacion">
       <ul>
         <li><a href="../index.html">Inicio</a></li>
-        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
         <li>
-          <a href="./categorias.html">Categorías</a>
+          <a href="#">Categorías</a>
           <ul>
-            <li><a href="./categorias.html">Mujeres</a></li>
-            <li><a href="./categoria-hombre.html">Hombres</a></li>
-            <li><a href="./categoria-niños.html">Niños</a></li>
+            <li><a href="../html/categorias.html">Mujeres</a></li>
+            <li><a href="../html/categoria-hombre.html">Hombres</a></li>
+            <li><a href="../html/categoria-niños.html">Niños</a></li>
           </ul>
         </li>
       </ul>
@@ -47,7 +47,7 @@
         <span class="contador" id="contador-carrito">0</span>
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
-      <a href="#"><i class="fa-solid fa-user"></i></a>
+      <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
     </div>
   </header>
 
@@ -136,6 +136,26 @@
       localStorage.setItem('favoritos', JSON.stringify(favoritos));
       location.reload(); // recarga para actualizar
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  
+    const contadorCarrito = document.getElementById('contador-carrito');
+    const contadorFav = document.getElementById('contador-fav');
+  
+    if (contadorCarrito) contadorCarrito.textContent = carrito.length;
+    if (contadorFav) contadorFav.textContent = favoritos.length;
+  });
+  
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  const contadorFav = document.getElementById('contador-fav');
+  if (contadorFav) contadorFav.textContent = favoritos.length;
+
+  localStorage.setItem('carrito', JSON.stringify(productos));
+const contadorCarrito = document.getElementById('contador-carrito');
+if (contadorCarrito) contadorCarrito.textContent = productos.length;
+
   </script>
     
 </body>
