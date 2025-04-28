@@ -1,6 +1,7 @@
 function llevaracarrito(){
-  window.location.href = "../html/carrito.html"
+  window.location.href = "./carrito.html"
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // Manejar botón de favoritos

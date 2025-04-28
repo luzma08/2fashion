@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 👉 Evita el scroll */
+    font-family: "Poppins", serif;
+}
+
+main {
+    height: 100vh;
+    width: 100%;
+    background: url("../img/fondo1.jpg") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 840px;
+}
+
+.login-container {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container h1 {
+    font-size: 2rem;
+    color: #663d4d;
+    margin-bottom: 10px;
+}
+
+.login-container p {
+    font-size: 1rem;
+    color: #8c6c79;
+    margin-bottom: 20px;
+}
+
+.login-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container button {
+    background-color: #945665;
+    color: white;
+    border: none;
+    width: 80%;
+    padding: 10px;
+    border-radius: 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+}
+
+.login-container button:hover {
+    background-color: #b6718c;
+}
+
+.login-container .links {
+    margin-top: 10px;
+}
+
+.login-container .links a {
+    text-decoration: none;
+    color: #684d58;
+    font-size: 0.9rem;
+}
+
+.login-container .links a:hover {
+    color: #e588f8;
+}
+
+/* Ajustes de íconos */
+.icono,
+.icocorreo,
+.icocontraseña {
+    height: 20px;
+    width: 20px;
+    margin-bottom: 10px;
+}
+
+.icocorreo, .icocontraseña {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.datos {
+    margin-top: -10px;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-label {
+    color: #b97390;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.user {
+    margin-right: 8px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d38eaf;
+    background-color: #e9b2c93a;
+    color: #944c70;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* -------- Aquí está el cambio importante -------- */
+.input-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d38eaf; /* solo línea abajo */
+    padding: 5px 0;
+    transition: border-color 0.3s;
+}
+
+.input-group img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 1rem;
+    color: #944c70;
+    padding: 10px 5px;
+}
+
+.input-group input::placeholder {
+    color: #c07794e3;
+}
+
+/* Focus bonito: ahora afecta al contenedor, no al input directamente */
+.input-group:focus-within {
+    border-bottom: 2px solid #b6718c;
+}

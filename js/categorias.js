@@ -112,9 +112,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   // Función para redirigir al carrito
-  function llevaracarrito() {
-    window.location.href = "../html/carrito.html";
-  }
+  function llevaracarrito(){
+    window.location.href = "./carrito.html"
+}
+
   
   // Función para eliminar filtros
   function eliminarChulito() {

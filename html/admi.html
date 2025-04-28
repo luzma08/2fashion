@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+<main>
+    <div class="login-container3">
+        <h1>Administrador</h1>
+        <img class="icono" src="../img/icons8-lock-24.png" alt="Contraseña" />
+        <p class="datos">Tus datos están protegidos.</p>
+
+        <form id="userForm">
+            <div class="form-group">
+                <label for="user-type" class="form-label">
+                    <img class="user" src="../img/icons8-usuario-24.png" alt="Usuario" />
+                    Tipo de Usuario
+                </label>
+                <select name="user-type" class="form-input" id="userSelect">
+                    <option selected disabled>Selecciona un tipo de usuario</option>
+                    <option value="../index.html">Inicio de Sesión</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <img class="icocorreo" src="../img/icons8-correo-electrónico-32.png" alt="Correo">
+                <input id="correo" type="text" placeholder="Correo electrónico" required>
+            </div>
+
+            <div class="input-group">
+                <img class="icocontraseña" src="../img/icons8-usuario-24.png" alt="Código">
+                <input id="contraseña" type="text" placeholder="Código" required>
+            </div>
+
+            <button class="btn-register" type="button" onclick="loginUser()">Iniciar sesión</button>
+        </form>
+
+        <div class="links">
+            <a href="#">Crear una cuenta</a>
+        </div>
+    </div>
+</main>
+
+<script src="../js/admi.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+main {
+    background: url("../img/fondosesion.JPG") no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 310px;
+}
+
+.login-container2 {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(102, 83, 83, 0.813);
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container2 h1 {
+    font-size: 2rem;
+    color: #7E4415;
+    margin-bottom: 10px;
+}
+
+.login-container2 p {
+    font-size: 1rem;
+    color: #7E4415;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.login-container2 p img {
+    width: 20px;
+    height: 20px;
+}
+
+.login-container2 form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d38eaf;
+    padding: 5px 0;
+    transition: border-color 0.3s;
+}
+
+.input-group img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 1rem;
+    color: #944c70;
+    padding: 10px 5px;
+}
+
+.input-group input::placeholder {
+    color: #c07794e3;
+}
+
+.input-group:focus-within {
+    border-bottom: 2px solid #b6718c;
+}
+
+.login-container2 button {
+    background-color: #B7867E;
+    color: white;
+    border: none;
+    width: 80%;
+    padding: 10px;
+    border-radius: 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0 10px;
+}
+
+.login-container2 button:hover {
+    background-color: #b6718c;
+}
+
+.login-container2 .links {
+    margin-top: 10px;
+}
+
+.login-container2 .links a {
+    text-decoration: none;
+    color: #a86f7d;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.login-container2 .links a:hover {
+    color: #f6c29a;
+}
