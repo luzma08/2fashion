@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Confirmación de Pago</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    .icono-con-contador {
+      position: relative;
+      display: inline-block;
+    }
+    .contador {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background-color: rgb(138, 56, 101);
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 70%;
+      z-index: 10;
+      cursor: pointer;
+    }
+    body {
+      font-family: "Poppins", serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 255, 255);
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4F1D3F;
+      padding: 20px;
+      box-sizing: border-box;
+      height: 70px;
+      width: 100%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo img {
+      height: 70px;
+      width: auto;
+    }
+    .navegacion {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .navegacion ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navegacion ul li {
+      margin: 0 30px;
+      position: relative;
+    }
+    .navegacion ul li a {
+      text-decoration: none;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: background-color 0.3s;
+    }
+    .navegacion ul li a:hover {
+      background-color: #EEDAF2;
+      color: #000000;
+    }
+    .navegacion ul li ul {
+      display: none;
+      position: absolute;
+      background-color: #FFFFFF;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 10px;
+      padding: 10px 0;
+    }
+    .navegacion ul li:hover > ul {
+      display: block;
+    }
+    .navegacion ul li ul li a {
+      color: #4F1D3F;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .navegacion ul li ul li a:hover {
+      background-color: #D9C6DD;
+    }
+    #toggle,
+    .header label {
+      display: none;
+      cursor: pointer;
+    }
+    .iconos {
+      display: flex;
+      gap: 34px; 
+      align-items: center;
+      padding: 30px;
+      cursor: pointer;
+    }
+    .iconos a {
+      color: rgb(254, 254, 254); 
+      text-decoration: none;
+      display: inline-block;
+      font-size: 17px; 
+      transition: color 0.5s ease, transform 0.3s ease;
+    }
+    .iconos a:hover {
+      color: rgb(170, 129, 172); 
+      transform: scale(1.2); 
+    }
+    .additional-logos {
+      display: flex;
+      gap: 27px; 
+      align-items: center;
+      padding-left: 40px;
+    }
+    .additional-logos i {
+      font-size: 17px; 
+      color: #ffffff; 
+      transition: transform 0.3s, color 0.3s;
+    }
+    .additional-logos i:hover {
+      color: #EEDAF2; 
+      transform: scale(1.2); 
+    }
+    .confirmation-container {
+      max-width: 880px;
+      margin: 40px auto 32px auto;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 6px 32px rgba(162, 89, 195, 0.13);
+      padding: 38px 28px 38px 28px;
+    }
+    .confirmation-icon {
+      text-align: center;
+      font-size: 3.2em;
+      color: #57084b;
+      margin-bottom: 18px;
+    }
+    .confirmation-container h1 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.2em;
+      color: #751a64;
+    }
+    .confirmation-container > p {
+      text-align: center;
+      color: #7d276c;
+      margin-bottom: 37px;
+      font-size: 1.1em;
+    }
+    .confirmation-details {
+      margin-bottom: 26px;
+      background: #f8f7fa;
+      padding: 18px 20px 8px 20px;
+      border-radius: 14px;
+    }
+    .confirmation-details h3 {
+      margin-top: 0;
+      color: #812171;
+      font-size: 1.2em;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+    .confirmation-details p {
+      margin: 6px 0;
+      font-size: 1em;
+      color: #660055;
+    }
+    .barcode {
+      font-family: monospace;
+      letter-spacing: 3px;
+      color: #c3aed6;
+      margin-top: 9px;
+      font-size: 1.3em;
+    }
+    .order-summary {
+      margin-top: 37px;
+      margin-bottom: 24px;
+      padding: 20px 18px 14px 18px;
+      background: #faf7fc;
+      border-radius: 14px;
+      box-shadow: 0 0 9px #e4dbef5d;
+    }
+    .order-summary h3 {
+      margin-top: 0;
+      color: #c359a0;
+      font-size: 1.2em;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+    .order-items .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #e2d4f6;
+      padding-bottom: 8px;
+      font-size: 1.07em;
+    }
+    .order-items .item:last-child {
+      border-bottom: 0;
+    }
+    .total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 9px;
+      font-weight: 600;
+      font-size: 1.14em;
+    }
+    #descuento-visual {
+      color: #c3599a;
+      font-weight: 600;
+      font-size: 1em;
+    }
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .btn {
+      background: #721854;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 22px;
+      font-size: 1em;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 0;
+    }
+    .btn:hover {
+      background: #660046;
+    }
+    @media print {
+      .no-print, .header {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+      }
+      .confirmation-container {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+      .order-summary, .confirmation-details {
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+        <div class="logo">
+            <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
+        </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="html/chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
+    </div>
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        <nav class="navegacion">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="#">Categorías</a>
+                    <ul>
+                        <li><a href="categorias.html">Mujeres</a></li>
+                        <li><a href="categoria-hombre.html">Hombres</a></li>
+                        <li><a href="categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="iconos">
+            <a href="favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
+          </div>
+    </header>
+  <div class="confirmation-container" id="receipt">
+    <div class="confirmation-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>¡Pago Confirmado!</h1>
+    <p>Tu pedido ha sido procesado correctamente. Gracias por tu compra.</p>
+    <div class="confirmation-details">
+      <h3>Detalles de la Transacción</h3>
+      <p><strong>Número de Orden:</strong> <span id="order-id">ORD-12345</span></p>
+      <p><strong>Código de Transacción:</strong> <span id="transaction-code">TX123456789</span></p>
+      <p><strong>Fecha y Hora:</strong> <span id="transaction-date"></span></p>
+      <p><strong>Estado:</strong> <span style="color: #4CAF50;">Completado</span></p>
+      <div class="barcode" id="barcode">
+        |||||| |||| | ||| || | ||||| |||| ||
+      </div>
+    </div>
+    <div class="confirmation-details">
+      <h3>Información del Cliente</h3>
+      <p><strong>Nombre:</strong> <span id="user-name">Nombre del Cliente</span></p>
+      <p><strong>Teléfono:</strong> <span id="user-phone">Teléfono</span></p>
+      <p><strong>Dirección de Envío:</strong> <span id="user-address">Dirección</span></p>
+      <p><strong>Detalles:</strong> <span id="user-details">Detalles</span></p>
+    </div>
+    <div class="order-summary">
+      <h3>Resumen del Pedido</h3>
+      <div id="order-items" class="order-items"></div>
+      <div class="total">
+        <span>Subtotal:</span>
+        <span id="subtotal-amount">$0</span>
+      </div>
+      <div class="total" id="descuento-visual" style="display:none;">
+        <span>Descuento aplicado:</span>
+        <span id="descuento-amount">-$0</span>
+      </div>
+      <div class="total">
+        <span>Total:</span>
+        <span id="total-amount">$0</span>
+      </div>
+    </div>
+    <div class="action-buttons no-print">
+      <a href="#" class="btn" id="download-btn">Descargar Comprobante</a>
+      <a href="../index.html" class="btn print-btn" id="print-btn">Volver a inicio</a>
+    </div>
+  </div>
+  <!-- SUPABASE Y LÓGICA DE MARCADO DE PRODUCTOS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    if (!localStorage.getItem('productosSeleccionados')) {
+      document.getElementById('receipt').innerHTML = "<h1 style='text-align:center;color:#A259C3;'>No hay pedido reciente para mostrar.</h1>";
+    } else {
+      // Fecha y hora actual
+      function pad(n){ return n<10 ? '0'+n : n }
+      function fechaActualStr() {
+        const now = new Date();
+        return `${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      }
+      document.getElementById('transaction-date').textContent = fechaActualStr();
+
+      // Simula código de orden y transacción (puedes cambiar por los reales)
+      document.getElementById('order-id').textContent = "ORD-" + (Math.floor(Math.random()*90000)+10000);
+      document.getElementById('transaction-code').textContent = "TX" + (Math.floor(Math.random()*900000000)+100000000);
+
+      // Recuperar info de usuario desde localStorage
+      const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
+      document.getElementById('user-name').textContent = (userDetails.nombre ? userDetails.nombre : '') + ' ' + (userDetails.apellido ? userDetails.apellido : '');
+      document.getElementById('user-phone').textContent = userDetails.telefono || 'No disponible';
+      document.getElementById('user-address').textContent = userDetails.direccion || 'No disponible';
+      document.getElementById('user-details').textContent = userDetails.piso || 'No disponible';
+
+      // Cargar productos desde localStorage
+      let productosSeleccionados = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+      let html = '';
+      let subtotal = 0;
+      productosSeleccionados.forEach(producto => {
+        let precio = 0;
+        if (typeof producto.precio === 'string') {
+          precio = parseInt(producto.precio.replace(/\D/g, '')) || 0;
+        } else if (typeof producto.precio === 'number') {
+          precio = producto.precio;
+        }
+        const cantidad = producto.cantidad || 1;
+        subtotal += precio * cantidad;
+        html += `<div class="item">
+          <span>${producto.nombre || 'Producto'}<br>Talla: ${producto.talla || '-'}<br>Cantidad: ${cantidad}</span>
+          <span>$${(precio * cantidad).toLocaleString('es-CO')}</span>
+        </div>`;
+      });
+      document.getElementById('order-items').innerHTML = html || "<em>No hay productos.</em>";
+
+      // Usa el total y descuento guardados
+      const descuentoValor = parseFloat(localStorage.getItem('descuentoValor') || '0');
+      const totalFinal = parseFloat(localStorage.getItem('totalFinal') || subtotal);
+
+      document.getElementById('subtotal-amount').textContent = '$' + subtotal.toLocaleString('es-CO');
+      if (descuentoValor > 0) {
+        document.getElementById('descuento-amount').textContent = '-$' + descuentoValor.toLocaleString('es-CO');
+        document.getElementById('descuento-visual').style.display = 'flex';
+      } else {
+        document.getElementById('descuento-visual').style.display = 'none';
+      }
+      document.getElementById('total-amount').textContent = '$' + totalFinal.toLocaleString('es-CO');
+
+      // Botón descargar comprobante
+      document.getElementById('download-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.print();
+      });
+
+      // MARCAR PRODUCTOS COMO VENDIDOS EN SUPABASE
+      (async function marcarVendidos() {
+        const productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
+        if (!productos || productos.length === 0) return;
+        for (const p of productos) {
+          if (p.id) {
+            await supabase
+              .from('productos')
+              .update({ vendido: true })
+              .eq('id', p.id);
+          }
+        }
+      })();
+
+      // Limpia el carrito y los datos SOLO DESPUÉS de mostrar (le da tiempo a la página de leerlos)
+      setTimeout(() => {
+        localStorage.removeItem('productosSeleccionados');
+        localStorage.removeItem('carrito');
+        localStorage.removeItem('totalPrecio');
+        localStorage.removeItem('totalFinal');
+        localStorage.removeItem('descuentoValor');
+        localStorage.removeItem('userDetails');
+      }, 500);
+    }
+
+    function llevaracarrito() {
+      window.location.href = "/html/carrito.html";
+    }
+  </script>
+</body>
+</html>

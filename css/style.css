@@ -90,6 +90,7 @@ body {
     gap: 34px; 
     align-items: center;
 padding: 30px;
+cursor: pointer;
    
 }
 
@@ -194,38 +195,156 @@ h1{
     object-fit: cover;
 }
 
-#promociones{
-    margin-bottom: 29px;
-    background-color: #e8b7cf91;
-    width: 100%;
-    height: 250px;
-    display: flex;
-    justify-content: space-between;
-    gap: 1px;
+#promociones {
+  margin: 40px 0;
+  background: #eedbe6;
+  border-radius: 23px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  position: relative;
 }
 
+.columna {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-    .columna {
-    flex: 1;
-    display: flex;
-    justify-content: center; 
+.columna a {
+  display: block;
+  width: 320px;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.columna img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+/* Overlay con fondo */
+.columna a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(79, 29, 71, 0.85);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+/* Texto del overlay */
+.columna a::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(250, 209, 241);
+    font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 20px;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.columna:nth-child(1) a::after {
+  content: 'Si donas ropa podrás acceder a descuentos exclusivos';
+}
+
+.columna:nth-child(2) a::after {
+  content: 'Personaliza tu ropa con nuestros servicios de customización';
+}
+
+.columna a:hover::before {
+  opacity: 1;
+}
+
+.columna a:hover::after {
+  opacity: 1;
+}
+
+.columna a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.columna a:hover img {
+  transform: scale(1.05);
+}
+
+/* Efecto de entrada */
+.columna {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.columna:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #promociones {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 15px;
+    margin: 30px 0;
   }
   
-  .columna img {
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 20px;
-    border-color: #4F1D3F;
-    transition: .5s;
-
+  .columna a {
+    width: 300px;
+    height: 180px;
   }
-
-  #promociones .columna :hover{
-    box-shadow: 5px 5px 10px rgba(80, 37, 90, 0.95), -5px -5px 10px rgb(138, 56, 101);
-
+  
+  .columna a::after {
+    font-size: 15px;
+    padding: 0 15px;
+  }
 }
 
-.footer {
+@media (max-width: 480px) {
+  .columna a {
+    width: 280px;
+    height: 160px;
+  }
+  
+  .columna a::after {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+}.footer {
     background-color:#4F1D3F ;
     bottom: 0;
     list-style: none;
@@ -463,5 +582,201 @@ h1{
     padding: 2px 6px;
     border-radius: 70%;
     z-index: 10;
+  }
+  
+/* Estilos para el contenedor de usuario */
+.user-name{
+    color: #FFFFFF;
+    padding: 12px;
+    cursor:auto ;
+    font-style: 400;
+  
+}
+
+.user-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilos para el botón de iniciar sesión */
+  .iniciar-sesion {
+    color: #4F1D3F;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 8px;
+  
+    transition: none !important; /* ← Esto bloquea cualquier transición heredada */
+  }
+  
+  .iniciar-sesion:hover {
+    color: #a15a8b;
+    transition: none !important; /* ← Esto lo refuerza aún más */
+  }
+  .iniciar-sesion, 
+  .iniciar-sesion:hover, 
+  .iniciar-sesion:focus, 
+  .iniciar-sesion:active {
+    color: #e3cfe5 !important;
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+    
+  
+  /* Estilos para la sesión de usuario */
+  .user-session {
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+    gap: 10px;
+    background-color: transparent; /* Quitamos el fondo */
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 14px;
+    color: #FFFFFF; /* Cambiamos el color del texto a blanco */
+    transition: all 0.3s ease;
+    margin-left: 8px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .user-greeting {
+    display: flex;
+    align-items: center;
+  position: absolute;
+  top: 92px;
+    gap: 5px;
+    max-width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #FFFFFF; /* Aseguramos que el texto sea blanco */
+  }
+  
+  .user-greeting::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 14px;
+    color: #FFFFFF; /* Cambiamos el ícono a blanco */
+    flex-shrink: 0;
+  }
+  
+  .user-session strong {
+    font-weight: 700;
+    color: #FFFFFF; /* Cambiamos el texto en negrita a blanco */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .logout-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente blanco */
+    color: #FFFFFF; /* Color del ícono blanco */
+    transition: all 0.3s ease;
+    text-decoration: none;
+    flex-shrink: 0;
+    font-size: 0; /* Oculta cualquier texto */
+    margin-left: 5px;
+  }
+  
+  .logout-btn::before {
+    content: '\f2f5'; /* Ícono universal de cerrar sesión */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 14px;
+    display: block; /* Aseguramos que sea visible */
+  }
+  
+  .logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+
+  /* Asegurar que el ícono de cerrar sesión se muestre correctamente */
+
+/* Método 1: Usar un enfoque más directo para el ícono de logout */
+.logout-btn {
+    position: relative;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-left: 8px !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50% !important;
+    text-decoration: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Forzar la visualización del ícono usando un pseudo-elemento */
+  .logout-btn::before {
+    content: "\f2f5" !important; /* Código del ícono de cerrar sesión */
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    color: #FFFFFF !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10 !important;
+  }
+  
+  /* Método alternativo: Si Font Awesome no funciona como esperado */
+  .logout-btn {
+    /* Mantenemos los estilos anteriores y añadimos: */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    position: relative !important;
+  }
+  
+  /* Ícono de salida usando caracteres Unicode si todo lo demás falla */
+  .logout-btn::after {
+    content: "×" !important; /* Símbolo X como alternativa */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #FFFFFF !important;
+  }
+
+  #contenido-extra .fila {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 64px;
+    
+    margin: 30px auto;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  #contenido-extra .recuadro-ropa {
+    min-width: 220px;
+    max-width: 250px;
+    flex: 0 0 auto;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #contenido-extra .recuadro-ropa:hover {
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
   }
   

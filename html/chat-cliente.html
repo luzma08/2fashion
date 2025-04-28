@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Cliente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/chat.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
+    </div>
+
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+            <a href="html/chat-cliente.html"><i class="fa-solid fa-comment"></i>
+    </div>
+    
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+            <li><a href="categorias.html">Mujeres</a></li>
+            <li><a href="categoria-hombre.html">Hombres</a></li>
+            <li><a href="categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="iconos">
+      <a href="favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a> 
+      <a onclick="llevaracarrito()" class="icono-con-contador">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>Chat de Soporte</h1>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>En línea</span>
+        </div>
+      </div>
+      
+      <div id="chat-messages" class="chat-messages">
+        <div class="welcome-message">
+          <div class="welcome-icon">💬</div>
+          <p>¡Hola! Estamos aquí para ayudarte.</p>
+          <p class="welcome-subtitle">Escribe tu mensaje para comenzar la conversación</p>
+        </div>
+      </div>
+      
+      <div id="chat-options" class="chat-options"></div>
+      
+      <div class="chat-input-container">
+        <form id="chat-form" autocomplete="off">
+          <div class="input-wrapper">
+            <input type="text" id="chat-input" autocomplete="off" placeholder="Escribe tu mensaje...">
+            <button type="submit" class="send-button">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+      <button id="close-chat" class="close-chat-btn">Cerrar chat</button>
+    </div>
+  </div>
+  <script src="../js/chat-cliente.js"></script>
+</body>
+</html>

@@ -14,11 +14,21 @@ main {
 }
 
 /* La parte superior donde se escoge que quieres ver*/
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    box-sizing: border-box  ;
+    overflow-x: hidden;
+}
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #4F1D3F;
+<<<<<<< HEAD
     padding: 0 20px;
     font-family: "Poppins", serif;
     box-sizing: border-box;
@@ -26,18 +36,26 @@ main {
     width: 100%;
     margin: 0;
     position: relative;
+=======
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+    width: 100%;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 15px;
+   gap: 15px;
 }
 
 .logo img {
     height: 50px;
     width: auto;
 }
+
+
 
 .navegacion {
     flex: 1;
@@ -106,7 +124,12 @@ main {
     display: flex;
     gap: 34px; 
     align-items: center;
+<<<<<<< HEAD
     padding: 0 30px;
+=======
+padding: 30px;
+cursor: pointer;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 }
 
 .iconos a {
@@ -124,48 +147,60 @@ main {
 
 .additional-logos {
     display: flex;
-    gap: 27px;
+    gap: 27px; 
     align-items: center;
     padding-left: 40px;
 }
 
 .additional-logos i {
-    font-size: 17px;
-    color: #ffffff;
+    font-size: 17px; 
+    color: #ffffff; 
     transition: transform 0.3s, color 0.3s;
 }
 
 .additional-logos i:hover {
-    color: #EEDAF2;
-    transform: scale(1.2);
+    color: #EEDAF2; 
+    transform: scale(1.2); 
 }
 
+<<<<<<< HEAD
 /* el lugar donde deciden donde ir categorias>mujer>sueter */
+=======
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 .breadcrumb {
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
+    font-size: 15px;
+    color: #7e7979;
     position: relative;
     top: 40px;
     left: 60px;
 }
-  
+
+/* Estilo base para enlaces */
 .breadcrumb a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.3s ease;
+}
+
+/* Color al pasar el mouse */
+.breadcrumb a:hover {
+    color: #4F1D3F;
 }
 
 .breadcrumb li {
     margin-right: 5px;
 }
-  
+
 /* Añade el separador ">" entre elementos */
 .breadcrumb li + li::before {
     content: ">";
     margin-right: 5px;
 }
+
 
 /* Ajuste del contenedor principal */
 .Caja-detalles {

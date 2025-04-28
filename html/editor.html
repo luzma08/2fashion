@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Prenda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/editor.css">
+</head>
+<body>
+   <header class="header">
+    <div class="logo">
+      <a href="index.html"><img src="/img/logo.svg" alt="Logo"></a>
+    </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="/html/chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
+    </div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="/html/sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+              <li><a href="/html/categorias.html">Mujeres</a></li>
+              <li><a href="/html/categoria-hombre.html">Hombres</a></li>
+              <li><a href="/html/categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="iconos">
+      <a href="/html/favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a> 
+      <a onclick="llevaracarrito()" class="icono-con-contador" style="cursor:pointer;">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <div class="user-container">
+        <a href="#" id="user-icon"><i class="fa-solid fa-user"></i></a>
+        <a href="/html/inisesion.html" class="iniciar-sesion" id="login-button" style="display:none;">Iniciar sesión</a>
+        <div class="user-session" id="userSession" style="display: none;"></div>
+      </div>
+    </div>
+  </header>
+
+    <div class="editor-container">
+        <div class="toolbar">
+            <div class="tool-item active" data-tool="clipart">
+                <i class="fa-solid fa-images"></i>
+                <div class="tool-label">Clipart</div>
+            </div>
+            <div class="tool-item" data-tool="subidas">
+                <i class="fa-solid fa-upload"></i>
+                <div class="tool-label">Subidas</div>
+            </div>
+            <div class="tool-item" data-tool="texto">
+                <i class="fa-solid fa-font"></i>
+                <div class="tool-label">Texto</div>
+            </div>
+        </div>
+        <div class="editor-main">
+            <div class="editor-titulo">✨ Editor de Prenda Personalizada</div>
+            <div class="prenda-info" id="info-prenda">
+                <div><b>Prenda:</b> <span id="nombre-prenda"></span></div>
+                <div><b>Tallas:</b> <span id="tallas-prenda"></span></div>
+                <div><b>Color base:</b> <span id="color-prenda"></span> <span class="color-circulo" id="color-circulo"></span></div>
+            </div>
+            <div id="precio-total" style="font-size:1.2em;font-weight:bold;color:#218c6b;margin:12px 0;text-align:center;">
+                Precio total: $0.00
+            </div>
+            <div class="prenda-preview">
+                <img id="preview-frente" src="" alt="Frente" class="active" data-side="frente">
+                <img id="preview-espalda" src="" alt="Espalda" data-side="espalda">
+            </div>
+            <div class="canvas-container">
+                <canvas id="editor-canvas" width="400" height="500"></canvas>
+            </div>
+            <!-- Paneles -->
+            <div class="controls-panel active" id="clipart-controls">
+                <div class="control-group">
+                    <label>Elige un Emoji:</label>
+                    <span class="clipart-item" data-clipart="😃">😃</span>
+                    <span class="clipart-item" data-clipart="⭐">⭐</span>
+                    <span class="clipart-item" data-clipart="🔥">🔥</span>
+                    <span class="clipart-item" data-clipart="🌈">🌈</span>
+                    <span class="clipart-item" data-clipart="🎨">🎨</span>
+                    <span class="clipart-item" data-clipart="💎">💎</span>
+                    <span class="clipart-item" data-clipart="🚀">🚀</span>
+                    <span class="clipart-item" data-clipart="❤️">❤️</span>
+                </div>
+            </div>
+            <div class="controls-panel" id="subidas-controls">
+                <div class="control-group">
+                    <label>Sube tu imagen:</label>
+                    <input type="file" id="uploader" accept="image/*">
+                </div>
+            </div>
+            <div class="controls-panel" id="texto-controls">
+                <div class="control-group">
+                    <label>Texto:</label>
+                    <input type="text" id="text-input" placeholder="Agrega tu texto aquí...">
+                    <button id="add-text">Agregar</button>
+                </div>
+                <div class="control-group">
+                    <label>Fuente:</label>
+                    <select id="font-family">
+                        <option value="Poppins">Poppins</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Comic Sans MS">Comic Sans</option>
+                    </select>
+                    <label>Tamaño:</label>
+                    <input type="range" id="font-size" min="12" max="80" value="30">
+                    <span id="size-value">30px</span>
+                </div>
+                <div class="control-group">
+                    <label>Color:</label>
+                    <input type="color" id="color-texto" value="#4F1D3F">
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="limpiar-canvas">
+                    <i class="fa-solid fa-eraser"></i> Limpiar Canvas
+                </button>
+                <button class="btn btn-secondary" id="volver">
+                    <i class="fa-solid fa-arrow-left"></i> Volver
+                </button>
+            </div>
+        </div>
+    </div>
+    <button class="save-button" id="guardar">
+        <i class="fa-solid fa-save"></i>
+        Guardar
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+    // ---------- ESTADO GLOBAL Y CONFIGURACIÓN ----------
+    let currentTool = 'clipart';
+    let currentSide = 'frente';
+    let canvas, ctx;
+    let elements = [];
+    let prenda = null;
+    let garmentImages = { frente: '', espalda: '' };
+    let currentTextColor = '#4F1D3F';
+    let selectedElementIndex = -1;
+    let isDragging = false;
+    let dragOffset = { x: 0, y: 0 };
+    let loadedBaseImages = { frente: null, espalda: null };
+    let resizing = false;
+    let resizingHandle = null;
+    let startResize = {};
+    let precioBase = 0, precioImagen = 0, precioTexto = 0, precioEmoji = 0, preciosPersonalizacion = {};
+
+    // ---- SUPABASE CONFIG ----
+    const supabaseUrl = "https://hxrcmbaxxfvlgubpdifu.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc";
+    const supabase = window.supabase?.createClient
+        ? window.supabase.createClient(supabaseUrl, supabaseKey)
+        : window.supabase;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        canvas = document.getElementById('editor-canvas');
+        ctx = canvas.getContext('2d');
+
+        // Recuperar prenda seleccionada
+        prenda = JSON.parse(localStorage.getItem('prendaSeleccionada') || '{}');
+        garmentImages.frente = prenda.frente || '';
+        garmentImages.espalda = prenda.espalda || '';
+        document.getElementById('preview-frente').src = garmentImages.frente;
+        document.getElementById('preview-espalda').src = garmentImages.espalda;
+
+        // Mostrar info
+        document.getElementById('nombre-prenda').textContent = prenda.nombre || '';
+        document.getElementById('tallas-prenda').textContent = Array.isArray(prenda.tallas) ? prenda.tallas.join(', ') : (prenda.tallas || 'No especificado');
+        document.getElementById('color-prenda').textContent = prenda.color || prenda.color_base || '';
+        document.getElementById('color-circulo').style.background = prenda.color || prenda.color_base || '#fff';
+        precioBase = Number(prenda.precio_base || 0);
+
+        // Precios de personalización
+        async function cargarPreciosPersonalizacion() {
+            if (!prenda.id) {
+                preciosPersonalizacion = { imagen: 0, texto: 0, emoji: 0 };
+                precioImagen = 0; precioTexto = 0; precioEmoji = 0;
+                actualizarPrecio();
+                return;
+            }
+            const { data } = await supabase
+                .from('personalizacion_precios')
+                .select('*')
+                .eq('prenda_id', prenda.id);
+            if (data) {
+                for (let p of data) {
+                    preciosPersonalizacion[p.tipo] = Number(p.precio);
+                }
+                precioImagen = preciosPersonalizacion.imagen || 0;
+                precioTexto = preciosPersonalizacion.texto || 0;
+                precioEmoji = preciosPersonalizacion.emoji || 0;
+            }
+            actualizarPrecio();
+        }
+        cargarPreciosPersonalizacion();
+
+        selectSide('frente');
+
+        document.querySelectorAll('.tool-item').forEach(item => {
+            item.addEventListener('click', function() {
+                selectTool(this.dataset.tool);
+            });
+        });
+        document.querySelectorAll('.prenda-preview img').forEach(img => {
+            img.addEventListener('click', function() {
+                selectSide(this.dataset.side);
+            });
+        });
+        document.querySelectorAll('.clipart-item').forEach(item => {
+            item.addEventListener('click', function() {
+                elements.push({
+                    type: 'clipart',
+                    content: this.dataset.clipart,
+                    x: canvas.width/2,
+                    y: canvas.height/2,
+                    fontSize: 60,
+                    side: currentSide
+                });
+                selectedElementIndex = elements.length - 1;
+                redrawCanvas();
+                actualizarPrecio();
+            });
+        });
+        document.getElementById('uploader').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    elements.push({
+                        type: 'image',
+                        src: img.src,
+                        x: canvas.width/2,
+                        y: canvas.height/2,
+                        width: 120,
+                        height: 120,
+                        side: currentSide,
+                        _imgObj: img
+                    });
+                    selectedElementIndex = elements.length - 1;
+                    redrawCanvas();
+                    actualizarPrecio();
+                }
+                img.src = evt.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+        document.getElementById('add-text').addEventListener('click', function() {
+            const text = document.getElementById('text-input').value;
+            const fontFamily = document.getElementById('font-family').value;
+            const fontSize = parseInt(document.getElementById('font-size').value, 10);
+            if (!text) return;
+            elements.push({
+                type: 'text',
+                text: text,
+                x: canvas.width/2,
+                y: canvas.height/2,
+                fontSize: fontSize,
+                fontFamily: fontFamily,
+                color: currentTextColor,
+                side: currentSide
+            });
+            selectedElementIndex = elements.length - 1;
+            redrawCanvas();
+            actualizarPrecio();
+            document.getElementById('text-input').value = '';
+        });
+        document.getElementById('font-size').addEventListener('input', function() {
+            document.getElementById('size-value').textContent = this.value + 'px';
+        });
+        document.getElementById('color-texto').addEventListener('input', function() {
+            currentTextColor = this.value;
+        });
+        document.getElementById('limpiar-canvas').addEventListener('click', function() {
+            elements = elements.filter(el => el.side !== currentSide);
+            selectedElementIndex = -1;
+            redrawCanvas();
+            actualizarPrecio();
+        });
+        document.getElementById('volver').addEventListener('click', function() {
+            window.location.href = 'personalizado.html';
+        });
+        document.getElementById('guardar').addEventListener('click', mostrarResumenYConfirmar);
+
+        // Canvas: selección, drag, resize
+        canvas.addEventListener('mousedown', function(e) {
+            const { x, y } = getCanvasCoords(e);
+            const sideElements = elements
+                .map((el, idx) => ({el, idx}))
+                .filter(o => o.el.side === currentSide);
+
+            let selIdx = sideElements.findIndex(o => o.idx === selectedElementIndex);
+            if (selIdx !== -1 && selectedElementIndex >= 0) {
+                const selEl = sideElements[selIdx].el;
+                const handle = getHandleUnderMouse(x, y, selEl);
+                if (handle) {
+                    resizing = true;
+                    resizingHandle = handle;
+                    startResize = {
+                        mouseX: x, mouseY: y,
+                        fontSize: parseInt(selEl.fontSize || 30),
+                        width: selEl.width,
+                        height: selEl.height,
+                        x: selEl.x, y: selEl.y
+                    };
+                    return;
+                }
+            }
+            let hit = sideElements.find(o => isInsideElement(o.el, x, y));
+            if (hit) {
+                selectedElementIndex = hit.idx;
+                isDragging = true;
+                dragOffset.x = x - hit.el.x;
+                dragOffset.y = y - hit.el.y;
+                redrawCanvas();
+            } else {
+                selectedElementIndex = -1;
+                redrawCanvas();
+            }
+        });
+        canvas.addEventListener('mousemove', function(e) {
+            const { x, y } = getCanvasCoords(e);
+            const sideElements = elements
+                .map((el, idx) => ({el, idx}))
+                .filter(o => o.el.side === currentSide);
+            let selIdx = sideElements.findIndex(o => o.idx === selectedElementIndex);
+            let selEl = (selIdx !== -1) ? sideElements[selIdx].el : null;
+            if (selEl && getHandleUnderMouse(x, y, selEl)) {
+                canvas.style.cursor = "nwse-resize";
+            } else {
+                canvas.style.cursor = "";
+            }
+            if (isDragging && selectedElementIndex >= 0 && !resizing) {
+                let el = elements[selectedElementIndex];
+                let bounds = getElementBounds(el);
+                let newX = x - dragOffset.x;
+                let newY = y - dragOffset.y;
+                newX = Math.max(bounds.width/2, Math.min(canvas.width - bounds.width/2, newX));
+                newY = Math.max(bounds.height/2, Math.min(canvas.height - bounds.height/2, newY));
+                el.x = newX;
+                el.y = newY;
+                redrawCanvas();
+            }
+            if (resizing && selectedElementIndex >= 0) {
+                let el = elements[selectedElementIndex];
+                if (el.type === 'text' || el.type === 'clipart') {
+                    let dist = Math.abs(x - el.x) + Math.abs(y - el.y);
+                    let newSize = Math.max(12, Math.min(120, startResize.fontSize + (dist - Math.abs(startResize.mouseX - el.x) - Math.abs(startResize.mouseY - el.y))/3 ));
+                    el.fontSize = newSize;
+                }
+                if (el.type === 'image') {
+                    let dx = x - startResize.mouseX;
+                    let dy = y - startResize.mouseY;
+                    if (resizingHandle === "br") {
+                        el.width = Math.max(30, startResize.width + dx);
+                        el.height = Math.max(30, startResize.height + dy);
+                    } else if (resizingHandle === "tr") {
+                        el.width = Math.max(30, startResize.width + dx);
+                        el.height = Math.max(30, startResize.height - dy);
+                    } else if (resizingHandle === "bl") {
+                        el.width = Math.max(30, startResize.width - dx);
+                        el.height = Math.max(30, startResize.height + dy);
+                    } else if (resizingHandle === "tl") {
+                        el.width = Math.max(30, startResize.width - dx);
+                        el.height = Math.max(30, startResize.height - dy);
+                    }
+                }
+                redrawCanvas();
+                actualizarPrecio();
+            }
+        });
+        canvas.addEventListener('mouseup', function() {
+            isDragging = false;
+            resizing = false;
+            resizingHandle = null;
+        });
+        canvas.addEventListener('mouseleave', function() {
+            isDragging = false;
+            resizing = false;
+            resizingHandle = null;
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (selectedElementIndex >= 0 && !resizing) {
+                let el = elements[selectedElementIndex];
+                if ((el.type === 'text' || el.type === 'clipart')) {
+                    if (e.key === '+' || e.key === '=' || e.key === 'ArrowUp') {
+                        el.fontSize = Math.min(120, (parseInt(el.fontSize) || 30) + 2);
+                        redrawCanvas(); actualizarPrecio();
+                    }
+                    if (e.key === '-' || e.key === '_' || e.key === 'ArrowDown') {
+                        el.fontSize = Math.max(12, (parseInt(el.fontSize) || 30) - 2);
+                        redrawCanvas(); actualizarPrecio();
+                    }
+                }
+                if (el.type === 'image') {
+                    if (e.key === '+' || e.key === '=' || e.key === 'ArrowUp') {
+                        el.width = Math.min(400, el.width + 10);
+                        el.height = Math.min(600, el.height + 10);
+                        redrawCanvas(); actualizarPrecio();
+                    }
+                    if (e.key === '-' || e.key === '_' || e.key === 'ArrowDown') {
+                        el.width = Math.max(30, el.width - 10);
+                        el.height = Math.max(30, el.height - 10);
+                        redrawCanvas(); actualizarPrecio();
+                    }
+                }
+            }
+        });
+
+        redrawCanvas();
+        actualizarPrecio();
+    });
+
+    // ---------- FUNCIONES UTILES ----------
+
+    function actualizarPrecio() {
+        let numImagen = elements.filter(e=>e.side===currentSide && e.type==='image').length;
+        let numTexto = elements.filter(e=>e.side===currentSide && e.type==='text').length;
+        let numEmoji = elements.filter(e=>e.side===currentSide && e.type==='clipart').length;
+        let total = precioBase + numImagen*precioImagen + numTexto*precioTexto + numEmoji*precioEmoji;
+        document.getElementById('precio-total').textContent = `Precio total: $${total.toFixed(2)}`;
+    }
+
+    function getCanvasCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: (e.clientX - rect.left) * (canvas.width / rect.width),
+            y: (e.clientY - rect.top) * (canvas.height / rect.height)
+        };
+    }
+    function isInsideElement(el, x, y) {
+        let bounds = getElementBounds(el);
+        return (
+            x >= el.x - bounds.width/2 &&
+            x <= el.x + bounds.width/2 &&
+            y >= el.y - bounds.height/2 &&
+            y <= el.y + bounds.height/2
+        );
+    }
+    function getElementBounds(el) {
+        if (el.type === 'text') {
+            ctx.font = `${parseInt(el.fontSize) || 30}px ${el.fontFamily || 'Poppins'}`;
+            let w = ctx.measureText(el.text).width;
+            let h = parseInt(el.fontSize) || 30;
+            return { width: w, height: h };
+        }
+        if (el.type === 'clipart') {
+            let fontSize = parseInt(el.fontSize) || 60;
+            return { width: fontSize, height: fontSize };
+        }
+        if (el.type === 'image') {
+            return { width: el.width, height: el.height };
+        }
+        return { width: 40, height: 40 };
+    }
+    function getHandleUnderMouse(x, y, element = null) {
+        let el = element || elements[selectedElementIndex];
+        if (!el || (el.type !== 'text' && el.type !== 'clipart' && el.type !== 'image')) return null;
+        const handles = getHandlePositions(el);
+        for (const [key, pos] of Object.entries(handles)) {
+            if (Math.abs(x - pos.x) < 10 && Math.abs(y - pos.y) < 10) {
+                return key;
+            }
+        }
+        return null;
+    }
+    function getHandlePositions(el) {
+        const bounds = getElementBounds(el);
+        return {
+            tl: { x: el.x - bounds.width/2, y: el.y - bounds.height/2 },
+            tr: { x: el.x + bounds.width/2, y: el.y - bounds.height/2 },
+            bl: { x: el.x - bounds.width/2, y: el.y + bounds.height/2 },
+            br: { x: el.x + bounds.width/2, y: el.y + bounds.height/2 }
+        };
+    }
+    function selectTool(tool) {
+        currentTool = tool;
+        document.querySelectorAll('.tool-item').forEach(item => item.classList.remove('active'));
+        document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
+        document.querySelectorAll('.controls-panel').forEach(panel => panel.classList.remove('active'));
+        const panel = document.getElementById(`${tool}-controls`);
+        if (panel) panel.classList.add('active');
+    }
+    function selectSide(side) {
+        currentSide = side;
+        let newSideElements = elements.filter(el => el.side === currentSide);
+        selectedElementIndex = newSideElements.length ? elements.indexOf(newSideElements[0]) : -1;
+        document.querySelectorAll('.prenda-preview img').forEach(img => img.classList.remove('active'));
+        document.querySelector(`[data-side="${side}"]`).classList.add('active');
+        redrawCanvas();
+        actualizarPrecio();
+    }
+    function redrawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        let imgSrc = garmentImages[currentSide] || garmentImages.frente;
+        if (imgSrc) {
+            if (loadedBaseImages[currentSide]) {
+                drawBaseAndElements(loadedBaseImages[currentSide]);
+            } else {
+                const garmentImg = new Image();
+                garmentImg.crossOrigin = "anonymous";
+                garmentImg.onload = function() {
+                    loadedBaseImages[currentSide] = garmentImg;
+                    drawBaseAndElements(garmentImg);
+                }
+                garmentImg.src = imgSrc;
+            }
+        } else {
+            redrawElements();
+        }
+    }
+    function drawBaseAndElements(baseImg) {
+        let imgW = baseImg.width;
+        let imgH = baseImg.height;
+        let canvasW = canvas.width;
+        let canvasH = canvas.height;
+        let ratio = Math.min(canvasW / imgW, canvasH / imgH);
+        let drawW = imgW * ratio;
+        let drawH = imgH * ratio;
+        let offsetX = (canvasW - drawW) / 2;
+        let offsetY = (canvasH - drawH) / 2;
+        ctx.drawImage(baseImg, offsetX, offsetY, drawW, drawH);
+        redrawElements();
+    }
+    function redrawElements() {
+        elements.filter(el => el.side === currentSide).forEach((element, i, arr) => {
+            if (element.type === 'text') {
+                ctx.font = `${parseInt(element.fontSize) || 30}px ${element.fontFamily || 'Poppins'}`;
+                ctx.fillStyle = element.color || '#4F1D3F';
+                ctx.textAlign = 'center';
+                ctx.fillText(element.text, element.x, element.y);
+            }
+            if (element.type === 'clipart') {
+                ctx.font = `${parseInt(element.fontSize) || 60}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText(element.content, element.x, element.y);
+            }
+            if (element.type === 'image') {
+                if (!element._imgObj) {
+                    element._imgObj = new window.Image();
+                    element._imgObj.src = element.src;
+                    element._imgObj.onload = function() {
+                        redrawCanvas();
+                    }
+                }
+                if (element._imgObj.complete) {
+                    ctx.drawImage(
+                        element._imgObj,
+                        element.x - element.width/2,
+                        element.y - element.height/2,
+                        element.width,
+                        element.height
+                    );
+                }
+            }
+            if (elements[selectedElementIndex] === element && (element.type === 'text' || element.type === 'clipart' || element.type === 'image')) {
+                let bounds = getElementBounds(element);
+                ctx.save();
+                ctx.strokeStyle = '#6B2A4F';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(
+                    element.x - bounds.width/2,
+                    element.y - bounds.height/2,
+                    bounds.width, bounds.height
+                );
+                const handles = getHandlePositions(element);
+                ctx.fillStyle = "#fff";
+                ctx.strokeStyle = "#6B2A4F";
+                for (const pos of Object.values(handles)) {
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 7, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+        });
+    }
+
+    // ---------- RESUMEN Y CARRITO ----------
+    async function mostrarResumenYConfirmar() {
+        // Captura ambos lados
+        const frenteCanvas = document.getElementById('editor-canvas');
+        selectSide('frente');
+        redrawCanvas();
+        const imgFrente = frenteCanvas.toDataURL("image/png");
+        selectSide('espalda');
+        redrawCanvas();
+        const imgEspalda = frenteCanvas.toDataURL("image/png");
+
+        // Recupera los datos
+        const nombre = prenda.nombre || '';
+        const tallas = Array.isArray(prenda.tallas) ? prenda.tallas.join(', ') : (prenda.tallas || 'No especificado');
+        const color = prenda.color || prenda.color_base || '';
+        let numImagen = elements.filter(e => e.type === 'image').length;
+        let numTexto = elements.filter(e => e.type === 'text').length;
+        let numEmoji = elements.filter(e => e.type === 'clipart').length;
+        let subtotalImagen = numImagen * precioImagen;
+        let subtotalTexto = numTexto * precioTexto;
+        let subtotalEmoji = numEmoji * precioEmoji;
+        let total = precioBase + subtotalImagen + subtotalTexto + subtotalEmoji;
+
+        // HTML del resumen
+        let html = `
+            <h3>Resumen de tu prenda personalizada</h3>
+            <div style="display:flex;gap:16px;justify-content:center;">
+                <div>
+                    <div><b>Frente:</b></div>
+                    <img src="${imgFrente}" width="120">
+                </div>
+                <div>
+                    <div><b>Espalda:</b></div>
+                    <img src="${imgEspalda}" width="120">
+                </div>
+            </div>
+            <ul style="text-align:left; margin:1em 0;">
+                <li><b>Nombre:</b> ${nombre}</li>
+                <li><b>Tallas:</b> ${tallas}</li>
+                <li><b>Color:</b> ${color}</li>
+                <li><b>Precio base:</b> $${precioBase.toFixed(2)}</li>
+                <li><b>Adicional imágenes:</b> $${subtotalImagen.toFixed(2)}</li>
+                <li><b>Adicional textos:</b> $${subtotalTexto.toFixed(2)}</li>
+                <li><b>Adicional emojis:</b> $${subtotalEmoji.toFixed(2)}</li>
+                <li style="font-weight:bold;color:#218c6b;">Precio total: $${total.toFixed(2)}</li>
+            </ul>
+        `;
+        let modal = document.createElement('div');
+        modal.innerHTML = `
+            <div style="
+                position:fixed;top:0;left:0;width:100vw;height:100vh;
+                background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;">
+                <div style="background:#fff;padding:24px;border-radius:8px;max-width:420px;width:100%;">
+                    ${html}
+                    <button id="confirmar-resumen" style="margin-top:1em;background:#218c6b;color:#fff;padding:8px 16px;border:none;border-radius:4px;">OK</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        document.getElementById('confirmar-resumen').onclick = function() {
+            document.body.removeChild(modal);
+            agregarDisenoAlCarrito(
+                imgFrente,
+                imgEspalda,
+                nombre,
+                tallas,
+                color,
+                `$${total.toFixed(2)}`
+            );
+            alert('¡Tu prenda personalizada se ha agregado al carrito!');
+            window.location.href = '../html/carrito.html';
+        };
+    }
+
+    function agregarDisenoAlCarrito(imgFrente, imgEspalda, nombre, tallas, color, precioTotal) {
+        const productoPersonalizado = {
+            id: Date.now(),
+            nombre: nombre || 'Prenda personalizada',
+            talla: tallas || 'Única',
+            color: color || '',
+            precio: precioTotal || '$0',
+            imagen_frente: imgFrente || '',
+            imagen_espalda: imgEspalda || '',
+            personalizado: true
+        };
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.push(productoPersonalizado);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+    </script>
+</body>
+</html>

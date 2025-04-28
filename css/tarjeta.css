@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+   gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+padding: 30px;
+   
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px; 
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px; 
+    color: #ffffff; 
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2; 
+    transform: scale(1.2); 
+}
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .info, .payment {
+    width:48%;
+  }
+  
+  h2 {
+    color: #5d0d76;
+  
+  }
+  
+  h3 {
+    color: #5d0d76;
+    margin-top: 40px;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    background: #f9f9f9;
+    width:280PX;
+  }
+  
+  .item img {
+    width: 63px;
+    height: 63px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  
+  .item-info {
+    flex: 1;
+    margin-left: 15px;
+    
+  }
+  /*sueter*/
+  .item-name {
+    font-weight: bold;
+  } .item-price {
+    color: #555;
+  }
+  
+  .remove {
+    background: none;
+    border: none;
+    font-size: 50px;
+    color: #5d0d76;
+    cursor: pointer;
+  }
+  
+  .payment form {
+    margin-top: 20px;
+    margin-right: 12%;
+    
+  }
+  
+  .payment label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    
+  }
+  
+  .payment input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    font-size: 16px;
+    
+  }
+  
+  .expiry {
+    display: flex;
+    gap: 10px;
+    
+  }
+  
+  .expiry input {
+    width: 35%;
+    
+  }
+  
+  #realizarPedido{
+    margin-top: 16px;
+    background-color: #6A365F;
+    color: white;
+    font-family: "Poppins-Regular", sans-serif;
+    font-weight: bold;
+    border: none;
+    padding: 9px 50px;
+    font-size: 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    
+  }
+  
+  .logos {
+    display: flex;
+    gap: 38px;
+    align-items: center;
+    margin-bottom: 20px;
+    
+
+  }
+  
+  .logos img {
+    height:50px;
+  }
+   .custom-alert {
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .custom-alert.error {
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+    }
+    .custom-alert.success {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+    .custom-alert.info {
+      background-color: #e3f2fd;
+      color: #1565c0;
+      border: 1px solid #90caf9;
+    }
+    .payment-method-selector {
+      margin-bottom: 20px;
+    }
+    .payment-method-selector label {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    .payment-method-selector input[type="radio"] {
+      margin-right: 5px;
+    }
+    /* Animación de carga */
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 2s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }

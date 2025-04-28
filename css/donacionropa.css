@@ -94,7 +94,7 @@ body {
     gap: 34px; 
     align-items: center;
 padding: 30px;
-   
+cursor: pointer;
 }
 
 .iconos a {

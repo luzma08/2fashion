@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Pago</title>
+  <link rel="stylesheet" href="../css/tarjeta.css">
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Supabase JS desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="../img/logo.svg" alt="Logo">
+    </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+            <li><a href="#">Mujeres</a></li>
+            <li><a href="#">Hombres</a></li>
+            <li><a href="#">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="iconos">
+      <a href="#"><i class="fa-solid fa-heart"></i></a>
+      <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="#"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="info">
+      <h2>Dirección de facturación</h2>
+      <div id="user-info"></div>
+      <h3>Artículos</h3>
+      <div id="items-container"></div>
+      <!-- NUEVO: Total con descuento si aplica -->
+      <div id="total-final-section" style="margin-top:15px;">
+        <!-- Aquí se mostrará el total FINAL con descuento si existe -->
+      </div>
+      <!-- NUEVO: Mostrar si hubo un descuento aplicado -->
+      <div id="descuento-section" style="margin-top:6px;">
+        <!-- Aquí se mostrará el aviso del descuento -->
+      </div>
+    </div>
+
+    <div class="payment">
+      <h2>Información De Pago</h2>
+      <div class="payment-method-selector">
+        <label>
+          <input type="radio" name="payment-method" value="card" checked> Tarjeta de crédito/débito
+        </label>
+        <label>
+          <input type="radio" name="payment-method" value="other"> Otros métodos
+        </label>
+      </div>
+      <div class="logos">
+        <img src="../img/mastercard.png" alt="Mastercard">
+        <img src="../img/bancolombia.png" alt="Bancolombia">
+        <img src="../img/visa.png" alt="Visa">
+        <img src="../img/PayPal.png" alt="PayPal">
+      </div>
+      <form id="payment-form">
+        <label>Número de la tarjeta*</label>
+        <input type="text" id="card-number" placeholder="Número" required maxlength="16">
+        <label>Fecha de caducidad*</label>
+        <input type="month" id="expiry-date" required min="2024-06">
+        <label>Código de seguridad*</label>
+        <input type="password" id="security-code" placeholder="Código" required maxlength="4">
+        <label>Nombre del titular*</label>
+        <input type="text" id="card-holder" placeholder="Nombre como aparece en la tarjeta" required>
+        <button id="realizar-pedido" type="submit">Realizar Pedido</button>
+        <div id="customAlert" class="custom-alert" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const UUID_PRODUCTO_PERSONALIZADO = "0dc3d337-7e94-435e-a881-99ba6470ae17";
+
+document.addEventListener('DOMContentLoaded', function() {
+  const ps = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+  if (ps.length === 0) {
+    alert("No hay productos en el carrito. Por favor, añade productos antes de continuar.");
+    window.location.href = "carrito.html";
+    return;
+  }
+
+  loadUserInfo();
+  loadProductItems();
+  mostrarTotalFinalYDescuento();
+  setupPaymentForm();
+});
+
+function getCurrentUserId() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user && user.id ? user.id : null;
+}
+
+function loadUserInfo() {
+  const c = document.getElementById('user-info');
+  if (!c) return;
+  const d = JSON.parse(localStorage.getItem('userDetails')) || {};
+  if (Object.keys(d).length === 0) {
+    c.innerHTML = '<p>No hay información de usuario disponible.</p>';
+    return;
+  }
+  c.innerHTML = `
+    <p><strong>Nombre:</strong> ${d.nombre} ${d.apellido}</p>
+    <p><strong>Teléfono:</strong> ${d.telefono}</p>
+    <p><strong>Dirección:</strong> ${d.direccion}${d.calle ? ', ' + d.calle : ''}</p>
+    <p><strong>Detalles:</strong> ${d.piso || '-'}</p>
+  `;
+}
+
+function loadProductItems() {
+  const c = document.getElementById('items-container');
+  if (!c) return;
+  const ps = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+  if (ps.length === 0) {
+    c.innerHTML = '<p>No hay productos en el carrito.</p>';
+    return;
+  }
+  let total = 0;
+  let html = '';
+  ps.forEach(p => {
+    const price = typeof p.precio === 'string'
+      ? parseInt(p.precio.replace(/\D/g, '')) || 0
+      : p.precio || 0;
+    total += price * (p.cantidad || 1);
+    const imagenMostrar = p.imagen_url || p.imagen_frente || p.imagen_espalda || p.img || '../img/placeholder.png';
+    html += `
+      <div class="item">
+        <div class="item-image">
+          <img src="${imagenMostrar}"
+               alt="${p.nombre || 'Producto'}"
+               onerror="this.src='../img/placeholder.png'">
+        </div>
+        <div class="item-details">
+          <h4>${p.nombre || 'Producto sin nombre'}</h4>
+          <p>Talla: ${p.talla || '-'}</p>
+          <p class="price">$${price.toLocaleString('es-CO')}</p>
+        </div>
+      </div>
+    `;
+  });
+  html += `
+    <div class="total-section">
+      <hr>
+      <div class="total">
+        <span>Total (sin descuento):</span>
+        <span class="total-amount">$${total.toLocaleString('es-CO')}</span>
+      </div>
+    </div>
+  `;
+  c.innerHTML = html;
+  localStorage.setItem('totalPrecio', total);
+}
+
+// NUEVO: Mostrar total final (con descuento si existe) y mensaje de descuento
+function mostrarTotalFinalYDescuento() {
+  const totalFinalSection = document.getElementById('total-final-section');
+  const descuentoSection = document.getElementById('descuento-section');
+  const totalFinalRaw = localStorage.getItem('totalFinal');
+  const totalPrecioRaw = localStorage.getItem('totalPrecio');
+  const descuentoValor = localStorage.getItem('descuentoValor');
+  let html = '';
+  let descuentoHtml = '';
+
+  if (totalFinalRaw && totalPrecioRaw && parseInt(totalFinalRaw) < parseInt(totalPrecioRaw)) {
+    html = `<span style="font-weight:bold;font-size:1.1em;color:#A259C3;">Total a pagar: $${parseInt(totalFinalRaw).toLocaleString('es-CO')}</span>`;
+    if (descuentoValor && parseInt(descuentoValor) > 0) {
+      descuentoHtml = `<span style="color:#27ae60;font-weight:600;">¡Descuento aplicado! -$${parseInt(descuentoValor).toLocaleString('es-CO')}</span>`;
+    }
+  } else if (totalPrecioRaw) {
+    html = `<span style="font-weight:bold;font-size:1.1em;">Total a pagar: $${parseInt(totalPrecioRaw).toLocaleString('es-CO')}</span>`;
+  }
+  totalFinalSection.innerHTML = html;
+  descuentoSection.innerHTML = descuentoHtml;
+}
+
+function validateCardData(fd) {
+  if (!fd.cardNumber || fd.cardNumber.length < 13 || fd.cardNumber.length > 16)
+    return 'Por favor ingrese un número de tarjeta válido (13-16 dígitos).';
+  if (!fd.expiryMonth || !fd.expiryYear) return 'Por favor seleccione la fecha de caducidad.';
+  if (!fd.securityCode || fd.securityCode.length < 3 || fd.securityCode.length > 4)
+    return 'Por favor ingrese un código de seguridad válido (3-4 dígitos).';
+  if (!fd.cardHolder || fd.cardHolder.length < 3)
+    return 'Por favor ingrese el nombre completo del titular de la tarjeta.';
+  return null;
+}
+
+function showAlert(msg, type = 'error') {
+  const el = document.getElementById('customAlert');
+  if (!el) { alert(msg); return; }
+  el.innerHTML = msg;
+  el.className = `custom-alert ${type}`;
+  el.style.display = 'block';
+  if (type !== 'info') setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
+
+function setupPaymentForm() {
+  const form = document.getElementById('payment-form');
+  if (!form) return;
+
+  [
+    { id: 'card-number', max: 16 },
+    { id: 'security-code', max: 4 }
+  ].forEach(f => {
+    const input = document.getElementById(f.id);
+    if (input) {
+      input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^\d]/g, '').slice(0, f.max);
+      });
+    }
+  });
+
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    showAlert('<div class="loader"></div> Procesando pago...', 'info');
+    try {
+      const expiryValue = document.getElementById('expiry-date').value; // "YYYY-MM"
+      let expiryMonth = null, expiryYear = null;
+      if (expiryValue) {
+        const parts = expiryValue.split('-');
+        expiryYear = Number(parts[0]);
+        expiryMonth = Number(parts[1]);
+      }
+
+      const fd = {
+        cardNumber: document.getElementById('card-number').value.trim(),
+        expiryMonth,
+        expiryYear,
+        securityCode: document.getElementById('security-code').value.trim(),
+        cardHolder: document.getElementById('card-holder').value.trim()
+      };
+      const msg = validateCardData(fd);
+      if (msg) return showAlert(msg, 'error');
+      const ps = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+      if (ps.length === 0)
+        return showAlert('No hay productos en el carrito para procesar el pago.', 'error');
+      const ud = JSON.parse(localStorage.getItem('userDetails')) || {};
+      if (!ud.nombre || !ud.apellido)
+        return showAlert('Por favor añada su información de facturación antes de continuar.', 'error');
+
+      // USAR TOTAL FINAL CON DESCUENTO SI EXISTE
+      let total = 0;
+      if (localStorage.getItem('totalFinal')) {
+        total = parseInt(localStorage.getItem('totalFinal')) || 0;
+      } else {
+        total = parseInt(localStorage.getItem('totalPrecio')) || 0;
+      }
+
+      const userId = getCurrentUserId();
+      // 1. Crear dirección de envío
+      let direccion_envio_id;
+      const { data: direccionData, error: errorDireccion } = await supabase
+        .from('direccion_envio')
+        .insert([{
+          nombre: ud.nombre,
+          apellido: ud.apellido,
+          telefono: ud.telefono,
+          calle: ud.calle,
+          numero: ud.piso || '',
+          descripcion: ud.direccion
+        }])
+        .select()
+        .single();
+      if (errorDireccion) return showAlert('Error guardando la dirección de envío', 'error');
+      direccion_envio_id = direccionData.id;
+
+      // 2. Crear el pedido_maestro
+      const { data: pedidoData, error: errorPedido } = await supabase
+        .from('pedido_maestro')
+        .insert([{
+          usuario_id: userId,
+          direccion_envio_id,
+          total,
+          estado: 'pendiente',
+          metodo_pago: 'tarjeta',
+        }])
+        .select()
+        .single();
+      if (errorPedido) return showAlert('Error creando el pedido', 'error');
+
+      // 3. Crear los productos en detalle_pedido
+      const detalles = ps.map(producto => {
+        let productoId = producto.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(producto.id)
+          ? producto.id
+          : UUID_PRODUCTO_PERSONALIZADO;
+
+        let detallePersonalizado = null;
+        if (producto.personalizado) {
+          detallePersonalizado = {
+            nombre: producto.nombre || "",
+            talla: producto.talla || "",
+            color: producto.color || "",
+            precio: producto.precio || "",
+            imagen_frente: producto.imagen_frente || "",
+            imagen_espalda: producto.imagen_espalda || "",
+          };
+        }
+
+        return {
+          pedido_id: pedidoData.id,
+          producto_id: productoId,
+          cantidad: Number(producto.cantidad) || 1,
+          talla: producto.talla || null,
+          detalle_personalizado: detallePersonalizado ? JSON.stringify(detallePersonalizado) : null,
+          subtotal: (
+            (typeof producto.precio === 'string'
+              ? parseInt(producto.precio.replace(/\D/g, ''))
+              : producto.precio
+            ) * (Number(producto.cantidad) || 1)
+          ) || 0
+        }
+      });
+
+      const { error: errorDetalle } = await supabase
+        .from('detalle_pedido')
+        .insert(detalles);
+      if (errorDetalle) {
+        return showAlert('Error agregando productos al pedido', 'error');
+      }
+
+      showAlert('¡Pago realizado con éxito! Redirigiendo...', 'success');
+      // NO borres aquí el localStorage, deja que confirmacion.html lo limpie
+      setTimeout(() => window.location.href = 'confirmacion.html', 2000);
+    } catch (e) {
+      showAlert('Error al procesar el pago: ' + (e.message || 'Error desconocido'), 'error');
+    }
+  });
+}
+  </script>
+</body>
+</html>

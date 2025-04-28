@@ -2,23 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador</title>
     <link rel="stylesheet" href="../css/admin.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Inicio de sesión</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 </head>
 <body>
 <main>
     <div class="login-container3">
         <h1>Administrador</h1>
-        <img class="icono" src="./img/icons8-lock-24.png" alt="Contraseña" />
+        <img class="icono" src="../img/icons8-lock-24.png" alt="Contraseña" />
         <p class="datos">Tus datos están protegidos.</p>
 
+<<<<<<< HEAD
         <form id="userForm">
             <div class="form-group">
                 <label for="user-type" class="form-label">
-                    <img class="user" src="./img/icons8-usuario-24.png" alt="Usuario" />
+                    <img class="user" src="../img/icons8-usuario-24.png" alt="Usuario" />
                     Tipo de Usuario
                 </label>
                 <select name="user-type" class="form-input" id="userSelect">
@@ -28,12 +37,12 @@
             </div>
 
             <div class="input-group">
-                <img class="icocorreo" src="./img/icons8-correo-electrónico-32.png" alt="Correo">
+                <img class="icocorreo" src="../img/icons8-correo-electrónico-32.png" alt="Correo">
                 <input id="correo" type="text" placeholder="Correo electrónico" required>
             </div>
 
             <div class="input-group">
-                <img class="icocontraseña" src="./img/icons8-usuario-24.png" alt="Código">
+                <img class="icocontraseña" src="../img/icons8-usuario-24.png" alt="Código">
                 <input id="contraseña" type="text" placeholder="Código" required>
             </div>
 
@@ -49,3 +58,119 @@
 <script src="../js/admi.js"></script>
 </body>
 </html>
+=======
+        <div class="form-group">
+            <label for="userSelect" class="form-label">
+                <img class="user" src="../img/icons8-usuario-24.png" alt="Icono usuario" />
+                <span class="user2">Tipo de Usuario</span>
+            </label>
+            <select name="user-type" class="form-input select-input" id="userSelect" required>
+                <option selected disabled>Selecciona un tipo de usuario</option>
+                <option value="admin">Administrador</option>
+                <option value="cliente">Cliente</option>
+            </select>
+        </div>
+        
+        <form id="userForm" autocomplete="off">
+            <!-- Cambio aquí: usar input-group como en el usuario -->
+            <div class="input-group">
+                <label for="correo">
+                    <img class="icocorreo" src="../img/icons8-correo-electrónico-32.png" alt="Correo" />
+                </label>
+                <input id="correo" type="email" placeholder="Correo electrónico" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="contraseña">
+                    <img class="icocontraseña" src="../img/icons8-lock-24.png" alt="Contraseña" />
+                </label>
+                <input id="contraseña" type="password" placeholder="Contraseña" required>
+            </div>
+            
+            <button class="btn-register" type="button" onclick="loginUser()">Iniciar sesión</button>
+        </form>
+    </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // CREA EL CLIENTE SUPABASE CORRECTAMENTE
+    const SUPABASE_URL = "https://hxrcmbaxxfvlgubpdifu.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Detecta cambio de tipo de usuario y redirige si es "cliente"
+    document.getElementById('userSelect').addEventListener('change', function () {
+        const userType = this.value;
+        if (userType === "cliente") {
+            window.location.href = "../html/inisesion.html";
+        }
+    });
+
+    window.loginUser = async function() {
+        const correo = document.getElementById('correo').value.trim();
+        const password = document.getElementById('contraseña').value.trim();
+        const userType = document.getElementById('userSelect').value;
+
+        if (!correo || !password || userType === "Selecciona un tipo de usuario") {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
+
+        if (userType !== "admin") {
+            alert("Solo los administradores pueden iniciar sesión aquí.");
+            return;
+        }
+
+        // 1. Verifica que el usuario está en la tabla admi
+        const { data, error } = await supabase
+            .from('admi')
+            .select('*')
+            .eq('email', correo) // Cambia a .eq('correo', correo) si tu columna es "correo"
+            .single();
+
+        if (error || !data) {
+            alert("Correo incorrecto o no autorizado como administrador");
+            return;
+        }
+
+        // 2. Intenta iniciar sesión con Supabase Auth
+        let { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+            email: correo,
+            password: password,
+        });
+
+        // 3. Si el usuario no existe aún en Auth, lo creamos (solo una vez)
+        if (authError && authError.message === "Invalid login credentials") {
+            let { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+                email: correo,
+                password: password,
+            });
+            if (signUpError) {
+                alert("No se pudo registrar al admin: " + signUpError.message);
+                return;
+            }
+            ({ data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                email: correo,
+                password: password,
+            }));
+            if (authError) {
+                alert("Error al iniciar sesión después de registrar: " + authError.message);
+                return;
+            }
+        } else if (authError) {
+            alert("Error en autenticación: " + authError.message);
+            return;
+        }
+
+        // 4. GUARDA LA SESIÓN DE ADMINISTRADOR Y REDIRIGE
+        alert("Inicio de sesión exitoso.");
+        localStorage.setItem('admin', JSON.stringify(data));
+        localStorage.setItem('isAdminLoggedIn', 'true');
+        window.location.href = "opciones_admin.html";
+    }
+});
+</script>
+</body>
+</html>
+>>>>>>> e870d6c (Subo mis archivos actualizados)

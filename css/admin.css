@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+=======
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 
 /* Reset general */
 * {
@@ -10,6 +14,7 @@
 
 html, body {
     height: 100%;
+<<<<<<< HEAD
     overflow: hidden;
 }
 
@@ -22,18 +27,47 @@ main {
     justify-content: flex-start;
     align-items: center;
     padding-left: 200px;
+=======
+}
+
+body {
+    min-height: 100vh;
+    background: url("../img/fondoadm.JPG") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 }
 
 .login-container3 {
     background-color: #ffffff;
+<<<<<<< HEAD
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 400px; /* igual que el otro */
     padding: 30px;
+=======
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
+    width: 440px;
+    left: 340px;
+    position: relative;
+    padding: 38px 32px 28px 32px;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+<<<<<<< HEAD
     position: absolute;
     margin: 34px 76px 0 600px; /* ajustado a tu diseño */
 }
@@ -54,12 +88,38 @@ main {
 
 /* Formulario */
 .login-container3 form {
+=======
+}
+
+.login-container3 h1 {
+    font-size: 2.1rem;
+    color: #9D71A5;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.login-container3 .icono {
+    height: 28px;
+    width: 28px;
+    margin-bottom: 8px;
+}
+
+.datos {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #561861;
+    margin-bottom: 24px;
+}
+
+form#userForm {
+>>>>>>> e870d6c (Subo mis archivos actualizados)
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+<<<<<<< HEAD
 /* Botón */
 .login-container3 button {
     background-color: #9D71A5;
@@ -116,18 +176,33 @@ main {
     width: 100%;
     margin-bottom: 15px;
     text-align: left;
+=======
+/* Estilos del selector de usuario */
+.form-group {
+    width: 100%;
+    margin-bottom: 18px;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 }
 
 .form-label {
     color: #ab73b9;
+<<<<<<< HEAD
     font-size: 14px;
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+=======
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 }
 
 .user {
     margin-right: 8px;
+<<<<<<< HEAD
 }
 
 /* Inputs bonitos */
@@ -142,12 +217,41 @@ main {
 }
 
 /* -------- ESTILO DE INPUT-GROUP (igual que en tu otro CSS) -------- */
+=======
+    width: 20px;
+    height: 20px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid #a38ed3;
+    background-color: #f8f3fa;
+    color: #574c94;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-top: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #c07794e3;
+    background-color: #f3e5f7;
+}
+
+/* Estilos del formulario con input-group (igual que el usuario) */
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 .input-group {
     width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+<<<<<<< HEAD
     border-bottom: 2px solid #a38ed3;
+=======
+    border-bottom: 2px solid #a38ed3; /* Usando el mismo color que el admin */
+>>>>>>> e870d6c (Subo mis archivos actualizados)
     padding: 5px 0;
     transition: border-color 0.3s;
 }
@@ -164,11 +268,16 @@ main {
     background: none;
     outline: none;
     font-size: 1rem;
+<<<<<<< HEAD
     color: #574c94;
+=======
+    color: #574c94; /* Color consistente con el admin */
+>>>>>>> e870d6c (Subo mis archivos actualizados)
     padding: 10px 5px;
 }
 
 .input-group input::placeholder {
+<<<<<<< HEAD
     color: #c07794e3;
 }
 
@@ -190,3 +299,118 @@ main {
     vertical-align: middle;
     cursor: pointer;
 }
+=======
+    color: #ab73b9; /* Color de placeholder consistente */
+}
+
+/* Focus bonito para input-group */
+.input-group:focus-within {
+    border-bottom: 2px solid #9D71A5; /* Color principal del admin */
+}
+
+.btn-register {
+    background-color: #9D71A5;
+    color: white;
+    border: none;
+    width: 90%;
+    padding: 13px 0;
+    border-radius: 28px;
+    font-size: 1.13rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    margin: 12px 0 8px 0;
+    box-shadow: 0 2px 6px #e0bee6ad;
+}
+
+.btn-register:hover {
+    background-color: #d09cdb;
+}
+
+.login-container3 .links {
+    margin-top: 10px;
+}
+
+.login-container3 .links a {
+    text-decoration: none;
+    color: #684d58;
+    font-size: 0.98rem;
+    transition: color 0.2s;
+}
+
+.login-container3 .links a:hover {
+    color: #e588f8;
+}
+
+/* Estilos adicionales para mantener compatibilidad */
+.icocorreo, 
+.icocontraseña {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+/* Estilos adicionales para la página de información de usuario */
+.login-message {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.login-message p {
+    font-size: 16px;
+    color: #4F1D3F;
+    margin-bottom: 20px;
+}
+
+.login-message button {
+    background-color: #D9C6DD;
+    color: #4F1D3F;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-message button:hover {
+    background-color: #4F1D3F;
+    color: #fff;
+}
+
+.logout-button {
+    background-color: #4F1D3F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    width: 100%;
+}
+
+.logout-button:hover {
+    background-color: #6e3059;
+}
+
+.edit-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #D9C6DD;
+    border-radius: 4px;
+    font-family: inherit;
+    color: #4F1D3F;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: #4F1D3F;
+    box-shadow: 0 0 0 2px rgba(79, 29, 63, 0.2);
+}
+>>>>>>> e870d6c (Subo mis archivos actualizados)

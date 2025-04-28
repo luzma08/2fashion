@@ -7,7 +7,39 @@
     <link rel="stylesheet" href="../css/favoritos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
-</head>
+    <style>
+        /* Estilos para los botones de filtrado */
+        #Opciones-favoritos button {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #Opciones-favoritos button.activo {
+            background-color: #53214F;
+            color: white;
+            border-color: #53214F;
+        }
+
+        #Opciones-favoritos button:hover {
+            background-color: #e0e0e0;
+        }
+
+        #Opciones-favoritos button.activo:hover {
+            background-color: #421640;
+        }
+
+        /* Estilos para categoría en productos */
+        .producto-info .categoria {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
   <header class="header">
@@ -69,96 +101,244 @@
   <section id="favoritos-ropa">
     <div id="lista-favoritos" class="p-4 max-w-3xl mx-auto"></div>
   </section>
-  <script>
-    function llevaracarrito() {
-      window.location.href = "../html/carrito.html";
-    }
   
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
       const contenedor = document.getElementById('lista-favoritos');
       const contador = document.getElementById('contador-favoritos');
+      const todosBtn = document.getElementById('Todos-favoritos');
+      const hombresBtn = document.getElementById('hombres-favoritos');
+      const mujeresBtn = document.getElementById('mujeres-favoritos');
+      const ninosBtn = document.getElementById('Niños-favoritos');
+      
       let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  
-      contador.textContent = favoritos.length;
-  
-      if (favoritos.length === 0) {
-        contenedor.innerHTML = '<p class="text-fav">No hay productos en tus favoritos.</p>';
-      } else {
-        favoritos.forEach((producto, index) => {
-          const div = document.createElement('div');
-          div.className = "producto-lista";
-  
-          div.innerHTML = `
-            <img src="${producto.img}" alt="${producto.nombre}">
-            <div class="producto-info">
-              <h4>${producto.nombre}</h4>
-              <p class="precio">${producto.precio}</p>
-              <p class="talla"> ${producto.talla}</p>
-            </div>
-            <div class="producto-botones">
-              <a href="#" class="agregar-al-carrito" data-index="${index}">
-                <i class="fa-solid fa-cart-shopping" title="Comprar"></i>
-              </a>
-              <a href="#" onclick="eliminarFavorito(${index})">
-                <i id="papelera-carro" class="fa-solid fa-trash" title="Eliminar"></i>
-              </a>
-            </div>
-          `;
-  
-          contenedor.appendChild(div);
+      let categoriaActual = 'todos';
+
+      // Actualizar contador inicial
+      actualizarContador(favoritos);
+      
+      // Mostrar todos los favoritos al cargar la página
+      mostrarFavoritos(favoritos);
+      
+      // Para depuración - muestra las categorías de los productos
+      console.log("Categorías en favoritos:", favoritos.map(p => p.categoria));
+      
+      // Asignar eventos a los botones de filtrado
+      todosBtn.addEventListener('click', () => {
+        categoriaActual = 'todos';
+        activarBoton(todosBtn);
+        mostrarFavoritos(favoritos);
+        actualizarContador(favoritos);
+      });
+      
+      // Corregir la inconsistencia en los nombres de categorías
+      mujeresBtn.addEventListener('click', () => {
+        categoriaActual = 'mujer';
+        activarBoton(mujeresBtn);
+        filtrarPorCategoria('mujer');
+      });
+
+      hombresBtn.addEventListener('click', () => {
+        categoriaActual = 'hombre'; // Cambiado de 'hombres' a 'hombre' para ser consistente
+        activarBoton(hombresBtn);
+        filtrarPorCategoria('hombre');
+      });
+
+      ninosBtn.addEventListener('click', () => {
+        categoriaActual = 'niño';
+        activarBoton(ninosBtn);
+        filtrarPorCategoria('niño');
+      });
+      
+      // Activar el botón "Todos" por defecto
+      activarBoton(todosBtn);
+      
+      // Función para filtrar productos por categoría - versión corregida
+      function filtrarPorCategoria(categoria) {
+        // Considerar que la categoría puede ser null o undefined
+        const productosFiltrados = favoritos.filter(producto => 
+          producto.categoria && producto.categoria.toLowerCase() === categoria.toLowerCase()
+        );
+        
+        console.log(`Filtrando por ${categoria}:`, productosFiltrados);
+        mostrarFavoritos(productosFiltrados);
+        actualizarContador(productosFiltrados);
+      }
+      
+      // Función para mostrar los favoritos en la interfaz
+      function mostrarFavoritos(productos) {
+        contenedor.innerHTML = '';
+        
+        if (productos.length === 0) {
+          if (categoriaActual === 'todos') {
+            contenedor.innerHTML = '<p class="text-fav">No hay productos en tus favoritos.</p>';
+          } else {
+            contenedor.innerHTML = `<p class="text-fav">No hay productos de la categoría ${categoriaActual} en tus favoritos.</p>`;
+          }
+        } else {
+          productos.forEach((producto, index) => {
+            // Encontrar el índice real en el array original de favoritos
+            const originalIndex = favoritos.findIndex(p => p.id === producto.id);
+            
+            const div = document.createElement('div');
+            div.className = "producto-lista";
+            
+            div.innerHTML = `
+              <img src="${producto.imagen_url}" alt="${producto.nombre}"> 
+              <div class="producto-info">
+                <h4>${producto.nombre}</h4>
+                <p class="precio">$${Number(producto.precio).toLocaleString('es-CO')}</p>
+                <p class="talla">Talla: ${producto.talla}</p>
+                <p class="categoria">Categoría: ${producto.categoria || 'No especificada'}</p>
+              </div>
+              <div class="producto-botones">
+                <a href="#" class="agregar-al-carrito" data-index="${originalIndex}">
+                  <i class="fa-solid fa-cart-shopping" title="Comprar"></i>
+                </a>
+                <a href="#" class="eliminar-favorito" data-index="${originalIndex}">
+                  <i id="papelera-carro" class="fa-solid fa-trash" title="Eliminar"></i>
+                </a>
+              </div>
+            `;
+            
+            contenedor.appendChild(div);
+          });
+          
+          // Añadir eventos a los botones
+          agregarEventos();
+        }
+      }
+      
+      // Función para actualizar el contador según los productos mostrados
+      function actualizarContador(productos) {
+        contador.textContent = productos.length;
+      }
+      
+      // Función para activar el botón seleccionado y desactivar los demás
+      function activarBoton(botonActivo) {
+        [todosBtn, hombresBtn, mujeresBtn, ninosBtn].forEach(btn => {
+          btn.classList.remove('activo');
         });
-  
-        // Añadir eventos a los botones de compra
+        botonActivo.classList.add('activo');
+      }
+      
+      // Función para agregar eventos a los botones de cada producto
+      function agregarEventos() {
+        // Eventos para botones de agregar al carrito
         const botonesComprar = document.querySelectorAll('.agregar-al-carrito');
         botonesComprar.forEach(boton => {
           boton.addEventListener('click', function (e) {
             e.preventDefault();
             const index = parseInt(this.dataset.index);
             const productoSeleccionado = favoritos[index];
-  
+            
             // Agregar al carrito
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            carrito.push(productoSeleccionado);
+            
+            // Verificar si ya existe en el carrito
+            const productoExistente = carrito.find(item => item.id === productoSeleccionado.id);
+            
+            if (productoExistente) {
+              // Si existe, aumentar cantidad
+              productoExistente.cantidad = (productoExistente.cantidad || 1) + 1;
+            } else {
+              // Si no existe, agregar con cantidad 1
+              productoSeleccionado.cantidad = 1;
+              carrito.push(productoSeleccionado);
+            }
+            
             localStorage.setItem('carrito', JSON.stringify(carrito));
-  
-            // Eliminar de favoritos (opcional)
-            // favoritos.splice(index, 1);
-            // localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  
-            // Redirigir al carrito
-            window.location.href = "../html/carrito.html";
+            
+            // Mostrar mensaje de confirmación
+            mostrarMensaje(`${productoSeleccionado.nombre} añadido al carrito`);
+            
+            // Actualizar contador del carrito
+            actualizarContadorCarrito();
+          });
+        });
+        
+        // Eventos para botones de eliminar
+        const botonesEliminar = document.querySelectorAll('.eliminar-favorito');
+        botonesEliminar.forEach(boton => {
+          boton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const index = parseInt(this.dataset.index);
+            eliminarFavorito(index);
           });
         });
       }
+      
+      // Función para mostrar mensajes de confirmación
+      function mostrarMensaje(mensaje) {
+        const mensajeElement = document.createElement('div');
+        mensajeElement.className = 'mensaje-confirmacion';
+        mensajeElement.textContent = mensaje;
+        mensajeElement.style.position = 'fixed';
+        mensajeElement.style.top = '20px';
+        mensajeElement.style.right = '20px';
+        mensajeElement.style.backgroundColor = '#53214F';
+        mensajeElement.style.color = 'white';
+        mensajeElement.style.padding = '10px 20px';
+        mensajeElement.style.borderRadius = '10px';
+        mensajeElement.style.zIndex = '9999';
+        
+        document.body.appendChild(mensajeElement);
+        
+        setTimeout(() => {
+          mensajeElement.remove();
+        }, 3000);
+      }
+      
+      // Función para eliminar un favorito
+      function eliminarFavorito(index) {
+        // Guardar el producto que se va a eliminar para mostrar mensaje
+        const productoEliminado = favoritos[index];
+        
+        // Eliminar del array y actualizar localStorage
+        favoritos.splice(index, 1);
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        
+        // Mostrar mensaje
+        mostrarMensaje(`${productoEliminado.nombre} eliminado de favoritos`);
+        
+        // Actualizar contador de favoritos en header
+        actualizarContadorFavoritos();
+        
+        // Recargar la vista según la categoría actual
+        if (categoriaActual === 'todos') {
+          mostrarFavoritos(favoritos);
+          actualizarContador(favoritos);
+        } else {
+          filtrarPorCategoria(categoriaActual);
+        }
+      }
+      
+      // Función para actualizar contadores en el header
+      function actualizarContadorCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let totalItems = 0;
+        
+        carrito.forEach(item => {
+          totalItems += item.cantidad || 1;
+        });
+        
+        const contadorCarrito = document.getElementById('contador-carrito');
+        if (contadorCarrito) contadorCarrito.textContent = totalItems;
+      }
+      
+      function actualizarContadorFavoritos() {
+        const contadorFav = document.getElementById('contador-fav');
+        if (contadorFav) contadorFav.textContent = favoritos.length;
+      }
+      
+      // Inicializar contadores
+      actualizarContadorCarrito();
+      actualizarContadorFavoritos();
     });
-  
-    function eliminarFavorito(index) {
-      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-      favoritos.splice(index, 1);
-      localStorage.setItem('favoritos', JSON.stringify(favoritos));
-      location.reload(); // recarga para actualizar
+
+    function llevaracarrito() {
+      window.location.href = "carrito.html";
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  
-    const contadorCarrito = document.getElementById('contador-carrito');
-    const contadorFav = document.getElementById('contador-fav');
-  
-    if (contadorCarrito) contadorCarrito.textContent = carrito.length;
-    if (contadorFav) contadorFav.textContent = favoritos.length;
-  });
-  
-  localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  const contadorFav = document.getElementById('contador-fav');
-  if (contadorFav) contadorFav.textContent = favoritos.length;
-
-  localStorage.setItem('carrito', JSON.stringify(productos));
-const contadorCarrito = document.getElementById('contador-carrito');
-if (contadorCarrito) contadorCarrito.textContent = productos.length;
-
   </script>
-    
 </body>
 </html>

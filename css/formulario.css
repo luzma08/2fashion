@@ -100,6 +100,7 @@ z-index: 1000;
     gap: 34px; 
     align-items: center;
 padding: 30px;
+cursor: pointer;
    
 }
 
@@ -137,7 +138,7 @@ padding: 30px;
     --primary-color: #4F1D3F;
     --primary-dark: #4F1D3F;
     --primary-light: #c78198;
-    --background-light: #e3b3d4;
+    --background-light: #ead2e2;
     --text-dark: #333;
     --text-light: #4F1D3F;
     --error-color: #F44336;

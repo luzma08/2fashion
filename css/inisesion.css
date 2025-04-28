@@ -162,3 +162,76 @@ main {
 .input-group:focus-within {
     border-bottom: 2px solid #b6718c;
 }
+<<<<<<< HEAD
+=======
+
+/* Estilos adicionales para la página de información de usuario */
+
+/* Mensaje de login */
+.login-message {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.login-message p {
+    font-size: 16px;
+    color: #4F1D3F;
+    margin-bottom: 20px;
+}
+
+.login-message button {
+    background-color: #D9C6DD;
+    color: #4F1D3F;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-message button:hover {
+    background-color: #4F1D3F;
+    color: #fff;
+}
+
+/* Botón de cerrar sesión */
+.logout-button {
+    background-color: #4F1D3F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    width: 100%;
+}
+
+.logout-button:hover {
+    background-color: #6e3059;
+}
+
+/* Estilos para el modo de edición */
+.edit-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #D9C6DD;
+    border-radius: 4px;
+    font-family: inherit;
+    color: #4F1D3F;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: #4F1D3F;
+    box-shadow: 0 0 0 2px rgba(79, 29, 63, 0.2);
+}
+
+>>>>>>> e870d6c (Subo mis archivos actualizados)

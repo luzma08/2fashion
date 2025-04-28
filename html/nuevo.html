@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header con botón login en hover</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .navegacion ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .navegacion ul li {
+            position: relative;
+            margin: 0 15px;
+        }
+        
+        .navegacion ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .navegacion ul li ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            display: none;
+            flex-direction: column;
+            width: 180px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .navegacion ul li:hover ul {
+            display: flex;
+        }
+        
+        .navegacion ul li ul li {
+            padding: 10px;
+            margin: 0;
+        }
+        
+        .iconos {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .iconos a {
+            color: #333;
+            text-decoration: none;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .icono-con-contador {
+            position: relative;
+        }
+        
+        .contador {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #toggle, label[for="toggle"] {
+            display: none;
+        }
+        
+        /* Estilos para el botón de login en hover */
+        .user-container {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .login-button {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: none;
+            z-index: 100;
+            white-space: nowrap;
+        }
+        
+        .login-button a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .user-container:hover .login-button {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navegacion {
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background-color: #f8f9fa;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.3s ease;
+                z-index: 100;
+            }
+            
+            #toggle:checked ~ .navegacion {
+                max-height: 300px;
+            }
+            
+            label[for="toggle"] {
+                display: block;
+                cursor: pointer;
+                font-size: 20px;
+            }
+            
+            label[for="toggle"]::before {
+                content: "\f0c9";
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+            
+            .navegacion ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .navegacion ul li {
+                margin: 10px 0;
+            }
+            
+            .navegacion ul li ul {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                display: none;
+            }
+            
+            .navegacion ul li:hover ul {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="/api/placeholder/180/40" alt="Logo"></a>
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="html/sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="#">Categorías</a>
+                    <ul>
+                        <li><a href="html/categorias.html">Mujeres</a></li>
+                        <li><a href="html/categoria-hombre.html">Hombres</a></li>
+                        <li><a href="html/categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="html/favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <div class="user-container">
+              <a href="html/infousuario.html"><i class="fa-solid fa-user"></i></a>
+              <div class="login-button">
+                <a href="html/login.html">Iniciar sesión</a>
+              </div>
+            </div>
+          </div>
+          
+    </header>
+
+    <script>
+        function llevaracarrito() {
+            window.location.href = "html/carrito.html";
+        }
+    </script>
+
+</body>
+</html>

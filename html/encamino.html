@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos En Camino</title>
+    <link rel="stylesheet" href="../css/verpedidos.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      /* Importar fuente moderna */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #4F1D3F;
+  --success: #0b382f;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --info: #3498db;
+  --light: #ffffff;
+  --dark: #2c3e50;
+  --bg-main: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  --card-bg: #cbc1c1;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #e8eef2;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-xl: 0 12px 32px rgba(0,0,0,0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --gradient-primary: linear-gradient(135deg, #4F1D3F 0%, #6a2a55 100%);
+  --gradient-success: linear-gradient(135deg, #195348 0%, #1abc9c 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+}
+
+body {
+  background: var(--bg-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  max-width: 1400px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* Título principal mejorado */
+main h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+main h1::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+/* Contenedor de pedidos con grid mejorado */
+.pedidos-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+  padding: 1rem 0;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Card principal redesignada */
+.pedido-card {
+  background: var(--gradient-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  backdrop-filter: blur(10px);
+}
+
+.pedido-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-success);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.pedido-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--success);
+}
+
+.pedido-card:hover::before {
+  opacity: 1;
+}
+
+/* Header de la card */
+.pedido-card .pedido-id {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin: 0;
+  padding: 1.5rem 1.5rem 0.5rem;
+  position: relative;
+}
+
+/* Estado mejorado */
+.pedido-card .pedido-estado {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: var(--gradient-success);
+  color: white;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Contenido principal de la card */
+.pedido-card > div:not(.pedido-estado):not(.pedido-id) {
+  padding: 0 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.pedido-card .pedido-fecha,
+.pedido-card .pedido-fecha-entrega {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pedido-card .pedido-fecha::before {
+  content: '📅';
+  font-size: 0.875rem;
+}
+
+.pedido-card .pedido-fecha-entrega {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.pedido-card .pedido-fecha-entrega::before {
+  content: '✅';
+  font-size: 0.875rem;
+}
+
+.pedido-card .pedido-usuario {
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(79, 29, 63, 0.05);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin: 0 1.5rem 0.75rem;
+}
+
+.pedido-card .pedido-usuario i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.pedido-card .pedido-direccion {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.pedido-card .pedido-direccion i {
+  color: var(--danger);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.pedido-card .pedido-total {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--success);
+  background: rgba(22, 160, 133, 0.1);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin: 1rem 1.5rem;
+  border: 2px solid rgba(22, 160, 133, 0.2);
+}
+
+.pedido-card .pedido-cantidad {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: 500;
+  padding: 8px;
+  background: rgba(0,0,0,0.03);
+  margin: 0 1.5rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Lista de productos mejorada */
+.pedido-card .productos-lista {
+  padding: 0 1.5rem 1.5rem;
+  margin: 0;
+  margin-top: auto;
+}
+
+.pedido-card .productos-lista > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.7);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.pedido-card .productos-lista > div:hover {
+  background: rgba(255,255,255,0.9);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.pedido-card img.img-minipersonalizada,
+.pedido-card img.producto-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 3px solid var(--success);
+  margin-right: 12px;
+  cursor: pointer;
+  background: var(--light);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.pedido-card img.img-minipersonalizada:hover,
+.pedido-card img.producto-img:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.pedido-card .producto-info {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Mensajes mejorados */
+.mensaje {
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--shadow-md);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.mensaje::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.mensaje.error {
+  background: linear-gradient(135deg, #ffe3e3 0%, #ffb3b3 100%);
+  color: #c0392b;
+}
+
+.mensaje.error::before {
+  background: var(--danger);
+}
+
+.mensaje.exito {
+  background: linear-gradient(135deg, #e8f8f5 0%, #d5f4e6 100%);
+  color: #27ae60;
+}
+
+.mensaje.exito::before {
+  background: var(--success);
+}
+
+/* Modal mejorado */
+#modal-imagen {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#modal-imagen .modal-content {
+  background-color: #ffff;
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  text-align: center;
+  max-width: 95vw;
+  max-height: 95vh;
+
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#modal-imagen img {
+  max-width: 80vw;
+  max-height: 70vh;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+#modal-imagen .btn-cerrar,
+#modal-imagen .btn-descargar {
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+#modal-imagen .btn-cerrar {
+  background: var(--danger);
+  color: white;
+}
+
+#modal-imagen .btn-cerrar:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+#modal-imagen .btn-descargar {
+  background: var(--gradient-success);
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#modal-imagen .btn-descargar:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive mejorado */
+@media (max-width: 1200px) {
+  .pedidos-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  main {
+    padding: 0 1rem;
+    margin: 2rem auto;
+  }
+  
+  main h1 {
+    font-size: 2rem;
+  }
+  
+  .pedidos-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main h1 {
+    font-size: 1.75rem;
+  }
+  
+  .pedidos-cards-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .pedido-card {
+    min-height: auto;
+  }
+  
+  .pedido-card .pedido-id,
+  .pedido-card > div:not(.pedido-estado):not(.pedido-id) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .pedido-card .pedido-usuario,
+  .pedido-card .pedido-total,
+  .pedido-card .pedido-cantidad {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .pedido-card .productos-lista {
+    padding: 0 1rem 1rem;
+  }
+}
+
+/* Animaciones adicionales */
+.pedido-card {
+  animation: slideInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.pedido-card:nth-child(1) { animation-delay: 0.1s; }
+.pedido-card:nth-child(2) { animation-delay: 0.2s; }
+.pedido-card:nth-child(3) { animation-delay: 0.3s; }
+.pedido-card:nth-child(4) { animation-delay: 0.4s; }
+.pedido-card:nth-child(5) { animation-delay: 0.5s; }
+.pedido-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados adicionales para diferentes tipos de pedidos */
+.pedido-card[data-estado="en_camino"] .pedido-estado {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.pedido-card[data-estado="pendiente"] .pedido-estado {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.pedido-card[data-estado="cancelado"] .pedido-estado {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+/* Efectos de hover más suaves */
+.pedido-card .productos-lista > div {
+  position: relative;
+  overflow: hidden;
+}
+
+.pedido-card .productos-lista > div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.6s;
+}
+
+.pedido-card .productos-lista > div:hover::before {
+  left: 100%;
+}
+    </style>
+</head>
+<body>
+ <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+     
+        <nav class="navegacion">
+            <ul>
+                <li><a href="opciones_admin.html">Inicio</a></li>
+                <li><a href="opciones_admin.html">Chat</a></li>
+                <li class="dropdown">
+                    <a href="#">Agregar prendas <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="agregarprendas.html">Agregar para usuario</a></li>
+                        <li><a href="agregarprendapersonalizable.html">Agregar para personalizable</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Administrar <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="verpedidos.html">Ver pedidos</a></li>
+                        <li><a href="verformulario.html">Ver formularios</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+          
+           <div class="iconos">
+            <a href="infoadmin.html"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    <main>
+        <h1>Pedidos En Camino</h1>
+        <div id="mensajes"></div>
+        <div class="pedidos-cards-container" id="pedidos-cards-container">
+            <!-- Aquí se cargarán las cards de pedidos dinámicamente -->
+        </div>
+    </main>
+    <!-- Modal para ver imagen grande y descargar -->
+    <div id="modal-imagen">
+      <div class="modal-content">
+        <img id="modal-img" src="" alt="Imagen personalizada" />
+        <br>
+        <button class="btn-cerrar" onclick="cerrarModalImagen()">Cerrar</button>
+        <a id="btn-descargar" class="btn-descargar" href="#" download="personalizacion.png">Guardar imagen</a>
+      </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://hxrcmbaxxfvlgubpdifu.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const pedidosCardsContainer = document.getElementById('pedidos-cards-container');
+const mensajesDiv = document.getElementById('mensajes');
+
+function abrirModalImagen(url) {
+  const modal = document.getElementById('modal-imagen');
+  const img = document.getElementById('modal-img');
+  const btnDescargar = document.getElementById('btn-descargar');
+  img.src = url;
+  btnDescargar.href = url;
+  let extension = 'png';
+  if (url.startsWith('data:image/jpeg')) extension = 'jpg';
+  btnDescargar.download = "personalizacion." + extension;
+  modal.style.display = 'flex';
+}
+function cerrarModalImagen() {
+  const modal = document.getElementById('modal-imagen');
+  document.getElementById('modal-img').src = '';
+  modal.style.display = 'none';
+}
+window.cerrarModalImagen = cerrarModalImagen;
+
+function mostrarMensaje(mensaje, tipo) {
+  const mensajeElement = document.createElement('div');
+  mensajeElement.textContent = mensaje;
+  mensajeElement.className = `mensaje ${tipo}`;
+  mensajesDiv.appendChild(mensajeElement);
+  setTimeout(() => {
+    mensajeElement.remove();
+  }, 1800);
+}
+
+async function cargarPedidosEnCamino() {
+  try {
+    const { data: pedidos, error } = await supabase
+      .from('pedido_maestro')
+      .select(`
+        id,
+        usuario_id,
+        direccion_envio_id,
+        fecha_pedido,
+        estado,
+        total,
+        usuario:usuarios(nombre),
+        direccion_envio(calle, numero, descripcion)
+      `)
+      .eq('estado', 'en camino')
+      .order('fecha_pedido', { ascending: true });
+
+    pedidosCardsContainer.innerHTML = '';
+
+    if (error) throw error;
+
+    if (!pedidos || pedidos.length === 0) {
+      pedidosCardsContainer.innerHTML = `<div class="mensaje error">No hay pedidos en camino</div>`;
+      return;
+    }
+
+    for (const pedido of pedidos) {
+      const { data: productos, error: errorProd } = await supabase
+        .from('detalle_pedido')
+        .select(`
+          cantidad,
+          talla,
+          subtotal,
+          detalle_personalizado,
+          productos(nombre, imagen_url)
+        `)
+        .eq('pedido_id', pedido.id);
+
+      if (errorProd) {
+        mostrarMensaje('Error al cargar productos de un pedido', 'error');
+        continue;
+      }
+
+      let productosArr = [];
+      let cantidadTotal = 0;
+
+      productos.forEach(prod => {
+        cantidadTotal += prod.cantidad;
+        let nombre = prod.productos?.nombre || 'Personalizado';
+        let imagen = "../img/placeholder.png";
+        if (prod.productos?.imagen_url && prod.productos.imagen_url.trim() !== "") {
+          if (prod.productos.imagen_url.startsWith('http')) {
+            imagen = prod.productos.imagen_url;
+          } else {
+            imagen = `https://hxrcmbaxxfvlgubpdifu.supabase.co/storage/v1/object/public/productos/${prod.productos.imagen_url}`;
+          }
+        }
+        let imagenFrente = null, imagenEspalda = null, imagenesHtml = "";
+
+        if (prod.detalle_personalizado) {
+          let det = {};
+          try { det = JSON.parse(prod.detalle_personalizado); } catch {}
+          imagenFrente = det.imagen_frente || null;
+          imagenEspalda = det.imagen_espalda || null;
+          nombre = det.nombre || 'Ropa Personalizada';
+          if (imagenFrente) {
+            if (imagenFrente.startsWith('data:image')) {
+              imagenesHtml += `<img class="img-minipersonalizada" src="${imagenFrente}" alt="Frente" title="Ver frente" />`;
+            } else if (imagenFrente.startsWith('http')) {
+              imagenesHtml += `<img class="img-minipersonalizada" src="${imagenFrente}" alt="Frente" title="Ver frente" />`;
+            } else {
+              imagenesHtml += `<img class="img-minipersonalizada" src="https://hxrcmbaxxfvlgubpdifu.supabase.co/storage/v1/object/public/productos/${imagenFrente}" alt="Frente" title="Ver frente" />`;
+            }
+          }
+          if (imagenEspalda) {
+            if (imagenEspalda.startsWith('data:image')) {
+              imagenesHtml += `<img class="img-minipersonalizada" src="${imagenEspalda}" alt="Espalda" title="Ver espalda" />`;
+            } else if (imagenEspalda.startsWith('http')) {
+              imagenesHtml += `<img class="img-minipersonalizada" src="${imagenEspalda}" alt="Espalda" title="Ver espalda" />`;
+            } else {
+              imagenesHtml += `<img class="img-minipersonalizada" src="https://hxrcmbaxxfvlgubpdifu.supabase.co/storage/v1/object/public/productos/${imagenEspalda}" alt="Espalda" title="Ver espalda" />`;
+            }
+          }
+          if (!imagenesHtml) {
+            imagenesHtml = `<img src="../img/placeholder.png" alt="Personalización" class="img-minipersonalizada">`;
+          }
+        } else {
+          imagenesHtml = `<img src="${imagen}" alt="${nombre}" class="producto-img">`;
+        }
+
+        productosArr.push({
+          nombre,
+          cantidad: prod.cantidad,
+          talla: prod.talla,
+          html: `
+            <div>
+              ${imagenesHtml}
+              <span class="producto-info">${nombre} (${prod.talla || '-'}) x${prod.cantidad}</span>
+            </div>
+          `
+        });
+      });
+
+      let direccion = '';
+      if (pedido.direccion_envio) {
+        direccion = [
+          pedido.direccion_envio.calle || '',
+          pedido.direccion_envio.numero || '',
+          pedido.direccion_envio.descripcion || ''
+        ].filter(Boolean).join(', ');
+      }
+      const fechaPedido = new Date(pedido.fecha_pedido).toLocaleDateString();
+
+      const card = document.createElement('div');
+      card.className = 'pedido-card';
+      card.innerHTML = `
+        <div class="pedido-id">Pedido #${pedido.id}</div>
+        <div class="pedido-estado" data-estado="${pedido.estado}">${pedido.estado}</div>
+        <div class="pedido-fecha">${fechaPedido}</div>
+        <div class="pedido-usuario"><i class="fas fa-user"></i> ${pedido.usuario ? pedido.usuario.nombre : "N/A"}</div>
+        <div class="pedido-direccion"><i class="fas fa-map-marker-alt"></i> ${direccion}</div>
+        <div class="pedido-total">Total: $${pedido.total}</div>
+        <div class="pedido-cantidad">Cantidad total: ${cantidadTotal}</div>
+        <div class="productos-lista">
+          ${productosArr.map(prod => prod.html).join('')}
+        </div>
+        <button class="btn-marcar-entregado" data-id="${pedido.id}">Marcar como Entregado</button>
+      `;
+      card.querySelectorAll('.img-minipersonalizada, .producto-img').forEach(img => {
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          abrirModalImagen(img.src);
+        });
+      });
+      // Asegura que el ID es el correcto, solo el UUID
+      card.querySelector('.btn-marcar-entregado').addEventListener('click', async (e) => {
+        e.stopPropagation();
+        let pedidoId = e.target.dataset.id;
+        // Limpiar el id: quita todo después de ":" si existe.
+        pedidoId = String(pedidoId).split(":")[0];
+        await marcarComoEntregado(pedidoId);
+      });
+
+      pedidosCardsContainer.appendChild(card);
+    }
+  } catch (error) {
+    console.error('Error al cargar pedidos:', error);
+    mostrarMensaje('Error al cargar los pedidos', 'error');
+  }
+}
+
+async function marcarComoEntregado(pedidoId) {
+  try {
+    pedidoId = String(pedidoId).split(":")[0];
+    console.log("ID limpio:", pedidoId);
+
+    const { error } = await supabase
+      .from('pedido_maestro')
+      .update({ estado: 'entregado', fecha_entrega: new Date().toISOString() })
+      .eq('id', pedidoId); // <--- ¡NO uses .single() aquí!
+
+    if (error) throw error;
+
+    mostrarMensaje('Pedido marcado como entregado', 'exito');
+    setTimeout(() => {
+      window.location.href = "verentregas.html";
+    }, 900);
+  } catch (error) {
+    console.error('Error al actualizar pedido:', error);
+    mostrarMensaje('Error al actualizar el pedido', 'error');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  cargarPedidosEnCamino();
+});
+
+document.getElementById('modal-imagen').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modal-imagen')) cerrarModalImagen();
+});
+</script>
+</body>
+</html>

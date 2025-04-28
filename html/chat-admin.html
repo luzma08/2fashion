@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/chat-admin.css">
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+     <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+     
+        <nav class="navegacion">
+            <ul>
+                <li><a href="opciones_admin.html">Inicio</a></li>
+                <li><a href="opciones_admin.html">Chat</a></li>
+                <li class="dropdown">
+                    <a href="#">Agregar prendas <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="agregarprendas.html">Agregar para usuario</a></li>
+                        <li><a href="agregarprendapersonalizable.html">Agregar para personalizable</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Administrar <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="verpedidos.html">Ver pedidos</a></li>
+                        <li><a href="verformulario.html">Ver formularios</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        
+           <div class="iconos">
+            <a href="infoadmin.html"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+
+  <div class="main-content">
+    <div class="admin-container">
+      <div class="admin-users">
+        <div class="users-header">
+          <h2>
+            <i class="fa-solid fa-users"></i>
+            Usuarios Conectados
+          </h2>
+          <div class="users-count">
+            <span id="users-online">0</span> online
+          </div>
+        </div>
+        <div class="users-search">
+          <input type="text" id="search-users" placeholder="Buscar usuario...">
+          <i class="fa-solid fa-search"></i>
+        </div>
+        <ul id="user-list" class="user-list"></ul>
+        <div class="admin-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="active-chats">0</span>
+            <span class="stat-label">Chats Activos</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="chat-user-info">
+            <div class="user-avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="user-details">
+              <h1 id="selected-user">Selecciona un usuario</h1>
+              <div class="user-status">
+                <div class="status-dot"></div>
+                <span id="user-status">Desconectado</span>
+              </div>
+            </div>
+          </div>
+          <div class="chat-actions">
+            <button class="action-btn" title="Archivar chat">
+              <i class="fa-solid fa-archive"></i>
+            </button>
+            <button class="action-btn" title="Marcar como resuelto">
+              <i class="fa-solid fa-check"></i>
+            </button>
+            <button class="action-btn" title="Más opciones">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div id="chat-messages" class="chat-messages">
+          <div class="welcome-message">
+            <div class="welcome-icon">👥</div>
+            <p>Panel de Administración de Chat</p>
+            <p class="welcome-subtitle">Selecciona un usuario de la lista para comenzar a chatear</p>
+          </div>
+        </div>
+        
+        <div class="admin-tools">
+          <button class="tool-btn active" data-tool="text">
+            <i class="fa-solid fa-keyboard"></i>
+            Texto
+          </button>
+          <button class="tool-btn" data-tool="template">
+            <i class="fa-solid fa-file-lines"></i>
+            Plantillas
+          </button>
+          <button class="tool-btn" data-tool="emoji">
+            <i class="fa-solid fa-face-smile"></i>
+            Emojis
+          </button>
+        </div>
+        
+        <div class="chat-input-container">
+          <form id="chat-form">
+            <div class="input-wrapper">
+              <button type="button" class="emoji-btn" title="Agregar emoji">
+                <i class="fa-solid fa-face-smile"></i>
+              </button>
+              <input type="text" id="chat-input" autocomplete="off" placeholder="Mensaje para el cliente...">
+              <button type="submit" class="send-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Botón de notificaciones flotante, fuera del contenedor del chat, para evitar que se superponga y siempre esté fijo a la derecha -->
+  <div class="noti-bell-container">
+    <button id="noti-bell-btn" class="noti-bell-btn" title="Notificaciones">
+      <i class="fa-solid fa-bell"></i>
+      <span id="noti-badge" class="noti-badge" style="display:none;">0</span>
+    </button>
+  </div>
+
+  <!-- PANEL EMERGENTE DE NOTIFICACIONES MEJORADO (al final del body) -->
+  <div id="noti-panel" class="noti-panel" style="display:none;">
+    <div class="noti-panel-header">
+      <span><i class="fa-solid fa-bell" style="margin-right: 8px;"></i>Notificaciones</span>
+      <button id="close-noti-panel" aria-label="Cerrar notificaciones">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+    <div id="noti-list" class="noti-list">
+      <!-- Ejemplo de estructura para notificaciones vacías -->
+      <div class="empty">
+        <div class="empty-icon">
+          <i class="fa-solid fa-bell-slash"></i>
+        </div>
+        <div class="empty-text">No hay notificaciones</div>
+        <div class="empty-subtext">Te notificaremos cuando tengas mensajes nuevos</div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../js/chat-admin.js"></script>
+</body>
+</html>

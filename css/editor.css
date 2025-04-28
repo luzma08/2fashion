@@ -1,0 +1,545 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+   gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+padding: 30px;
+cursor: pointer;
+   
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px; 
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px; 
+    color: #ffffff; 
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2; 
+    transform: scale(1.2); 
+}
+.icono-con-contador {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .contador {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: rgb(138, 56, 101);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 70%;
+    z-index: 10;
+  }
+        
+        .editor-container { 
+            display: flex; 
+            max-width: 1400px; 
+            margin: 20px auto; 
+            gap: 20px; 
+            padding: 0 20px;
+            height: calc(100vh - 120px);
+        }
+        
+        .toolbar { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(15px); 
+            border-radius: 20px; 
+            padding: 20px 15px; 
+            width: 80px; 
+            height: fit-content; 
+            box-shadow: 0 10px 40px rgba(79, 29, 63, 0.1); 
+            border: 1px solid rgba(255,255,255,0.3); 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            align-items: center;
+        }
+        
+        .tool-item { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 15px; 
+            background: rgba(79, 29, 63, 0.08); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 2px solid transparent; 
+            flex-direction: column; 
+            gap: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .tool-item:hover::before {
+            left: 100%;
+        }
+        
+        .tool-item:hover { 
+            background: rgba(79, 29, 63, 0.15); 
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 29, 63, 0.2);
+        }
+        
+        .tool-item.active { 
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%); 
+            color: white; 
+            border-color: #8B4A7F;
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(79, 29, 63, 0.3);
+        }
+        
+        .tool-item i { 
+            font-size: 1.2rem; 
+            color: #4F1D3F;
+            transition: all 0.3s;
+        }
+        
+        .tool-item.active i { 
+            color: white;
+        }
+        
+        .tool-label { 
+            font-size: 0.65rem; 
+            font-weight: 600; 
+            color: #4F1D3F; 
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        
+        .tool-item.active .tool-label { 
+            color: white;
+        }
+        
+        .editor-main { 
+            flex: 1; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(15px);
+            border-radius: 25px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+            padding: 30px; 
+            text-align: center;
+            overflow-y: auto;
+        }
+        
+        .editor-titulo { 
+            color: #4F1D3F; 
+            font-size: 1.8rem; 
+            margin-bottom: 25px; 
+            font-weight: 700;
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .prenda-info { 
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%); 
+            border-radius: 20px; 
+            padding: 20px 30px; 
+            margin-bottom: 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            align-items: center; 
+            font-size: 1.1rem;
+            box-shadow: 0 5px 20px rgba(79, 29, 63, 0.1);
+            border: 1px solid rgba(79, 29, 63, 0.1);
+        }
+        
+        .prenda-info div { 
+            margin: 0 8px; 
+            color: #4F1D3F; 
+            font-weight: 600; 
+        }
+        
+        .prenda-info .color-circulo { 
+            display: inline-block; 
+            width: 25px; 
+            height: 25px; 
+            border-radius: 50%; 
+            border: 2px solid rgba(79, 29, 63, 0.3); 
+            margin-left: 10px; 
+            vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .prenda-preview { 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            margin-bottom: 30px;
+        }
+        
+        .prenda-preview img {
+            max-height: 180px;
+            max-width: 170px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            box-shadow: 0 8px 25px rgba(79,29,63,0.15);
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 10px;
+        }
+        
+        .prenda-preview img:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(79,29,63,0.2);
+        }
+        
+        .prenda-preview img.active { 
+            border-color: #4F1D3F;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(79,29,63,0.25);
+        }
+        
+        .canvas-container { 
+            position: relative; 
+            display: inline-block; 
+            margin: 25px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        #editor-canvas { 
+            border: 3px solid rgba(79, 29, 63, 0.2); 
+            border-radius: 20px; 
+            cursor: crosshair; 
+            background: #fafafa;
+            transition: border-color 0.3s;
+        }
+        
+        #editor-canvas:hover {
+            border-color: rgba(79, 29, 63, 0.4);
+        }
+        
+        .controls-panel { 
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%); 
+            border-radius: 20px; 
+            padding: 25px; 
+            margin-top: 25px; 
+            display: none;
+            border: 1px solid rgba(79, 29, 63, 0.1);
+            box-shadow: 0 5px 20px rgba(79, 29, 63, 0.08);
+        }
+        
+        .controls-panel.active { 
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .control-group { 
+            display: flex; 
+            gap: 15px; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            flex-wrap: wrap;
+        }
+        
+        .control-group label { 
+            font-weight: 600; 
+            color: #4F1D3F; 
+            min-width: 90px;
+            font-size: 0.95rem;
+        }
+        
+        .control-group input, 
+        .control-group select { 
+            padding: 10px 15px; 
+            border-radius: 12px; 
+            border: 2px solid rgba(79, 29, 63, 0.2); 
+            font-family: inherit;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #4F1D3F;
+            box-shadow: 0 0 0 3px rgba(79, 29, 63, 0.1);
+        }
+        
+        .control-group button { 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            border: none; 
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%); 
+            color: white; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .control-group button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 29, 63, 0.3);
+        }
+        
+        .clipart-item {
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .clipart-item:hover {
+            transform: scale(1.2);
+            background: rgba(79, 29, 63, 0.1);
+        }
+        
+        .action-buttons { 
+            display: flex; 
+            gap: 20px; 
+            justify-content: center; 
+            margin-top: 30px;
+        }
+        
+        .btn { 
+            padding: 12px 30px; 
+            border: none; 
+            border-radius: 15px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%); 
+            color: white;
+        }
+        
+        .btn-primary:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(79, 29, 63, 0.3);
+        }
+        
+        .btn-secondary { 
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%); 
+            color: #495057;
+        }
+        
+        .btn-secondary:hover { 
+            background: linear-gradient(135deg, #dee2e6 0%, #ced4da 100%);
+            transform: translateY(-2px);
+        }
+        
+        .save-button { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%); 
+            color: white; 
+            border: none; 
+            padding: 18px 30px; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            box-shadow: 0 10px 40px rgba(79, 29, 63, 0.3); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .save-button:hover { 
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(79, 29, 63, 0.4);
+        }
+        
+        .save-button i {
+            font-size: 1.1rem;
+        }
+        
+        /* Scrollbar personalizado */
+        .editor-main::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .editor-main::-webkit-scrollbar-track {
+            background: rgba(79, 29, 63, 0.1);
+            border-radius: 10px;
+        }
+        
+        .editor-main::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #4F1D3F 0%, #6B2A4F 100%);
+            border-radius: 10px;
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .editor-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .toolbar {
+                flex-direction: row;
+                width: 100%;
+                height: auto;
+                justify-content: center;
+            }
+            
+            .prenda-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .prenda-preview {
+                gap: 20px;
+            }
+            
+            .save-button {
+                bottom: 20px;
+                right: 20px;
+                padding: 15px 25px;
+            }
+        }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/personalizado.css">
+    <style>
+        .shirt-images img {
+            height: 150px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        .precio-prenda {
+            color: #18864f;
+            font-size: 1.15rem;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="/img/logo.svg" alt="Logo"></a>
+    </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
+    </div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+              <li><a href="categorias.html">Mujeres</a></li>
+              <li><a href="categoria-hombre.html">Hombres</a></li>
+              <li><a href="categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="iconos">
+            <a href="favoritos.html" class="icono-con-contador">
+              <span class="contador" id="contador-fav">0</span>
+              <i class="fa-solid fa-heart"></i>
+            </a> 
+            <a onclick="llevaracarrito()" class="icono-con-contador">
+              <span class="contador" id="contador-carrito">0</span>
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
+        </div>
+  </header>
+    <div class="personaliza-contenedor">
+        <h2 class="personaliza-titulo">¿Quieres personalizar tu ropa?</h2>
+        <hr class="personaliza-divider">
+        <div class="personaliza-card">
+            <button class="arrow-btn arrow-left" title="Anterior">
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <div class="shirt-container">
+                <div class="shirt-images">
+                    <img id="camiseta-frente" src="../img/camiseta-frente.png" alt="Camiseta frente">
+                    <img id="camiseta-espalda" src="../img/camiseta-espalda.png" alt="Camiseta espalda">
+                </div>
+                <div style="text-align:center;margin-top:10px;">
+                    <span id="nombre-prenda" style="font-weight:600;color:#4F1D3F;">Camiseta blanca</span>
+                    <div id="precio-prenda" class="precio-prenda"></div>
+                </div>
+            </div>
+            <button class="arrow-btn arrow-right" title="Siguiente">
+                <i class="fa fa-arrow-right"></i>
+            </button>
+        </div>
+        <button class="select-btn">Seleccionar</button>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+    const supabaseUrl = "https://hxrcmbaxxfvlgubpdifu.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function cargarPrendasPersonalizadas() {
+        const { data, error } = await supabase
+            .from('prendas_personalizables')
+            .select('*')
+            .eq('disponible', true);
+
+        // Mapea con los nombres correctos
+        const prendas = (data || []).map(prenda => ({
+            id: prenda.id,
+            frente: prenda.imagen_frente,
+            espalda: prenda.imagen_espalda,
+            nombre: prenda.nombre,
+            precio_base: prenda.precio_base || 0,
+            tallas: prenda.tallas,
+            color_base: prenda.color_base
+        }));
+
+        window.prendas = prendas;
+        window.prendaActual = 0;
+        mostrarPrenda(0);
+    }
+
+    function mostrarPrenda(idx) {
+        const prendas = window.prendas || [];
+        if (prendas.length === 0) return;
+        document.getElementById('camiseta-frente').src = prendas[idx].frente;
+        document.getElementById('camiseta-espalda').src = prendas[idx].espalda;
+        document.getElementById('nombre-prenda').textContent = prendas[idx].nombre;
+        // Mostrar precio base
+        const precio = prendas[idx].precio_base;
+        document.getElementById('precio-prenda').textContent =
+            "Precio base: " + (precio ? "$" + Number(precio).toFixed(2) : "Gratis");
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarPrendasPersonalizadas);
+
+    document.querySelector('.arrow-left').addEventListener('click', function() {
+        const prendas = window.prendas || [];
+        window.prendaActual = (window.prendaActual - 1 + prendas.length) % prendas.length;
+        mostrarPrenda(window.prendaActual);
+    });
+    document.querySelector('.arrow-right').addEventListener('click', function() {
+        const prendas = window.prendas || [];
+        window.prendaActual = (window.prendaActual + 1) % prendas.length;
+        mostrarPrenda(window.prendaActual);
+    });
+    document.querySelector('.select-btn').addEventListener('click', function() {
+        const prendas = window.prendas || [];
+        localStorage.setItem('prendaSeleccionada', JSON.stringify(prendas[window.prendaActual]));
+        window.location.href = 'editor.html';
+    });
+
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  if (document.getElementById('contador-carrito')) document.getElementById('contador-carrito').textContent = carrito.length;
+  if (document.getElementById('contador-fav')) document.getElementById('contador-fav').textContent = favoritos.length;
+function llevaracarrito() {
+  window.location.href = "carrito.html";
+}
+
+
+</script>
+</body>
+</html>

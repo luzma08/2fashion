@@ -80,118 +80,201 @@
   </div>
 
   <div class="boton">
-    <a href="">Ir a pagar</a>
+    <a href="#" id="boton-pagar">Ir a pagar</a>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const contenedor = document.getElementById('contenedor-carrito');
-      const productos = JSON.parse(localStorage.getItem('carrito')) || [];
-      const seleccionarTodo = document.getElementById('seleccionarTodo');
-      const contadorSeleccionados = document.getElementById('contadorSeleccionados');
-      const totalContainer = document.getElementById('total-container');
-      const totalPrecio = document.getElementById('total-precio');
-      const eliminarTodosContainer = document.getElementById('eliminar-todos-container');
-      const eliminarTodosBtn = document.getElementById('eliminar-todos');
+<script>
+// Función centralizada para validar sesión
+function isLoggedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('user') !== null;
+}
 
-      let checkboxes = [];
+// Redirección al login
+function redirectToLogin() {
+  localStorage.setItem('redirectAfterLogin', window.location.href);
+  window.location.href = "inisesion.html";
+}
 
-      if (productos.length === 0) {
-        contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+// Actualiza los contadores de carrito y favoritos
+function updateCounters() {
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  const contadorCarrito = document.getElementById('contador-carrito');
+  const contadorFav = document.getElementById('contador-fav');
+  if (contadorCarrito) contadorCarrito.textContent = carrito.length;
+  if (contadorFav) contadorFav.textContent = favoritos.length;
+}
+
+// Eliminar producto del carrito
+window.eliminarProducto = function(index) {
+  let productos = JSON.parse(localStorage.getItem('carrito')) || [];
+  productos.splice(index, 1);
+  localStorage.setItem('carrito', JSON.stringify(productos));
+  window.location.reload();
+}
+
+// Navegación al carrito desde icono
+window.llevaracarrito = function() {
+  window.location.href = "carrito.html";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const contenedor = document.getElementById('contenedor-carrito');
+  const productos = JSON.parse(localStorage.getItem('carrito')) || [];
+  const seleccionarTodo = document.getElementById('seleccionarTodo');
+  const contadorSeleccionados = document.getElementById('contadorSeleccionados');
+  const totalContainer = document.getElementById('total-container');
+  const totalPrecio = document.getElementById('total-precio');
+  const eliminarTodosContainer = document.getElementById('eliminar-todos-container');
+  const eliminarTodosBtn = document.getElementById('eliminar-todos');
+  const botonPagar = document.getElementById('boton-pagar');
+
+  updateCounters();
+
+  let checkboxes = [];
+
+  // Limpia el contenedor antes de pintar
+  contenedor.innerHTML = '';
+
+  // Renderizar productos
+  if (productos.length === 0) {
+    contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+  } else {
+    productos.forEach((producto, index) => {
+      const div = document.createElement('div');
+      div.classList.add('producto');
+
+      // Imagen personalizada o normal
+      let imagenesHTML = '';
+      if (producto.personalizado && (producto.imagen_frente || producto.imagen_espalda)) {
+        imagenesHTML = `
+          <div class="imagen-slider" data-index="${index}">
+            <button class="flecha-izq" style="background:none;border:none;font-size:1.5em;">&#8592;</button>
+            <img 
+              src="${producto.imagen_frente || producto.imagen_espalda}" 
+              data-frente="${producto.imagen_frente || ''}" 
+              data-espalda="${producto.imagen_espalda || ''}" 
+              data-lado="frente"
+              class="imagen-producto-carrito"
+              style="width:80px;height:auto;border:2px solid #218c6b;margin:0 6px;">
+            <button class="flecha-der" style="background:none;border:none;font-size:1.5em;">&#8594;</button>
+          </div>
+        `;
       } else {
-        productos.forEach((producto, index) => {
-          const div = document.createElement('div');
-          div.classList.add('producto');
-          div.innerHTML = `
-            <input type="checkbox" class="checkbox-producto" data-precio="${producto.precio.replace(/\D/g, '')}" data-index="${index}">
-            <div class="imagen-contenedor">
-              <img src="${producto.img}" alt="" class="imagen-producto-carrito">
-            </div>
-            <div id="textos-favoritos">
-              <h3 id="titulo-compra-descripcion">${producto.nombre}</h3>
-              <h3 id="talla-compra">${producto.talla || '-'}</h3>
-              <h3 id="precio-compra">${producto.precio}</h3>
-            </div>
-            <a href="#" onclick="eliminarProducto(${index})"><i id="papelera-carro" class="fa-solid fa-trash"></i></a>
-          `;
-          contenedor.appendChild(div);
-        });
-
-        checkboxes = document.querySelectorAll('.checkbox-producto');
-
-        checkboxes.forEach(checkbox => {
-          checkbox.addEventListener('change', actualizarSeleccion);
-        });
-
-        seleccionarTodo.addEventListener('change', function () {
-          checkboxes.forEach(checkbox => {
-            checkbox.checked = seleccionarTodo.checked;
-          });
-          actualizarSeleccion();
-        });
-
-        eliminarTodosBtn.addEventListener('click', function () {
-          let productos = JSON.parse(localStorage.getItem('carrito')) || [];
-          const nuevosProductos = productos.filter((_, index) => {
-            const checkbox = document.querySelector(`.checkbox-producto[data-index="${index}"]`);
-            return !checkbox.checked;
-          });
-          localStorage.setItem('carrito', JSON.stringify(nuevosProductos));
-          location.reload();
-        });
-
-        function actualizarSeleccion() {
-          let total = 0;
-          let seleccionados = 0;
-
-          checkboxes.forEach(checkbox => {
-            const producto = checkbox.closest('.producto');
-            if (checkbox.checked) {
-              producto.classList.add('producto-seleccionado');
-              seleccionados++;
-              total += parseInt(checkbox.dataset.precio);
-            } else {
-              producto.classList.remove('producto-seleccionado');
-            }
-          });
-
-          contadorSeleccionados.textContent = seleccionados;
-
-          totalContainer.style.display = seleccionados > 0 ? 'flex' : 'none';
-          eliminarTodosContainer.style.display = seleccionados > 0 ? 'block' : 'none';
-          totalPrecio.textContent = `$${total.toLocaleString('es-CO')}`;
-          seleccionarTodo.checked = seleccionados === checkboxes.length;
-        }
+        imagenesHTML = `
+          <div class="imagen-contenedor">
+            <img src="${producto.imagen_url || producto.img}" alt="" class="imagen-producto-carrito">
+          </div>
+        `;
       }
+
+      div.innerHTML = `
+        <input type="checkbox" class="checkbox-producto" data-precio="${typeof producto.precio === 'string' ? producto.precio.replace(/\D/g, '') : producto.precio}" data-index="${index}">
+        ${imagenesHTML}
+        <div id="textos-favoritos">
+          <h3 id="titulo-compra-descripcion">${producto.nombre}</h3>
+          <h3 id="talla-compra">${producto.talla || '-'}</h3>
+          <h3 id="precio-compra">${producto.precio}</h3>
+        </div>
+        <a href="#" onclick="eliminarProducto(${index})"><i id="papelera-carro" class="fa-solid fa-trash"></i></a>
+      `;
+      contenedor.appendChild(div);
     });
 
-    function eliminarProducto(index) {
+    // Slider personalizado
+    contenedor.querySelectorAll('.imagen-slider').forEach(slider => {
+      const img = slider.querySelector('img');
+      const izq = slider.querySelector('.flecha-izq');
+      const der = slider.querySelector('.flecha-der');
+      izq.addEventListener('click', () => {
+        if (img.dataset.frente) {
+          img.src = img.dataset.frente;
+          img.dataset.lado = "frente";
+        }
+      });
+      der.addEventListener('click', () => {
+        if (img.dataset.espalda) {
+          img.src = img.dataset.espalda;
+          img.dataset.lado = "espalda";
+        }
+      });
+      izq.disabled = !img.dataset.frente || !img.dataset.espalda;
+      der.disabled = !img.dataset.frente || !img.dataset.espalda;
+    });
+
+    checkboxes = document.querySelectorAll('.checkbox-producto');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', actualizarSeleccion);
+    });
+
+    seleccionarTodo.addEventListener('change', function () {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = seleccionarTodo.checked;
+      });
+      actualizarSeleccion();
+    });
+
+    eliminarTodosBtn.addEventListener('click', function () {
       let productos = JSON.parse(localStorage.getItem('carrito')) || [];
-      productos.splice(index, 1);
-      localStorage.setItem('carrito', JSON.stringify(productos));
-      location.reload();
+      const nuevosProductos = productos.filter((_, index) => {
+        const checkbox = document.querySelector(`.checkbox-producto[data-index="${index}"]`);
+        return !checkbox.checked;
+      });
+      localStorage.setItem('carrito', JSON.stringify(nuevosProductos));
+      window.location.reload();
+    });
+
+    // Botón pagar: solo permite si sesión es válida
+    if (botonPagar) {
+      botonPagar.addEventListener('click', function(e) {
+        e.preventDefault();
+        let haySeleccionados = false;
+        let productosSeleccionados = [];
+        checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            haySeleccionados = true;
+            const index = parseInt(checkbox.dataset.index);
+            productosSeleccionados.push(productos[index]);
+          }
+        });
+        if (!haySeleccionados) {
+          alert('Debes seleccionar al menos un producto para continuar con la compra');
+          return;
+        }
+        // Guarda los productos seleccionados
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productosSeleccionados));
+        if (isLoggedIn()) {
+          window.location.href = "pago.html";
+        } else {
+          alert('Debes iniciar sesión para continuar con el pago');
+          redirectToLogin();
+        }
+      });
     }
 
+    function actualizarSeleccion() {
+      let total = 0;
+      let seleccionados = 0;
 
-    document.addEventListener('DOMContentLoaded', function () {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  
-    const contadorCarrito = document.getElementById('contador-carrito');
-    const contadorFav = document.getElementById('contador-fav');
-  
-    if (contadorCarrito) contadorCarrito.textContent = carrito.length;
-    if (contadorFav) contadorFav.textContent = favoritos.length;
-  });
-  
-  localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  const contadorFav = document.getElementById('contador-fav');
-  if (contadorFav) contadorFav.textContent = favoritos.length;
+      checkboxes.forEach(checkbox => {
+        const producto = checkbox.closest('.producto');
+        if (checkbox.checked) {
+          producto.classList.add('producto-seleccionado');
+          seleccionados++;
+          total += parseInt(checkbox.dataset.precio);
+        } else {
+          producto.classList.remove('producto-seleccionado');
+        }
+      });
 
-  localStorage.setItem('carrito', JSON.stringify(productos));
-const contadorCarrito = document.getElementById('contador-carrito');
-if (contadorCarrito) contadorCarrito.textContent = productos.length;
-
-  </script>
+      contadorSeleccionados.textContent = seleccionados;
+      totalContainer.style.display = seleccionados > 0 ? 'flex' : 'none';
+      eliminarTodosContainer.style.display = seleccionados > 0 ? 'block' : 'none';
+      totalPrecio.textContent = `$${total.toLocaleString('es-CO')}`;
+      seleccionarTodo.checked = seleccionados === checkboxes.length;
+    }
+  }
+});
+</script>
 </body>
 </html>

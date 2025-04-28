@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../css/categorias.css">
     <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Añadir Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -104,11 +106,10 @@
     <div class="rango-precios">
         <!-- Barra de rango de precios -->
         <label for="precio">Rango de precios:</label><br>
-        <input type="range" id="precio" name="precio" min="13000" max="31000" step="100" value="13000" oninput="actualizarValor()">
+        <input type="range" id="precio" name="precio" min="13000" max="100000" step="1000" value="13000" oninput="actualizarValor()">
         
         <!-- Mostrar valores del rango -->
         <div class="valores-rango">
-       
             <span id="valorActual">13.000</span>
         </div>
     </div>
@@ -118,103 +119,10 @@
 
 <!--Cuadros para poner las prendas de ropa -->
 <section id="Mostradores">
-     
-    <div class="fila">
-        <div class="recuadro-ropa">
-            <div class="cuadroderopa"> 
-                <a href="./detalles-camisa-formal.html" target="_blank"> 
-                    <div class="img-categorias"> <img src="../img/camisa_formal_men.jpg" alt=""></div>
-            </div>
-            <div class="texto-info"><h4>Camiseta formal</h4>
-                <p class="talla-compra">Talla: M</p> <!-- Esta es la nueva línea -->
-            </div>
-            <a href="#"><i id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-            <div class="texto-precio"><h3>$25.000</h3></div>
-        </div>
-        <div class="recuadro-ropa">
-            <div class="cuadroderopa"> 
-                <a href="./chaqueta-en-cuero.html" target="_blank"> 
-                    <div class="img-categorias"> <img src="../img/chaleco-man.png" alt=""></div>
-            </div>
-            <div class="texto-info"><h4>Chaqueta en cuero</h4>
-                <p class="talla-compra">Talla: L</p> <!-- Esta es la nueva línea -->
-            </div>
-            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-            <div class="texto-precio"><h3>$31.000</h3></div>
-        </div>
-        <div class="recuadro-ropa">
-            <div class="cuadroderopa"> 
-                <a href="/html/detalles_dril.html" target="_blank"> 
-                    <div class="img-categorias"> <img src="../img/drill_hombre.png" alt=""></div>
-            </div>
-            <div class="texto-info"><h4>Pantalon en drill</h4>
-                <p class="talla-compra">Talla: 32</p> <!-- Esta es la nueva línea -->
-            </div>
-            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-            <div class="texto-precio"><h3>$20.000</h3></div>
-        </div>
-        <div class="recuadro-ropa">
-            <div class="cuadroderopa"> 
-                <a href="/html/detalles_traje.html" target="_blank"> <div class="img-categorias"> <img src="../img/trajehombre.jpg" alt=""></div>
-            </div>
-            <div class="texto-info"><h4>Traje</h4>
-                <p class="talla-compra">Talla: 42</p> <!-- Esta es la nueva línea -->
-            </div>
-            <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-            <div class="texto-precio"><h3>$30.000</h3></div>
-        </div>
-    </div>
-    <div class="fila">
-        <div class="recuadro-ropa">
-            <div class="cuadroderopa"> 
-                <a href="/html/detalles_bermudas_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/bermudashombre.jpg" alt=""></div>
-            </div>
-        <div class="texto-info"><h4>Bermuda</h4>
-            <p class="talla-compra">Talla: 34</p> <!-- Esta es la nueva línea -->
-        </div>
-        <a href="#"><i id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-        <div class="texto-precio"><h3>$20.000</h3></div>
-    </div>
-    <div class="recuadro-ropa">
-        <div class="cuadroderopa"> 
-            <a href="/html/detalles_bleazer_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/blazerhombre.jpg" alt=""></div>
-        </div>
-        <div class="texto-info"><h4> Blazer</h4>
-            <p class="talla-compra">Talla: M</p> <!-- Esta es la nueva línea -->
-        </div>
-        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-        <div class="texto-precio"><h3>$30.000</h3></div>
-    </div>
-    <div class="recuadro-ropa">
-        <div class="cuadroderopa"> 
-            <a href="/html/camisa.polo.html" target="_blank"> <div class="img-categorias"> <img src="../img/polocamisa.webp" alt=""></div>
-        </div>
-        <div class="texto-info"><h4>Camisa tipo polo</h4>
-            <p class="talla-compra">Talla: L</p> <!-- Esta es la nueva línea -->
-        </div>
-        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-        <div class="texto-precio"><h3>$28.000</h3></div>
-    </div>
-    <div class="recuadro-ropa">
-        <div class="cuadroderopa"> 
-            <a href="/html/jean_skkiny_men.html" target="_blank"> <div class="img-categorias"> <img src="../img/jean-skinny.jpg" alt=""></div>
-        </div>
-        <div class="texto-info"><h4>Jean skinny</h4>
-            <p class="talla-compra">Talla: 28</p> <!-- Esta es la nueva línea -->
-        </div>
-        <a href="#"><i  id="icono-compra" class="fa-solid fa-cart-shopping"></i></a>
-        <a href="#"><i id="icono-corazon" class="fa-solid fa-heart"></i></a> 
-        <div class="texto-precio"><h3>$30.000</h3></div>
-    </div>
-    </div>
+    <!-- Los productos se cargarán dinámicamente aquí desde la base de datos -->
+    <div class="cargando">Cargando productos...</div>
 </section>
+<<<<<<< HEAD
 
 <footer class="footer">
     <div class="footer-content">
@@ -285,80 +193,260 @@
     </div>
      </footer>
 <div id="mensaje-carrito" style="font-family: Poppins, serif;  position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999;"></div>
+=======
+>>>>>>> e870d6c (Subo mis archivos actualizados)
 
-<script src="../js/categorias.js"></script>
+<div id="mensaje-carrito" style="font-family: Poppins, serif; position: fixed; top: 20px; right: 20px; background-color: #53214F; color: white; padding: 10px 20px; border-radius: 10px; z-index: 9999; display: none;"></div>
+
 <script>
-// Esperar que todo cargue
-document.addEventListener('DOMContentLoaded', function () {
-    const buscador = document.getElementById('buscador');
-    const productos = document.querySelectorAll('.recuadro-ropa'); // todos los productos
+// Configuración de Supabase
+const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    buscador.addEventListener('input', function () {
-        const texto = buscador.value.toLowerCase(); // lo que escribe el usuario en minúscula
+let todosLosProductos = [];
+let productosFiltrados = [];
+let productosMostrados = 8;
+const incrementoProductos = 4;
 
-        productos.forEach(producto => {
-            const nombre = producto.querySelector('.texto-info h4').textContent.toLowerCase();
+const paginaActual = window.location.pathname;
+let categoriaActual = 'hombre'; // ESPECÍFICO para esta página
 
-            if (nombre.includes(texto)) {
-                producto.style.display = 'block'; // mostrar si coincide
-            } else {
-                producto.style.display = 'none'; // ocultar si no coincide
-            }
-        });
-    });
-});
-
-function llevaracarrito(){
-    window.location.href = "../html/carrito.html"
+async function cargarProductos() {
+    try {
+        const productosContainer = document.getElementById('productos-container') || document.getElementById('Mostradores');
+        productosContainer.innerHTML = '<p class="cargando">Cargando productos...</p>';
+        const { data, error } = await supabase
+            .from('productos')
+            .select('*')
+            .eq('categoria', categoriaActual)
+            .eq('vendido', false)
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        todosLosProductos = data || [];
+        productosFiltrados = [...todosLosProductos];
+        productosMostrados = 8;
+        mostrarProductos();
+    } catch (error) {
+        const productosContainer = document.getElementById('productos-container') || document.getElementById('Mostradores');
+        productosContainer.innerHTML = '<p class="error">Error al cargar los productos. Por favor, recarga la página.</p>';
+    }
 }
 
+function mostrarProductos() {
+    const productosContainer = document.getElementById('productos-container') || document.getElementById('Mostradores');
+    productosContainer.innerHTML = '';
+    if (!productosFiltrados || productosFiltrados.length === 0) {
+        productosContainer.innerHTML = '<p class="no-productos">No hay productos disponibles con los filtros seleccionados.</p>';
+        return;
+    }
+    const productosVisibles = productosFiltrados.slice(0, productosMostrados);
+    const productosPorFila = 4;
+    for (let i = 0; i < productosVisibles.length; i += productosPorFila) {
+        const fila = document.createElement('div');
+        fila.className = 'fila';
+        for (let j = i; j < i + productosPorFila && j < productosVisibles.length; j++) {
+            const producto = productosVisibles[j];
+            const productoElement = crearProductoElement(producto);
+            fila.appendChild(productoElement);
+        }
+        productosContainer.appendChild(fila);
+    }
+    const mostrarMasBtn = document.getElementById('mostrar-mas');
+    if (mostrarMasBtn) {
+        if (productosMostrados >= productosFiltrados.length) {
+            mostrarMasBtn.style.display = 'none';
+        } else {
+            mostrarMasBtn.style.display = 'block';
+        }
+    }
+    agregarEventListeners();
+    actualizarContadores();
+}
 
+function crearProductoElement(producto) {
+    const recuadro = document.createElement('div');
+    recuadro.className = 'recuadro-ropa';
+    recuadro.setAttribute('data-producto-id', producto.id);
+    recuadro.innerHTML = `
+        <div class="cuadroderopa">
+            <a href="detalles_productos.html?id=${producto.id}"> 
+                <div class="img-categorias"> 
+                    <img src="${producto.imagen_url}" alt="${producto.nombre}">
+                </div>
+            </a>
+        </div>
+        <div class="texto-info">
+            <h4>${producto.nombre}</h4>
+            <p class="talla-compra">Talla: ${producto.talla}</p>
+        </div>
+        <a href="#" class="btn-carrito" data-id="${producto.id}">
+            <i id="icono-compra" class="fa-solid fa-cart-shopping"></i>
+        </a>
+        <a href="#" class="btn-favorito" data-id="${producto.id}">
+            <i id="icono-corazon" class="fa-solid fa-heart"></i>
+        </a> 
+        <div class="texto-precio"><h3>${formatearPrecio(producto.precio)}</h3></div>
+    `;
+    return recuadro;
+}
 
+function formatearPrecio(precio) {
+    return '$' + Number(precio).toLocaleString('es-CO');
+}
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const iconosCompra = document.querySelectorAll('.fa-cart-shopping');
-      const mensajeCarrito = document.getElementById('mensaje-carrito');
-    
-      iconosCompra.forEach(icono => {
-        icono.addEventListener('click', function (e) {
-          e.preventDefault();
-    
-          const recuadro = this.closest('.recuadro-ropa');
-          if (!recuadro) return;
-    
-          const img = recuadro.querySelector('img')?.src || '';
-          const nombre = recuadro.querySelector('.texto-info h4')?.textContent || 'Producto';
-          const precio = recuadro.querySelector('.texto-precio h3')?.textContent || '$0';
-          const talla = recuadro.querySelector('.talla-compra')?.textContent || 'Talla: -';
-
-         
-
-    
-          const nuevoProducto = {
-  img: img,
-  nombre: nombre,
-  precio: precio,
-  talla: talla
-};
-
-          let productos = JSON.parse(localStorage.getItem('carrito')) || [];
-          productos.push(nuevoProducto);
-          localStorage.setItem('carrito', JSON.stringify(productos));
-    
-          // Mostrar mensaje con estilo
-          mensajeCarrito.textContent = `${nombre} se añadió al carrito`;
-          mensajeCarrito.style.display = 'block';
-    
-          setTimeout(() => {
-            mensajeCarrito.style.display = 'none';
-          }, 2000);
+function agregarEventListeners() {
+    document.querySelectorAll('.btn-carrito').forEach(boton => {
+        boton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productoId = this.getAttribute('data-id');
+            agregarAlCarrito(productoId); // SOLO agrega al carrito (NO marca vendido)
         });
-      });
     });
-    </script>
-    
-  
+    document.querySelectorAll('.btn-favorito').forEach(boton => {
+        boton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productoId = this.getAttribute('data-id');
+            agregarAFavoritos(productoId);
+        });
+    });
+}
 
+function agregarAlCarrito(productoId) {
+    const producto = todosLosProductos.find(p => p.id == productoId);
+    if (!producto) return;
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    carrito.push({
+        id: producto.id,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        imagen_url: producto.imagen_url,
+        talla: producto.talla,
+        cantidad: 1
+    });
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    mostrarMensaje('carrito', `${producto.nombre} añadido al carrito`);
+    actualizarContadores();
+    // NO marques como vendido aquí
+}
+
+function agregarAFavoritos(productoId) {
+    const producto = todosLosProductos.find(p => p.id == productoId);
+    if (!producto) return;
+    let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    if (!favoritos.some(item => item.id == productoId)) {
+        favoritos.push({
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            imagen_url: producto.imagen_url,
+            talla: producto.talla
+        });
+        mostrarMensaje('favoritos', `${producto.nombre} añadido a favoritos`);
+    } else {
+        mostrarMensaje('favoritos', `${producto.nombre} ya está en favoritos`);
+    }
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+    actualizarContadores();
+}
+
+function mostrarMensaje(tipo, mensaje, esError = false) {
+    const elementoMensaje = document.getElementById(`mensaje-${tipo}`);
+    if (!elementoMensaje) return;
+    elementoMensaje.textContent = mensaje;
+    elementoMensaje.style.display = 'block';
+    elementoMensaje.style.backgroundColor = esError ? '#d32f2f' : '#53214F';
+    setTimeout(() => {
+        elementoMensaje.style.display = 'none';
+    }, 2500);
+}
+
+function actualizarContadores() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    document.getElementById('contador-carrito').textContent = carrito.length;
+    document.getElementById('contador-fav').textContent = favoritos.length;
+}
+
+function aplicarFiltros(e) {
+    if (e) e.preventDefault();
+    let filtrados = [...todosLosProductos];
+    const ropasSeleccionadas = Array.from(document.querySelectorAll('#lista-ropa input:checked')).map(cb => cb.parentElement.textContent.trim().toLowerCase());
+    if (ropasSeleccionadas.length > 0) {
+        filtrados = filtrados.filter(producto => {
+            const nombreLimpio = (producto.nombre || "").trim().toLowerCase();
+            return ropasSeleccionadas.some(tipo => nombreLimpio.includes(tipo));
+        });
+    }
+    const coloresSeleccionados = Array.from(document.querySelectorAll('#colores input[name="color"]:checked')).map(cb => cb.parentElement.textContent.trim());
+    if (coloresSeleccionados.length > 0) {
+        filtrados = filtrados.filter(producto =>
+            coloresSeleccionados.some(color =>
+                (producto.descripcion || '').toLowerCase().includes(color.toLowerCase())
+            )
+        );
+    }
+    const tallaSeleccionada = document.querySelector('#tallas input[name="talla"]:checked')?.parentElement.textContent.trim();
+    if (tallaSeleccionada) {
+        filtrados = filtrados.filter(producto =>
+            producto.talla === tallaSeleccionada
+        );
+    }
+    const precioMaximo = parseInt(document.getElementById('precio').value, 10);
+    filtrados = filtrados.filter(producto =>
+        parseFloat(producto.precio) <= precioMaximo
+    );
+    productosFiltrados = filtrados;
+    productosMostrados = 8;
+    mostrarProductos();
+}
+
+function eliminarChulito() {
+    document.querySelectorAll('.miCheckbox').forEach(cb => { cb.checked = false; });
+    document.getElementById('precio').value = 13000;
+    actualizarValor();
+    productosFiltrados = [...todosLosProductos];
+    productosMostrados = 8;
+    mostrarProductos();
+}
+
+function actualizarValor() {
+    const valor = document.getElementById('precio').value;
+    document.getElementById('valorActual').textContent = `${parseInt(valor).toLocaleString('es-CO')}`;
+}
+
+function cargarMasProductos() {
+    productosMostrados += incrementoProductos;
+    mostrarProductos();
+}
+
+function llevaracarrito() {
+    window.location.href = "/html/carrito.html";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarProductos();
+    const mostrarMasBtn = document.getElementById('mostrar-mas');
+    if (mostrarMasBtn) {
+        mostrarMasBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            cargarMasProductos();
+        });
+    }
+    const aplicarFiltrosBtn = document.getElementById('aplicar-filtros');
+    if (aplicarFiltrosBtn) {
+        aplicarFiltrosBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            aplicarFiltros();
+        });
+    }
+    actualizarContadores();
+    const precioInput = document.getElementById('precio');
+    if (precioInput) {
+        precioInput.addEventListener('input', actualizarValor);
+    }
+});
+</script>
 
 </body>
 </html>

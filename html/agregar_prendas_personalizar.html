@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Prenda Personalizada</title>
+    <link rel="stylesheet" href="../css/agregarprendas_personalizador">
+        <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f8f9fa; }
+        .admin-container { max-width: 450px; margin: 50px auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 35px 30px; }
+        h2 { color: #4F1D3F; text-align: center; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; }
+        label { font-weight: 500; color: #4F1D3F; display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="file"], select, input[type="color"], input[type="number"] {
+            width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; margin-bottom: 5px;
+        }
+        .tallas-checkbox { display: flex; flex-wrap: wrap; gap: 12px; }
+        .tallas-checkbox label { font-weight: 400; color: #2d1c22; margin-bottom: 0; }
+        .btn { background: #4F1D3F; color: #fff; padding: 12px 25px; border-radius: 12px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 10px; width: 100%;}
+        .btn:hover { background: #6B2A4F; }
+        .img-preview { display: block; width: 120px; margin: 8px 0; border-radius: 8px; background: #eee; object-fit: contain; }
+        .success-message { color: green; text-align: center; margin-top: 10px; }
+        .error-message { color: red; text-align: center; margin-top: 10px; }
+        /* Estilo para precios de personalización */
+        .personalizacion-precios { background:#f5f5fa; border-radius: 10px; padding: 10px 18px; margin-bottom: 16px; }
+        .personalizacion-precios label { display:inline-block; width: 80px; margin-right: 8px; }
+        .personalizacion-precios input[type="number"] { width: 80px; display:inline-block; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+   gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+padding: 30px;
+   
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px; 
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px; 
+    color: #ffffff; 
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2; 
+    transform: scale(1.2); 
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 160px;
+  height: 160px;
+  margin-bottom: 10px;
+}
+
+.card p {
+    text-align: center;
+    font-style: italic;
+  font-size: 15px;
+  color: #000000;
+}
+  button{
+      background-color: #4F1D3F ;
+      font-family: "Poppins", sans-serif; 
+      font-weight: 600;
+      color: #FFFFFF;
+      border-radius: 15px;
+      padding: 10px;
+      width: 200px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+     margin-left: 20px;
+    margin: 20px;
+
+  
+  }
+  button:hover{
+      color: #000000;
+      
+          background-color: #D9C6DD;
+
+         }
+         .footer{
+
+          background-color:#4F1D3F ;
+      
+          bottom: 0;
+      
+          left: 0;
+      
+          width: 100%;
+      
+          padding: 20px  0;
+      top: -200px;
+          color: #EEDAF2;
+      
+      
+      
+      }
+    </style>
+</head>
+<body>
+     <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+     
+        <nav class="navegacion">
+            <ul>
+                <li><a href="opciones_admin.html">Inicio</a></li>
+                <li><a href="opciones_admin.html">Chat</a></li>
+                <li class="dropdown">
+                    <a href="#">Agregar prendas <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="agregarprendas.html">Agregar para usuario</a></li>
+                        <li><a href="agregarprendapersonalizable.html">Agregar para personalizable</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Administrar <i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="verpedidos.html">Ver pedidos</a></li>
+                        <li><a href="verformulario.html">Ver formularios</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        
+           <div class="iconos">
+            <a href="infoadmin.html"><i class="fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    <div class="admin-container">
+        <h2>Agregar Prenda Personalizable</h2>
+        <form id="form-prenda">
+            <div class="form-group">
+                <label for="nombre">Nombre de la prenda:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="form-group">
+                <label>Imagen Frente:</label>
+                <input type="file" id="img-frente" accept="image/*" required>
+                <img id="preview-frente" class="img-preview" style="display:none;" alt="Frente preview">
+            </div>
+            <div class="form-group">
+                <label>Imagen Espalda:</label>
+                <input type="file" id="img-espalda" accept="image/*" required>
+                <img id="preview-espalda" class="img-preview" style="display:none;" alt="Espalda preview">
+            </div>
+            <div class="form-group">
+                <label>Tallas disponibles:</label>
+                <div class="tallas-checkbox">
+                    <label><input type="checkbox" name="tallas" value="S"> S</label>
+                    <label><input type="checkbox" name="tallas" value="M"> M</label>
+                    <label><input type="checkbox" name="tallas" value="L"> L</label>
+                    <label><input type="checkbox" name="tallas" value="XL"> XL</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Color base (opcional):</label>
+                <input type="color" id="color-base" value="#ffffff">
+            </div>
+            <div class="form-group">
+                <label for="precio-base">Precio base de la prenda:</label>
+                <input type="number" id="precio-base" min="0" step="0.01" required>
+            </div>
+            <div class="form-group personalizacion-precios">
+                <div style="margin-bottom:5px;font-weight:600;color:#4F1D3F;">Precio por personalización:</div>
+                <div>
+                    <label for="precio-img">Imagen:</label>
+                    <input type="number" id="precio-img" min="0" step="0.01" required>
+                </div>
+                <div>
+                    <label for="precio-emoji">Emoji:</label>
+                    <input type="number" id="precio-emoji" min="0" step="0.01" required>
+                </div>
+                <div>
+                    <label for="precio-texto">Texto:</label>
+                    <input type="number" id="precio-texto" min="0" step="0.01" required>
+                </div>
+            </div>
+            <button type="submit" class="btn">Agregar Prenda</button>
+            <div class="success-message" id="success-message" style="display:none;">¡Prenda agregada correctamente!</div>
+            <div class="error-message" id="error-message" style="display:none;"></div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+    // Configura tus credenciales de Supabase
+    const supabaseUrl = "https://hxrcmbaxxfvlgubpdifu.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Previsualización de imágenes
+    document.getElementById('img-frente').addEventListener('change', function(e) {
+        mostrarPreview(e.target.files[0], document.getElementById('preview-frente'));
+    });
+    document.getElementById('img-espalda').addEventListener('change', function(e) {
+        mostrarPreview(e.target.files[0], document.getElementById('preview-espalda'));
+    });
+    function mostrarPreview(file, imgElem) {
+        if (!file) { imgElem.style.display = 'none'; return; }
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            imgElem.src = evt.target.result;
+            imgElem.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+
+    document.getElementById('form-prenda').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        document.getElementById('success-message').style.display = "none";
+        document.getElementById('error-message').style.display = "none";
+        document.getElementById('error-message').textContent = "";
+
+        const nombre = document.getElementById('nombre').value.trim();
+        const imgFrenteFile = document.getElementById('img-frente').files[0];
+        const imgEspaldaFile = document.getElementById('img-espalda').files[0];
+        const colorBase = document.getElementById('color-base').value;
+        const precioBase = parseFloat(document.getElementById('precio-base').value);
+        const precioImg = parseFloat(document.getElementById('precio-img').value);
+        const precioEmoji = parseFloat(document.getElementById('precio-emoji').value);
+        const precioTexto = parseFloat(document.getElementById('precio-texto').value);
+
+        let tallas = [];
+        document.querySelectorAll('input[name="tallas"]:checked').forEach(chk => tallas.push(chk.value));
+        if (!nombre || !imgFrenteFile || !imgEspaldaFile || tallas.length === 0 ||
+            isNaN(precioBase) || isNaN(precioImg) || isNaN(precioEmoji) || isNaN(precioTexto)) {
+            alert("¡Por favor rellena todos los campos obligatorios, selecciona al menos una talla y pon todos los precios!");
+            return;
+        }
+
+        // SUBIR IMAGEN a STORAGE
+        async function uploadImage(file, folder) {
+            const ext = file.name.split('.').pop();
+            const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substr(2, 8)}.${ext}`;
+            const { error } = await supabase.storage.from('prendas').upload(fileName, file);
+            if (error) throw error;
+            const { data } = supabase.storage.from('prendas').getPublicUrl(fileName);
+            return data.publicUrl;
+        }
+
+        try {
+            const frenteUrl = await uploadImage(imgFrenteFile, "frentes");
+            const espaldaUrl = await uploadImage(imgEspaldaFile, "espaldas");
+            // Insertar en la tabla 'prendas_personalizables'
+            const { error: errorPrenda, data: prendaData } = await supabase.from('prendas_personalizables').insert([{
+                nombre: nombre,
+                imagen_frente: frenteUrl,
+                imagen_espalda: espaldaUrl,
+                tallas: tallas,
+                color_base: colorBase,
+                precio_base: precioBase,
+                disponible: true,
+                activo: true,
+            }]).select('id');
+            if (errorPrenda) throw errorPrenda;
+            const prendaId = prendaData && prendaData[0] && prendaData[0].id;
+
+            // Insertar precios de personalización (vinculados a la prenda)
+            // Si tu tabla de precios global se llama 'personalizacion_precios', puedes hacer:
+            // Si quieres que cada prenda tenga su propio precio de personalización:
+            await supabase.from('personalizacion_precios').insert([
+                { prenda_id: prendaId, tipo: 'imagen', precio: precioImg },
+                { prenda_id: prendaId, tipo: 'emoji', precio: precioEmoji },
+                { prenda_id: prendaId, tipo: 'texto', precio: precioTexto }
+            ]);
+
+            document.getElementById('success-message').style.display = "block";
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = "none";
+                document.getElementById('form-prenda').reset();
+                document.getElementById('preview-frente').style.display = "none";
+                document.getElementById('preview-espalda').style.display = "none";
+            }, 1600);
+        } catch(err) {
+            document.getElementById('error-message').textContent = "Error: " + (err.message || err.error_description || err);
+            document.getElementById('error-message').style.display = "block";
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,454 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1D3F;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+   gap: 15px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+
+
+.navegacion {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+}
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navegacion ul li {
+    margin: 0 30px;
+    position: relative;
+}
+.navegacion ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+.navegacion ul li a:hover {
+    background-color: #EEDAF2;
+    color: #000000;
+}
+.navegacion ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+.navegacion ul li:hover > ul {
+    display: block;
+}
+
+.navegacion ul li ul li a {
+    color: #4F1D3F;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.navegacion ul li ul li a:hover {
+    background-color: #D9C6DD;
+}
+#toggle,
+.header label {
+    display: none;
+    cursor: pointer;
+}
+
+.iconos {
+    display: flex;
+    gap: 34px; 
+    align-items: center;
+padding: 30px;
+cursor: pointer;
+   
+}
+
+.iconos a {
+    color: rgb(254, 254, 254); 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px; 
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+.iconos a:hover {
+    color: rgb(170, 129, 172); 
+    transform: scale(1.2); 
+}
+
+.additional-logos {
+    display: flex;
+    gap: 27px; 
+    align-items: center;
+    padding-left: 40px;
+}
+
+.additional-logos i {
+    font-size: 17px; 
+    color: #ffffff; 
+    transition: transform 0.3s, color 0.3s;
+}
+
+.additional-logos i:hover {
+    color: #EEDAF2; 
+    transform: scale(1.2); 
+}
+.icono-con-contador {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .contador {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: rgb(138, 56, 101);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 70%;
+    z-index: 10;
+  }
+
+                body {
+            font-family: "Poppins", serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(255, 255, 255);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4F1D3F;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 70px;
+            width: auto;
+        }
+
+        .navegacion {
+            flex: 1;
+            display: flex;
+            justify-content: center; 
+        }
+        .navegacion ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .navegacion ul li {
+            margin: 0 30px;
+            position: relative;
+        }
+        .navegacion ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        .navegacion ul li a:hover {
+            background-color: #EEDAF2;
+            color: #000000;
+        }
+        .navegacion ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+            padding: 10px 0;
+        }
+        .navegacion ul li:hover > ul {
+            display: block;
+        }
+
+        .navegacion ul li ul li a {
+            color: #4F1D3F;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .navegacion ul li ul li a:hover {
+            background-color: #D9C6DD;
+        }
+        #toggle,
+        .header label {
+            display: none;
+            cursor: pointer;
+        }
+
+        .iconos {
+            display: flex;
+            gap: 34px; 
+            align-items: center;
+            padding: 30px;
+        }
+
+        .iconos a {
+            color: rgb(254, 254, 254); 
+            text-decoration: none;
+            display: inline-block;
+            font-size: 17px; 
+            transition: color 0.5s ease, transform 0.3s ease;
+        }
+
+        .iconos a:hover {
+            color: rgb(170, 129, 172); 
+            transform: scale(1.2); 
+        }
+
+        .additional-logos {
+            display: flex;
+            gap: 27px; 
+            align-items: center;
+            padding-left: 40px;
+        }
+
+        .additional-logos i {
+            font-size: 17px; 
+            color: #ffffff; 
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .additional-logos i:hover {
+            color: #EEDAF2; 
+            transform: scale(1.2); 
+        }
+
+        /* --------- Personalización visual del contenido ---------- */
+        .personaliza-contenedor {
+            max-width: 800px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 40px 30px;
+        }
+        
+        .personaliza-titulo {
+            color: #4F1D3F;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+        
+        .personaliza-divider {
+            width: 60%;
+            margin: 0 auto 35px auto;
+            border: none;
+            border-top: 4px solid #4F1D3F;
+            border-radius: 2px;
+        }
+        
+        .personaliza-card {
+            background: linear-gradient(135deg, #E8D5EA, #D4B8D8);
+            border-radius: 20px;
+            padding: 50px 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+        
+        .shirt-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            width: 100%;
+        }
+        
+        .shirt-images {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .shirt-images img {
+            height: 150px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        
+        .arrow-btn {
+            background: #4F1D3F;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(79, 29, 63, 0.3);
+            transition: all 0.3s ease;
+            position: absolute;
+        }
+        
+        .arrow-btn:hover {
+            background: #6B2A4F;
+            transform: scale(1.1);
+        }
+        
+        .arrow-left {
+            left: 30px;
+        }
+        
+        .arrow-right {
+            right: 30px;
+        }
+        
+        .select-btn {
+            display: block;
+            margin: 30px auto 0 auto;
+            background: #fff;
+            color: #4F1D3F;
+            border: 2px solid #4F1D3F;
+            border-radius: 10px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .select-btn:hover {
+            background: #4F1D3F;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(79, 29, 63, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .personaliza-contenedor {
+                margin: 30px 20px;
+                padding: 30px 20px;
+            }
+            
+            .personaliza-titulo {
+                font-size: 1.5rem;
+            }
+            
+            .personaliza-card {
+                padding: 40px 20px;
+            }
+            
+            .shirt-container {
+                gap: 40px;
+            }
+            
+            .shirt-images {
+                gap: 40px;
+            }
+            
+            .shirt-images img {
+                height: 120px;
+            }
+            
+            .arrow-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .arrow-left {
+                left: 15px;
+            }
+            
+            .arrow-right {
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .shirt-container {
+                gap: 20px;
+            }
+            
+            .shirt-images {
+                gap: 30px;
+            }
+            
+            .shirt-images img {
+                height: 100px;
+            }
+            
+            .arrow-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .arrow-left {
+                left: 10px;
+            }
+            
+            .arrow-right {
+                right: 10px;
+            }
+        }
+        .shirt-images img {
+            height: 150px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+ 

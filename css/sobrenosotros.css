@@ -93,6 +93,7 @@ body {
     gap: 34px; 
     align-items: center;
 padding: 30px;
+cursor: pointer;
    
 }
 
@@ -146,12 +147,12 @@ padding: 30px;
   
 }
  .texto-sobrenosotras{
-    width: 100%;
+    width: 800px;
     display: flex;
     justify-content: right;
     align-items: right;
     margin-top: -333px;  
-    margin-left: -50px; 
+    margin-left: 490px; 
     text-align: right;
     color: #4F1D3F;
     font-size: 18px;

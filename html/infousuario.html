@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="../css/infousuario.css">
-    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <title>Información de usuario</title>
+  <meta charset="UTF-8">
+  <title>Perfil de Usuario</title>
+  <link rel="stylesheet" href="../css/infousuario.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    window.supabase = supabase.createClient(
+      'https://hxrcmbaxxfvlgubpdifu.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc'
+    );
+  </script>
 </head>
+<<<<<<< HEAD
 <body style="background-image: url('./imagenes/fondo.png'); background-size: cover; background-position: center;">
     
     <header class="header">
@@ -98,160 +105,70 @@
          
             
         </div>
+=======
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="../img/logo.svg" alt="Logo"></a>
+>>>>>>> e870d6c (Subo mis archivos actualizados)
     </div>
-    <div class="reset-container" style="display: none; text-align: center; margin-top: 20px;">
-        <button id="guardarCambios">Guardar cambios</button>
-        <button id="restablecerCambios">Restablecer cambios</button>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
     </div>
-    
-
-<footer class="footer">
-
-<div class="footer-content">
-
-    <h1>2fashion</h1>
-
-    <div class="conctact">
-
-        <div class="title">Conctacto</div>
-
-        <li class="lista">
-
-            <ul class="elem">
-
-                2fashion
-
-            </ul>
-
-            <ul class="elem">
-
-                3155131227
-
-            </ul>
-
-            <ul class="elem">
-
-                devprogramm4.@gmail.com
-
-            </ul>
-
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../html/sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+            <li><a href="categorias.html">Mujeres</a></li>
+            <li><a href="categoria-hombre.html">Hombres</a></li>
+            <li><a href="categoria-niños.html">Niños</a></li>
+          </ul>
         </li>
-
+      </ul>
+    </nav>
+    <div class="iconos">
+      <a href="favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a>
+      <a onclick="llevaracarrito()" class="icono-con-contador" style="cursor:pointer;">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <a href="infousuario.html"><i class="fa-solid fa-user"></i></a>
     </div>
-
-    <div class="direction">
-
-        <div class="title">Legal</div>
-
-        <li class="lista">
-
-            <ul class="elem">
-
-                Terminos y condiciones
-
-
-
-            </ul>
-
-            <ul class="elem">
-
-                Aviso de privacidad
-
-            </ul>
-
-            <ul class="elem">
-
-                Uso de cookies
-
-            </ul>
-
-            <ul class="elem">
-
-                Política de datos personales
-
-            </ul>
-
-        </li>
-
-    </div>
-
-    <div class="services">
-
-        <div class="title">Menu</div>
-
-        <li class="lista">
-
-            <ul class="elem">
-
-               Inicio
-
-            </ul>
-
-            <ul class="elem">
-
-                Sobre nosotros
-
-            </ul>
-
-            <ul class="elem">
-
-                Categoría mujer
-
-            </ul>
-
-            <ul class="elem">
-
-                Categoría hombres
-
-            </ul>
-
-            <ul class="elem">
-
-                Categoría niños
-
-            </ul>
-
-        </li>
-
-    </div>
-
-    <div class="social">
-
-        <div class="title">Conctacto</div>
-
-        <div class="social-content">
-
-            <a class="elem">
-
-                <i class="fa-brands fa-instagram"></i>
-
-            </a>
-
-            <a class="elem">
-
-                <i class="fa-brands fa-facebook"></i>
-
-            </a>
-
-            <a class="elem">
-
-                <i class="fa-brands fa-whatsapp"></i>
-
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
- </footer>
- <script src="../js/infousuario.js"></script> 
- <script src="../js/detalles.js"></script> 
-
-
- <div id="customAlert" class="custom-alert" style="display: none;"></div>
-
-
+  </header>
+  <div class="perfil-wrapper">
+    <aside class="perfil-aside">
+      <div class="perfil-avatar" id="avatarContainer">
+        <img src="../img/user-default.jpg" alt="Avatar" id="avatarImg"/>
+        <input type="file" id="fileInput" class="file-input" accept="image/*" style="display:none">
+        <div class="avatar-edit-btn" id="editAvatarBtn"><i class="fa fa-camera"></i></div>
+      </div>
+      <div class="perfil-hola">Hola!</div>
+      <nav class="perfil-menu">
+        <ul>
+          <li class="activo" data-section="perfil"><span class="perfil-barra"></span>Perfil</li>
+          <li data-section="direcciones"><span class="perfil-barra"></span>Direcciones</li>
+          <li data-section="pedidos"><span class="perfil-barra"></span>Pedidos</li>
+          <li data-section="salir" id="logoutBtn"><span class="perfil-barra"></span>Salir</li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="perfil-main">
+      <div id="main-content">
+        <!-- El contenido se genera dinámicamente -->
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="../js/infousuario.js"></script>
 </body>
 </html>

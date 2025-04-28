@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Nequi</title>
+        <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/nequipg.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        
+        <nav class="navegacion">
+            <ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="#">Categorías</a>
+                    <ul>
+                        <li><a href="#">Mujeres</a></li>
+                        <li><a href="#">Hombres</a></li>
+                        <li><a href="#">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="iconos">
+            <a href="#"><i class="fa-solid fa-heart"></i></a> 
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+        </div> 
+    </header> 
+     <img id="fondo" src="../img/pagina NequiPNG.PNG" alt="">
+     
+        <div class="contenido-109">
+            <div class="rectangle-197">
+              <img class="qr" src="../img/qr.jfif" />
+            </div>
+          </div>
+          <script>
+
+            // Código para implementar simulación de pago con Nequi
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar cliente de Supabase
+  const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+  
+  // Crear cliente de Supabase
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  
+  // Obtener detalles de usuario desde localStorage
+  const userDetails = JSON.parse(localStorage.getItem('userDetails')) || {};
+  
+  // Obtener productos seleccionados desde localStorage
+  const productosSeleccionados = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+  
+  // Calcular precio total
+  let totalPrecio = 0;
+  productosSeleccionados.forEach(producto => {
+    // Convertir precio de formato string "$123.456" a número
+    const precioNumerico = typeof producto.precio === 'string' ? 
+      parseInt(producto.precio.replace(/\D/g, '')) : 
+      producto.precio;
+    
+    totalPrecio += precioNumerico;
+  });
+  
+  // Mostrar información del usuario y productos en la página
+  // (Este código dependerá de la estructura de tu HTML para Nequi)
+  
+  // Generar un código de transacción único para Nequi
+  const generateTransactionCode = () => {
+    return 'NQ' + Date.now() + Math.floor(Math.random() * 1000);
+  };
+  
+  // Función para mostrar alertas personalizadas
+  function showAlert(message, type = 'error') {
+    const alertElement = document.getElementById('customAlert');
+    if (alertElement) {
+      alertElement.textContent = message;
+      alertElement.className = `custom-alert ${type}`;
+      alertElement.style.display = 'block';
+      
+      if (type !== 'info') {
+        setTimeout(() => {
+          alertElement.style.display = 'none';
+        }, 5000);
+      }
+    } else {
+      alert(message);
+    }
+  }
+  
+  // Agregar event listener al botón de pagar con Nequi
+  document.getElementById('pagar-nequi').addEventListener('click', async function() {
+    try {
+      showAlert('Procesando pago con Nequi...', 'info');
+      
+      // Simular generación de número telefónico de Nequi
+      const nequiPhone = userDetails.telefono || '300XXXXXXX';
+      
+      // 1. Verificar si el usuario ya existe en la base de datos
+      const { data: existingUsers, error: searchError } = await supabase
+        .from('usuarios')
+        .select()
+        .eq('nombre', userDetails.nombre)
+        .eq('apellido', userDetails.apellido);
+      
+      if (searchError) throw searchError;
+      
+      let userId;
+      
+      if (existingUsers && existingUsers.length > 0) {
+        // Si el usuario ya existe, usamos su ID
+        userId = existingUsers[0].id;
+        
+        // Actualizamos sus datos si es necesario
+        const { error: updateError } = await supabase
+          .from('usuarios')
+          .update({
+            telefono: userDetails.telefono,
+            direccion: userDetails.direccion,
+            calle: userDetails.calle,
+            piso_edificio: userDetails.piso,
+            metodo_pago: 'nequi'
+          })
+          .eq('id', userId);
+        
+        if (updateError) throw updateError;
+      } else {
+        // Si el usuario no existe, lo creamos
+        const { data: userData, error: userError } = await supabase
+          .from('usuarios')
+          .insert([{
+            nombre: userDetails.nombre,
+            apellido: userDetails.apellido,
+            telefono: userDetails.telefono,
+            direccion: userDetails.direccion,
+            calle: userDetails.calle,
+            piso_edificio: userDetails.piso,
+            metodo_pago: 'nequi'
+          }])
+          .select();
+        
+        if (userError) throw userError;
+        userId = userData[0].id;
+      }
+      
+      // Generar código de transacción
+      const transactionCode = generateTransactionCode();
+      
+      // 2. Guardar detalles del pedido en la tabla 'ordenes'
+      const { data: ordenData, error: ordenError } = await supabase
+        .from('ordenes')
+        .insert([{
+          usuario_id: userId,
+          total: totalPrecio,
+          estado: 'pendiente',
+          fecha: new Date().toISOString(),
+          codigo_transaccion: transactionCode
+        }])
+        .select();
+      
+      if (ordenError) throw ordenError;
+      
+      // Obtener el ID del pedido insertado
+      const ordenId = ordenData[0].id;
+      
+      // 3. Guardar cada producto en el pedido en la tabla 'orden_productos'
+      const ordenProductos = productosSeleccionados.map(producto => ({
+        orden_id: ordenId,
+        nombre_producto: producto.nombre,
+        imagen_url: producto.imagen_url,
+        talla: producto.talla || '',
+        precio: typeof producto.precio === 'string' ? 
+          parseInt(producto.precio.replace(/\D/g, '')) : 
+          producto.precio,
+        producto_id: producto.id || null
+      }));
+      
+      const { error: productosError } = await supabase
+        .from('orden_productos')
+        .insert(ordenProductos);
+      
+      if (productosError) throw productosError;
+      
+      // 4. Guardar información del pago en la tabla 'pagos'
+      const { error: pagoError } = await supabase
+        .from('pagos')
+        .insert([{
+          orden_id: ordenId,
+          tipo_tarjeta: 'nequi',
+          ultimos_digitos: nequiPhone.substring(nequiPhone.length - 4),
+          titular: `${userDetails.nombre} ${userDetails.apellido}`,
+          estado: 'aprobado' // Simulación de pago aprobado
+        }]);
+      
+      if (pagoError) throw pagoError;
+      
+      // Actualizar el estado del pedido a 'completado'
+      const { error: updateError } = await supabase
+        .from('ordenes')
+        .update({ estado: 'completado' })
+        .eq('id', ordenId);
+      
+      if (updateError) throw updateError;
+      
+      // Mostrar mensaje de éxito
+      showAlert('¡Pago con Nequi realizado con éxito! Redirigiendo...', 'success');
+      
+      // Guardar el código de transacción en localStorage para mostrar en la página de confirmación
+      localStorage.setItem('transactionCode', transactionCode);
+      
+      // Limpiar carrito después de la compra exitosa
+      localStorage.removeItem('productosSeleccionados');
+      
+      // Redirigir a la página de confirmación después de un retraso
+      setTimeout(() => {
+        window.location.href = 'confirmacion.html';
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error al procesar el pago con Nequi:', error);
+      showAlert('Error al procesar el pago. Por favor intente nuevamente.', 'error');
+    }
+  });
+});
+          </script>
+   
+</body>
+</html>

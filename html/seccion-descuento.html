@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recompensas por Donaciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="shortcut icon" href="img/icono-2-fashion.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/seccion-descuento.css">
+    <!-- Carga la librería de Supabase antes de cualquier script que la use -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+    /* ALERTA BONITA */
+    .custom-alert {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff0f5;
+      color: #b74e91;
+      border: 1.5px solid #c48cc2;
+      padding: 16px 32px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(183, 78, 145, 0.18);
+      font-size: 1.09rem;
+      font-weight: 600;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeInDown 0.45s;
+    }
+    .custom-alert.show {
+      display: flex;
+      animation: fadeInDown 0.45s;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px) translateX(-50%);}
+      100% { opacity: 1; transform: translateY(0) translateX(-50%);}
+    }
+    </style>
+</head>
+<body>
+  <!-- ALERTA BONITA -->
+  <div id="custom-alert" class="custom-alert" style="display:none;">
+    <span id="custom-alert-message"></span>
+  </div>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="/img/logo.svg" alt="Logo"></a>
+    </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
+    </div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+              <li><a href="categorias.html">Mujeres</a></li>
+              <li><a href="categoria-hombre.html">Hombres</a></li>
+              <li><a href="categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="iconos">
+      <a href="html/favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a> 
+      <a onclick="llevaracarrito()" class="icono-con-contador" style="cursor:pointer;">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <div class="user-container">
+        <a href="#" id="user-icon"><i class="fa-solid fa-user"></i></a>
+        <a href="html/inisesion.html" class="iniciar-sesion" id="login-button" style="display:none;">Iniciar sesión</a>
+        <div class="user-session" id="userSession" style="display: none;"></div>
+      </div>
+    </div>
+  </header>
+    <!-- Fondo animado -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 12v10H4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 7H2v5h20z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 22V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="hero-title">Recompensas por Donaciones</h1>
+                <p class="hero-description">
+                    Transforma tu generosidad en beneficios mutuos. Al donar, no solo contribuyes a una causa noble, 
+                    sino que también obtienes recompensas exclusivas para renovar tu guardarropa.
+                </p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <div class="form-container">
+                <div class="form-card">
+                    <div class="card-header">
+                        <h2>Obtén tu Recompensa</h2>
+                        <p>Ingresa tus datos para recibir tu código de descuento</p>
+                    </div>
+
+                  <form class="donation-form" id="rewardsForm">
+  <div class="input-group">
+    <div class="input-container">
+      <input 
+        type="email" 
+        id="donorEmail" 
+        class="form-input" 
+        placeholder=" "
+        required
+      >
+      <label for="donorEmail" class="form-label">
+        Correo electrónico
+      </label>
+    </div>
+    <div class="input-container">
+      <input 
+        type="text" 
+        id="donatedItem" 
+        class="form-input" 
+        placeholder=" "
+        required
+      >
+      <label for="donatedItem" class="form-label">
+        Prenda donada
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="submit-btn">
+    <span class="btn-text">Obtener mi recompensa</span>
+    <div class="btn-glow"></div>
+    <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reward Display Section -->
+        <section class="reward-section" id="rewardDisplay" style="display: none;">
+            <div class="reward-container">
+                <div class="reward-card">
+                    <div class="reward-celebration">
+                        <div class="celebration-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="confetti">
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="reward-title">¡Gracias por tu generosidad!</h3>
+                    <p class="reward-subtitle">Tu código de descuento está listo</p>
+                    
+                    <div class="code-container">
+                        <div class="discount-code" id="discountCode"></div>
+                        <button class="copy-btn" id="copyButton" title="Copiar código">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="reward-benefits">
+                        <div class="benefit-item">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Válido por 30 días</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Descuento del 15%</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>No aplicable para productos personalizados</span>
+                        </div>
+                    </div>
+                    
+                    <p class="reward-instruction">
+                        Usa este código en tu próxima compra y disfruta de tu descuento exclusivo.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    // ALERTA BONITA
+    function showCustomAlert(message) {
+      const alertDiv = document.getElementById('custom-alert');
+      const messageSpan = document.getElementById('custom-alert-message');
+      messageSpan.textContent = message;
+      alertDiv.classList.add('show');
+      alertDiv.style.display = 'flex';
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        alertDiv.style.display = 'none';
+      }, 2700);
+    }
+
+    // --- CONFIGURACIÓN SUPABASE ---
+    const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Lógica del formulario de recompensas:
+    document.getElementById('rewardsForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('donorEmail').value.trim().toLowerCase();
+        const item = document.getElementById('donatedItem').value.trim().toLowerCase();
+
+        // Buscar donación aprobada en Supabase (insensible a mayúsculas/minúsculas)
+        const { data, error } = await supabase
+            .from('donaciones')
+            .select('*')
+            .ilike('contacto', email)
+            .ilike('tipo_prenda', item)
+            .single();
+
+        // Si no existe o no está aprobada, alerta "Donación no existente"
+        if (error || !data || !data.aprobado || data.aprobado.trim().toLowerCase() !== "aprobado") {
+            showCustomAlert("Donación no existente");
+            return;
+        }
+
+        // Si ya hay código, mostrar ese. Si no, generar y guardar uno.
+        let code = data.codigo_descuento;
+        if (!code) {
+            code = 'DESC-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            await supabase
+                .from('donaciones')
+                .update({ codigo_descuento: code })
+                .eq('id', data.id);
+        }
+
+        // Mostrar recompensa con animación
+        document.getElementById('discountCode').textContent = code;
+        const rewardSection = document.getElementById('rewardDisplay');
+        rewardSection.style.display = 'block';
+
+        // Animación de confetti
+        setTimeout(() => {
+            const confettiPieces = document.querySelectorAll('.confetti-piece');
+            confettiPieces.forEach((piece, index) => {
+                piece.style.animationDelay = `${index * 0.1}s`;
+                piece.classList.add('active');
+            });
+        }, 300);
+
+        // Scroll suave hacia la recompensa
+        setTimeout(() => {
+            rewardSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, 400);
+    });
+
+    // Funcionalidad de copiar código
+    document.getElementById('copyButton').addEventListener('click', function() {
+        const code = document.getElementById('discountCode').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            const button = this;
+            const originalHTML = button.innerHTML;
+
+            // Cambiar a icono de check
+            button.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            `;
+            button.classList.add('copied');
+
+            // Restaurar después de 2 segundos
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.classList.remove('copied');
+            }, 2000);
+        });
+    });
+
+    // Animación de formas flotantes
+    function animateShapes() {
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            const delay = index * 2;
+            const duration = 15 + Math.random() * 10;
+            shape.style.animationDelay = `${delay}s`;
+            shape.style.animationDuration = `${duration}s`;
+        });
+    }
+
+    // Inicializar animaciones
+    document.addEventListener('DOMContentLoaded', function() {
+        animateShapes();
+    });
+
+    function llevaracarrito() {
+    window.location.href = "/html/carrito.html";
+}
+
+  // Contadores para carrito y favoritos (localStorage)
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  if (document.getElementById('contador-carrito')) document.getElementById('contador-carrito').textContent = carrito.length;
+  if (document.getElementById('contador-fav')) document.getElementById('contador-fav').textContent = favoritos.length;
+
+    </script>
+</body>
+</html>

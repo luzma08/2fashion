@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <link rel="stylesheet" href="../css/detalles_producto.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html"><img src="/img/logo.svg" alt="Logo"></a>
+    </div>
+    <div class="additional-logos">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="chat-cliente.html"><i class="fa-solid fa-comment"></i></a>
+    </div>
+    <input type="checkbox" id="toggle">
+    <label for="toggle"></label>
+    <nav class="navegacion">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+        <li>
+          <a href="#">Categorías</a>
+          <ul>
+              <li><a href="categorias.html">Mujeres</a></li>
+              <li><a href="categoria-hombre.html">Hombres</a></li>
+              <li><a href="categoria-niños.html">Niños</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="iconos">
+      <a href="favoritos.html" class="icono-con-contador">
+        <span class="contador" id="contador-fav">0</span>
+        <i class="fa-solid fa-heart"></i>
+      </a> 
+      <a onclick="llevaracarrito()" class="icono-con-contador" style="cursor:pointer;">
+        <span class="contador" id="contador-carrito">0</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <div class="user-container">
+        <a href="#" id="user-icon"><i class="fa-solid fa-user"></i></a>
+        <a href="infousuario.html" class="iniciar-sesion" id="login-button" style="display:none;">Iniciar sesión</a>
+        <div class="user-session" id="userSession" style="display: none;"></div>
+      </div>
+    </div>
+  </header>    <div class="contenedor">
+        <div class="breadcrumb">
+            <a href="../index.html">Inicio</a> &gt;
+            <span id="categoria-breadcrumb"></span> &gt;
+            <span id="nombre-producto-breadcrumb"></span>
+        </div>
+
+        <div class="detalles-producto">
+            <div class="imagen-container">
+                <img id="imagen-detalles" src="" alt="Imagen del producto">
+                <div id="zoom-modal" class="zoom-modal">
+                    <span class="zoom-cerrar">&times;</span>
+                    <img id="imagen-ampliada" class="zoom-contenido" src="">
+                </div>
+            </div>
+            <div class="info-producto">
+                <h1 class="titulo-prenda"></h1>
+                <h2 class="precio"></h2>
+                <div class="descripcion">
+                    <p class="texto"></p>
+                </div>
+                <div class="botones">
+                    <button class="boton-carrito">Añadir al carrito</button>
+                    <a href="#" class="icono-fav-agregar">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de Supabase
+        const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Función para obtener parámetros de la URL
+        function obtenerParametroURL(nombre) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nombre);
+        }
+
+        // Cargar detalles del producto
+        async function cargarDetallesProducto() {
+            try {
+                const productoId = obtenerParametroURL('id');
+                if (!productoId) {
+                    console.error('ID del producto no especificado en la URL');
+                    document.body.innerHTML = '<p>Producto no encontrado. <a href="../index.html">Volver al inicio</a></p>';
+                    return;
+                }
+
+                // Obtener producto de Supabase
+                const { data: producto, error } = await supabase
+                    .from('productos')
+                    .select('*')
+                    .eq('id', productoId)
+                    .single();
+
+                if (error) {
+                    console.error('Error al cargar el producto:', error);
+                    document.body.innerHTML = '<p>Error al cargar el producto. <a href="../index.html">Volver al inicio</a></p>';
+                    return;
+                }
+
+                if (!producto) {
+                    console.error('Producto no encontrado');
+                    document.body.innerHTML = '<p>Producto no encontrado. <a href="../index.html">Volver al inicio</a></p>';
+                    return;
+                }
+
+                // Actualizar breadcrumb
+                const categoriaLink = document.getElementById('categoria-breadcrumb');
+                if (producto.categoria) {
+                    let categoriaUrl = './categorias.html'; // por defecto para mujer
+                    if (producto.categoria === 'hombre') {
+                        categoriaUrl = './categoria-hombre.html';
+                    } else if (producto.categoria === 'niño') {
+                        categoriaUrl = './categoria-niños.html';
+                    }
+                    
+                    categoriaLink.innerHTML = `
+                        <a href="${categoriaUrl}">${capitalizarPrimeraLetra(producto.categoria)}</a>
+                    `;
+                } else {
+                    categoriaLink.textContent = 'Categoría';
+                }
+                
+                document.getElementById('nombre-producto-breadcrumb').textContent = producto.nombre || 'Producto';
+
+                // Actualizar información del producto
+                document.getElementById('imagen-detalles').src = producto.imagen_url || '';
+                document.getElementById('imagen-ampliada').src = producto.imagen_url || '';
+                document.querySelector('.titulo-prenda').textContent = producto.nombre || 'Producto';
+                document.querySelector('.precio').textContent = formatearPrecio(producto.precio);
+
+                // -----------------------------------------
+                // ACTUALIZADO: Solo descripción, talla y estado
+                // -----------------------------------------
+                let descripcionFormateada = `
+                    <b>Descripción:</b> ${producto.descripcion || '-'}<br>
+                    <b>Talla:</b> ${producto.talla || '-'}<br>
+                    <b>Estado:</b> ${producto.estado || '-'}
+                `;
+                document.querySelector('.texto').innerHTML = descripcionFormateada;
+                // -----------------------------------------
+
+                // Actualizar título de la página
+                document.title = `${producto.nombre} - Detalles del Producto`;
+            } catch (error) {
+                console.error('Error al cargar detalles del producto:', error);
+                alert('Ocurrió un error al cargar los detalles del producto.');
+            }
+        }
+
+        // Capitalizar primera letra
+        function capitalizarPrimeraLetra(texto) {
+            if (!texto) return '';
+            return texto.charAt(0).toUpperCase() + texto.slice(1);
+        }
+
+        // Formatear precio
+        function formatearPrecio(precio) {
+            return '$' + Number(precio).toLocaleString('es-CO');
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDetallesProducto();
+            actualizarContadores();
+            configurarZoomImagen();
+            configurarBotonesCarritoYFavoritos();
+        });
+
+        // Actualizar contadores de carrito y favoritos
+        function actualizarContadores() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+            let totalItemsCarrito = 0;
+            carrito.forEach(item => {
+                totalItemsCarrito += item.cantidad || 1;
+            });
+
+            document.getElementById('contador-carrito').textContent = totalItemsCarrito;
+            document.getElementById('contador-fav').textContent = favoritos.length;
+        }
+
+        // Configurar zoom de imagen
+        function configurarZoomImagen() {
+            const imagenDetalles = document.getElementById('imagen-detalles');
+            const modal = document.getElementById('zoom-modal');
+            const imagenAmpliada = document.getElementById('imagen-ampliada');
+            const cerrarModal = document.querySelector('.zoom-cerrar');
+
+            if (imagenDetalles && modal && imagenAmpliada && cerrarModal) {
+                // Abrir modal con imagen
+                imagenDetalles.addEventListener('click', function () {
+                    imagenAmpliada.src = this.src;
+                    modal.style.display = 'flex';
+                });
+
+                // Cerrar modal
+                cerrarModal.addEventListener('click', function () {
+                    modal.style.display = 'none';
+                });
+
+                // Zoom al hacer clic en imagen dentro del modal
+                imagenAmpliada.addEventListener('click', function () {
+                    this.classList.toggle('zoom');
+                });
+
+                // Cerrar al hacer clic fuera de la imagen
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        imagenAmpliada.classList.remove('zoom');
+                    }
+                });
+            }
+        }
+
+        // Configurar botones de carrito y favoritos
+        function configurarBotonesCarritoYFavoritos() {
+            // Manejar botón de favoritos
+            const botonFavorito = document.querySelector('.icono-fav-agregar');
+            if (botonFavorito) {
+                botonFavorito.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const productoId = obtenerParametroURL('id');
+                    if (!productoId) return;
+                    
+                    const img = document.getElementById('imagen-detalles')?.src || '';
+                    const nombre = document.querySelector('.titulo-prenda')?.textContent || 'Producto';
+                    const precio = document.querySelector('.precio')?.textContent || '$0';
+                    const textoDescripcion = document.querySelector('.texto')?.textContent || '';
+                    
+                    let talla = 'Talla: -';
+                    if (textoDescripcion) {
+                        const tallaMatch = textoDescripcion.match(/Talla:\s*([^\n]+)/);
+                        if (tallaMatch && tallaMatch[1]) {
+                            talla = tallaMatch[1].trim();
+                        }
+                    }
+                    
+                    const nuevoFavorito = {
+                        id: productoId,
+                        imagen_url: img,
+                        nombre: nombre,
+                        precio: precio,
+                        talla: talla
+                    };
+
+                    let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+                    // Validar si ya está en favoritos para evitar duplicados
+                    const yaExiste = favoritos.some(item => item.id === nuevoFavorito.id);
+                    
+                    if (yaExiste) {
+                        // Si ya existe, lo eliminamos (toggle)
+                        favoritos = favoritos.filter(item => item.id !== nuevoFavorito.id);
+                        mostrarMensaje(`${nombre} se eliminó de favoritos`);
+                    } else {
+                        // Si no existe, lo agregamos
+                        favoritos.push(nuevoFavorito);
+                        mostrarMensaje(`${nombre} se añadió a favoritos`);
+                    }
+                    
+                    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+                    actualizarContadores();
+                });
+            }
+
+            // Manejar botón de carrito
+            const botonCarrito = document.querySelector('.boton-carrito');
+            if (botonCarrito) {
+                botonCarrito.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const productoId = obtenerParametroURL('id');
+                    if (!productoId) return;
+                    
+                    const img = document.getElementById('imagen-detalles')?.src || '';
+                    const nombre = document.querySelector('.titulo-prenda')?.textContent || 'Producto';
+                    const precioTexto = document.querySelector('.precio')?.textContent || '$0';
+                    const textoDescripcion = document.querySelector('.texto')?.textContent || '';
+                    
+                    // Extraer el valor numérico del precio
+                    let precio = 0;
+                    const precioMatch = precioTexto.match(/\$?([\d.,]+)/);
+                    if (precioMatch && precioMatch[1]) {
+                        precio = precioMatch[1].replace(/\./g, '').replace(',', '.');
+                    }
+                    
+                    let talla = '-';
+                    if (textoDescripcion) {
+                        const tallaMatch = textoDescripcion.match(/Talla:\s*([^\n]+)/);
+                        if (tallaMatch && tallaMatch[1]) {
+                            talla = tallaMatch[1].trim();
+                        }
+                    }
+                    
+                    const nuevoProducto = {
+                        id: productoId,
+                        imagen_url: img,
+                        nombre: nombre,
+                        precio: precio,
+                        talla: talla,
+                        cantidad: 1
+                    };
+
+                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                    
+                    // Verificar si el producto ya está en el carrito
+                    const indiceExistente = carrito.findIndex(item => item.id === productoId);
+                    
+                    if (indiceExistente >= 0) {
+                        // Si ya existe, incrementamos la cantidad
+                        carrito[indiceExistente].cantidad += 1;
+                    } else {
+                        // Si no existe, lo agregamos
+                        carrito.push(nuevoProducto);
+                    }
+                    
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    actualizarContadores();
+                    mostrarMensaje(`${nombre} se añadió al carrito`);
+                });
+            }
+        }
+
+        // Función para mostrar mensajes temporales
+        function mostrarMensaje(mensaje, esError = false) {
+            const elementoMensaje = document.createElement('div');
+            elementoMensaje.textContent = mensaje;
+            elementoMensaje.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: ${esError ? '#d32f2f' : '#53214F'};
+                color: white;
+                padding: 10px 20px;
+                border-radius: 10px;
+                z-index: 9999;
+                font-family: Poppins, serif;
+            `;
+            
+            document.body.appendChild(elementoMensaje);
+            
+            // Ocultar después de 3 segundos
+            setTimeout(() => {
+                elementoMensaje.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

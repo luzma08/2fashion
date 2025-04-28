@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="../img/icono-2-fashion.png" type="image/x-icon">
+    <title>Métodos de pago</title>
+    <link rel="stylesheet" href="../css/pago.css">
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="../img/logo.svg" alt="Logo">
+        </div>
+        <div class="additional-logos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        <input type="checkbox" id="toggle">
+        <label for="toggle"></label>
+        <nav class="navegacion">
+            <ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="sobrenostros.html">Sobre nosotras</a></li>
+                <li>
+                    <a href="#">Categorías</a>
+                    <ul>
+                        <li><a href="categorias.html">Mujeres</a></li>
+                        <li><a href="categoria-hombre.html">Hombres</a></li>
+                        <li><a href="categoria-niños.html">Niños</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="iconos">
+            <a href="#"><i class="fa-solid fa-heart"></i></a> 
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></a>
+        </div> 
+    </header> 
+
+    <div id="payment-section">
+        <h1>Métodos de Pago</h1>
+        <div class="rectangle-1">   
+            <input type="radio" class="circulo" name="metodoPago" value="tarjeta" id="pagoTarjeta">
+            <label class="tarjetas" for="pagoTarjeta">Tarjeta de Crédito</label><br>
+            <img class="visa" src="../img/visa.png" alt="Visa">
+            <img class="mastercard" src="../img/mastercard.png" alt="Mastercard">
+            <img class="bancolombia" src="../img/bancolombia.png" alt="Bancolombia">
+            <img class="pay-pal" src="../img/PayPal.png" alt="PayPal">
+        </div>
+
+        <h1 class="titulo-carro">Detalles de pago</h1>
+        <div id="contenedor-pago" class="contenedor-pago"></div>
+        <div class="casilla-pago" id="total-container" style="display: none;">
+            <p>TOTAL:</p>
+            <p id="total-precio"></p>
+        </div>
+        <!-- Campo de descuento -->
+        <div class="casilla-pago" id="discount-container" style="display: flex; flex-direction: column; align-items: flex-start; margin-top:12px;">
+            <label for="codigo-descuento" style="font-weight:600;">Código de descuento:</label>
+            <div style="display:flex;gap:10px;align-items:center;width:100%;">
+                <input type="text" id="codigo-descuento" placeholder="Ingresa tu código" style="flex:1; border-radius:8px;border:1px solid #A259C3; padding:7px 10px;" />
+                <button type="button" id="aplicar-descuento" style="background:#A259C3;color:#fff; border:none; border-radius:8px; padding:7px 18px; font-weight:600;cursor:pointer;">Aplicar</button>
+            </div>
+            <span id="mensaje-descuento" style="color:#A259C3; font-size:0.98em; margin-top:6px;"></span>
+        </div>
+        <div class="group-boton">
+            <button id="btn-siguiente" class="siguienteBT">Siguiente</button>
+        </div>
+    </div>
+    <!-- Formulario de detalles de compra -->
+    <div class="form-container" id="purchase-details" style="display: none;">
+        <h2>Detalles de compra</h2>
+        <form id="purchase-form">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" placeholder="Apellido" required>
+            <input type="tel" id="telefono" placeholder="Teléfono" required>
+            <input type="text" id="direccion" placeholder="Direccion" required>
+            <input type="text" id="piso" placeholder="Piso/Edificio/Fachada/Otro" >
+            <button type="submit">Finalizar compra</button>
+        </form>
+    </div>
+  
+    <script>
+    // 1. Inicializa Supabase
+    const SUPABASE_URL = 'https://hxrcmbaxxfvlgubpdifu.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4cmNtYmF4eGZ2bGd1YnBkaWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0OTgxNzQsImV4cCI6MjA1ODA3NDE3NH0.uPrLyN5PfPv8kx414tZetdQLkiQGXq9Lkg_kJZ1zvyc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Variables de descuento
+    let descuentoAplicado = false;
+    let descuentoValor = 0;
+    let totalFinal = 0;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAuthentication();
+        initializePaymentSection();
+        setupEventListeners();
+        mostrarTotalFinalGuardado();
+    });
+
+    // --- AUTENTICACIÓN UNIFICADA CON LOCALSTORAGE ---
+    function checkAuthentication() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const user = localStorage.getItem('user');
+        if (!isLoggedIn || !user) {
+            localStorage.setItem('redirectAfterLogin', window.location.href);
+            window.location.href = "inisesion.html";
+            return;
+        }
+    }
+
+    function initializePaymentSection() {
+        const contenedorPago = document.getElementById('contenedor-pago');
+        const totalContainer = document.getElementById('total-container');
+        const totalPrecio = document.getElementById('total-precio');
+        
+        let productosSeleccionados = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+        contenedorPago.innerHTML = '';
+        if (productosSeleccionados.length === 0) {
+            contenedorPago.innerHTML = '<p>No hay productos seleccionados.</p>';
+            totalContainer.style.display = 'none';
+            return;
+        }
+        
+        let totalPrecioValue = 0;
+        productosSeleccionados.forEach((producto, index) => {
+            const div = document.createElement('div');
+            div.classList.add('producto-pago');
+            div.dataset.index = index;
+
+            const nombreProducto = producto.nombre || 'Producto sin nombre';
+            const tallaProducto = producto.talla || '-';
+            const imagenUrl = producto.imagen_url || producto.imagen_frente || producto.imagen_espalda || producto.img || '../img/placeholder.png';
+            
+            // Ajuste robusto para precio
+            let precioNumerico = 0;
+            if (typeof producto.precio === 'string') {
+                // Extrae solo dígitos y convierte "30.000" a 30000, también funciona con "$30.000"
+                let limpio = producto.precio.replace(/[^0-9]/g, '');
+                precioNumerico = parseInt(limpio) || 0;
+            } else if (typeof producto.precio === 'number') {
+                precioNumerico = producto.precio;
+            }
+            let precioFormateado = `$${precioNumerico.toLocaleString('es-CO')}`;
+            
+            div.innerHTML = `
+                <button class="btn-eliminar" data-index="${index}">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="imagen-contenedor-pago">
+                    <img src="${imagenUrl}" alt="${nombreProducto}" class="imagen-producto-pago" 
+                        onerror="this.src='../img/placeholder.png'">
+                </div>
+                <div class="detalles-producto-pago">
+                    <h3 class="nombre-producto-pago">${nombreProducto}</h3>
+                    <p class="talla-producto-pago">Talla: ${tallaProducto}</p>
+                    <p class="precio-producto-pago">${precioFormateado}</p>
+                </div>
+            `;
+            contenedorPago.appendChild(div);
+            totalPrecioValue += precioNumerico * (producto.cantidad || 1);
+        });
+        
+        totalContainer.style.display = 'flex';
+        totalPrecio.textContent = `$${totalPrecioValue.toLocaleString('es-CO')}`;
+        localStorage.setItem('totalPrecio', totalPrecioValue);
+        localStorage.setItem('totalFinal', totalPrecioValue); // Por defecto igual si no hay descuento
+        localStorage.removeItem('descuentoValor');
+        setupDeleteButtons();
+    }
+
+    function setupDeleteButtons() {
+        document.querySelectorAll('.btn-eliminar').forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                let productosSeleccionados = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+                productosSeleccionados.splice(index, 1);
+                localStorage.setItem('productosSeleccionados', JSON.stringify(productosSeleccionados));
+                initializePaymentSection();
+                mostrarTotalFinalGuardado();
+            });
+        });
+    }
+
+    function setupEventListeners() {
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        if (btnSiguiente) {
+            btnSiguiente.addEventListener('click', function() {
+                const metodoSeleccionado = document.querySelector('input[name="metodoPago"]:checked');
+                if (!metodoSeleccionado) {
+                    alert("Por favor selecciona un método de pago.");
+                    return;
+                }
+                const productosSeleccionados = JSON.parse(localStorage.getItem('productosSeleccionados')) || [];
+                if (productosSeleccionados.length === 0) {
+                    alert("No hay productos en el carrito. Por favor, añade productos antes de continuar.");
+                    return;
+                }
+                document.getElementById('payment-section').style.display = 'none';
+                document.getElementById('purchase-details').style.display = 'block';
+                localStorage.setItem('metodoPagoSeleccionado', metodoSeleccionado.value);
+            });
+        }
+        
+        const purchaseForm = document.getElementById('purchase-form');
+        if (purchaseForm) {
+            purchaseForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const nombre = document.getElementById('nombre').value.trim();
+                const apellido = document.getElementById('apellido').value.trim();
+                const telefono = document.getElementById('telefono').value.trim();
+                const direccion = document.getElementById('direccion').value.trim();
+                const piso = document.getElementById('piso').value.trim();
+
+                if (!nombre || !apellido) {
+                    alert('Por favor ingrese su nombre y apellido.');
+                    return;
+                }
+                if (!telefono || telefono.length < 7) {
+                    alert('Por favor ingrese un número de teléfono válido.');
+                    return;
+                }
+                if (!direccion) {
+                    alert('Por favor ingrese su dirección completa.');
+                    return;
+                }
+
+                // Guarda temporalmente los detalles para usarlos en el siguiente paso (tarjeta/nequi)
+                const userDetails = {
+                    nombre,
+                    apellido,
+                    telefono,
+                    direccion,
+                    piso
+                };
+                localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+                const metodoPago = localStorage.getItem('metodoPagoSeleccionado');
+                if (metodoPago === 'tarjeta') {
+                    window.location.href = 'tarjeta.html';
+                } else if (metodoPago === 'nequi') {
+                    window.location.href = 'Nequi.html';
+                } else {
+                    alert('Error: Método de pago no reconocido');
+                }
+            });
+        }
+
+        // Descuento
+        document.getElementById('aplicar-descuento').addEventListener('click', async function() {
+            const input = document.getElementById('codigo-descuento');
+            const mensaje = document.getElementById('mensaje-descuento');
+            const codigoIngresado = input.value.trim();
+
+            // --- NUEVO: Validación con Supabase para códigos usados ---
+            if (!/^DESC-\w{8,}$/.test(codigoIngresado)) {
+                mensaje.textContent = "El código ingresado no es válido.";
+                descuentoAplicado = false;
+                descuentoValor = 0;
+                totalFinal = parseFloat(localStorage.getItem('totalPrecio') || '0');
+                document.getElementById('total-precio').textContent = `$${totalFinal.toLocaleString('es-CO')}`;
+                localStorage.setItem('totalFinal', totalFinal);
+                localStorage.removeItem('descuentoValor');
+                return;
+            }
+
+            // 1. Verificar si el código ya está marcado como usado en la tabla donaciones
+            const { data: yaUsado, error: errorYaUsado } = await supabase
+                .from('donaciones')
+                .select('*')
+                .eq('codigo_descuento', codigoIngresado)
+                .eq('codigo_usado', 'Si')
+                .maybeSingle();
+
+            if (yaUsado) {
+                mensaje.textContent = "Este código ya fue utilizado.";
+                input.disabled = false;
+                this.disabled = false;
+                this.style.background = '#A259C3';
+                return;
+            }
+
+            // 2. Buscar un registro disponible para marcar como usado
+            const { data: filaCodigo, error: errorFila } = await supabase
+                .from('donaciones')
+                .select('id')
+                .eq('codigo_descuento', codigoIngresado)
+                .eq('codigo_usado', 'No')
+                .maybeSingle();
+
+            if (!filaCodigo || !filaCodigo.id) {
+                mensaje.textContent = "Código no válido o ya utilizado.";
+                return;
+            }
+
+            // 3. Actualizar a "Si" ese registro
+            const { error: errorUpdate } = await supabase
+                .from('donaciones')
+                .update({ codigo_usado: 'Si' })
+                .eq('id', filaCodigo.id);
+
+            if (errorUpdate) {
+                mensaje.textContent = "Error al marcar el código como usado.";
+                return;
+            }
+
+            // 4. Aplica el descuento normalmente
+            const totalPrecio = parseFloat(localStorage.getItem('totalPrecio') || '0');
+            descuentoValor = Math.round(totalPrecio * 0.15);
+            descuentoAplicado = true;
+            totalFinal = totalPrecio - descuentoValor;
+            mensaje.textContent = `¡Descuento aplicado! -$${descuentoValor.toLocaleString('es-CO')} (${codigoIngresado})`;
+            input.disabled = true;
+            this.disabled = true;
+            this.style.background = '#6b7280';
+            document.getElementById('total-precio').textContent = `$${totalFinal.toLocaleString('es-CO')}`;
+            // Guarda para la siguiente página
+            localStorage.setItem('totalFinal', totalFinal);
+            localStorage.setItem('descuentoValor', descuentoValor);
+        });
+    }
+
+    // Muestra el total final correctamente si ya existe descuento guardado
+    function mostrarTotalFinalGuardado() {
+        const val = localStorage.getItem('totalFinal');
+        if (val) {
+            document.getElementById('total-precio').textContent = `$${parseFloat(val).toLocaleString('es-CO')}`;
+        }
+    }
+    </script>
+</body>
+</html>
